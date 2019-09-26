@@ -1,0 +1,17 @@
+.navbar ul{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.navbar ul li{
+    display: inline-block;
+}
+
+.navbar ul li img{
+    align: left; 
+}
+
+.navbar ul li form{
+    text-align: center;
+}
