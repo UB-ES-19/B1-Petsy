@@ -1,3 +1,6 @@
+h3{
+    font-weight: bold;
+}
 .navbar ul{
     margin: 0;
     padding: 0;
@@ -14,4 +17,7 @@
 
 .navbar ul li form{
     text-align: center;
+}
+.modal-header{
+    display: inline;
 }
