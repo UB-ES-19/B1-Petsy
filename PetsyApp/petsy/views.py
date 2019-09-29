@@ -53,7 +53,7 @@ def login_user(request):
     if request.method == 'POST':
         username = request.POST["username"]
         password = request.POST["password"]
-        go_to_url = request.POST["redirect_url"]
+        go_to_url = request.POST["redirect_url"] or "/"
 
         user = authenticate(username=username, password=password)
 
