@@ -53,12 +53,13 @@ def login_user(request):
     if request.method == 'POST':
         username = request.POST["username"]
         password = request.POST["password"]
+        go_to_url = request.POST["redirect_url"]
 
         user = authenticate(username=username, password=password)
 
         if user is not None:
             login(request, user)
-            return redirect('/')
+            return redirect(go_to_url)
         else:
             return ""
 
