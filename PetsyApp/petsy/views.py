@@ -4,7 +4,12 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 # User registration stuff
 from django.contrib.auth import login, authenticate
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
+
+from django.views.generic.edit import CreateView
+
+from django.urls import reverse_lazy
+#from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm
 
 
@@ -31,6 +36,10 @@ def signup(request):
     """
     if request.method == 'POST':
         form = SignUpForm(request.POST)
+        print(request.POST['username'])
+        print(request.POST['email'])
+        print(request.POST['password'])
+        print(request.POST['password2'])
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')

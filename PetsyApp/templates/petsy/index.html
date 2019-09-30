@@ -59,7 +59,7 @@
                 <h5 class="modal-title" id="exampleModalLongTitle">Registrarse es muy fácil.</h5>
 
               </div>
-              <form method="POST">
+              <form method="POST" action="{% url 'register' %}">
               <div class="modal-body">
 
                     {% if form.errors %}
@@ -80,6 +80,10 @@
                     <label for="password">Contraseña *:</label>
                     <br>
                     <input type="password" name="password" value="" id="password">
+                    <br><br>
+                    <label for="password2">Confirm Password:</label>
+                    <input type="password" name="password2" value="" id="password2">
+                    <br>
                     <input type="hidden" name="next" value="{{ next|escape }}" />
                     <br>
 
@@ -105,13 +109,12 @@
 
               </div>
               <form method="POST">
+              {% csrf_token %}
               <div class="modal-body">
 
                     {% if form.errors %}
                     <p class="error">Sorry, that's not a valid username or password</p>
                     {% endif %}
-
-                    {% csrf_token %}
                     <label for="email">Dirección de correo electrónico *:</label>
                     <br>
                     <input type="text" name="email" value="" id="email">
@@ -125,7 +128,7 @@
 
                 </div>
               <div class="modal-footer">
-                <button type="submit" class="btn btn-secondary">Entrar</button>
+                <button type="submit" class="btn btn-secondary" id="button" value="OK">Entrar</button>
               </div>
             </form>
             </div>
@@ -133,9 +136,33 @@
         </div>
 
         <!-- header-end -->
-        
-        
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            document.getElementById('#button').addEventListener('click',
+            function () {
+                //e.preventDefault();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url 'register' %}',
+                    data:{
+                        email: $('#email').val(),
+                        name: $('#username').val(),
+                        password: $('#password').val(),
+                        password2: $('#password2').val(),
+                        csrfmiddlewaretoken: $("[name=csrfmiddlewaretoken]").val()
+                    },
+
+                    success:function(){
+                        alert("Created new user");
+                    }
+
+                });
+
+            });
+
+        </script>
+
+        <script src="https://code.jquery.com/jquery-3.3.0.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="{% static "js/bootstrap.min.js" %}"></script>
         <script defer src="{% static "js/all.js" %}"></script>
