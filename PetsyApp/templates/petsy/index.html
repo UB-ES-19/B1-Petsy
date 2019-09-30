@@ -59,14 +59,13 @@
                 <h5 class="modal-title" id="exampleModalLongTitle">Registrarse es muy fácil.</h5>
 
               </div>
-              <form method="POST" action="{% url 'register' %}">
+              <form class="my-form" method="POST" action="{% url 'register' %}">
               <div class="modal-body">
 
                     {% if form.errors %}
                     <p class="error">Sorry, that's not a valid username or password</p>
                     {% endif %}
 
-                    {% csrf_token %}
                     <label for="email">Dirección de correo electrónico *:</label>
                     <br>
                     <input type="text" name="email" value="" id="email">
@@ -108,27 +107,26 @@
                 <h3 class="modal-title" id="exampleModalLongTitle">Inicia sesión para continuar</h3>
 
               </div>
-              <form method="POST">
-              {% csrf_token %}
+              <form class="my-form" method="POST">
               <div class="modal-body">
 
                     {% if form.errors %}
                     <p class="error">Sorry, that's not a valid username or password</p>
                     {% endif %}
-                    <label for="email">Dirección de correo electrónico *:</label>
+                    <label for="email_login">Dirección de correo electrónico *:</label>
                     <br>
-                    <input type="text" name="email" value="" id="email">
+                    <input type="text" name="email_login" value="" id="email_login">
                     <br>
                     <br>
-                    <label for="password">Contraseña *:</label>
+                    <label for="password_login">Contraseña *:</label>
                     <br>
-                    <input type="password" name="password" value="" id="password">
+                    <input type="password" name="password_login" value="" id="password_login">
                     <input type="hidden" name="next" value="{{ next|escape }}" />
                     <br>
 
                 </div>
               <div class="modal-footer">
-                <button type="submit" class="btn btn-secondary" id="button" value="OK">Entrar</button>
+                <button type="submit" class="btn btn-secondary" id="button_login" value="OK">Entrar</button>
               </div>
             </form>
             </div>
@@ -136,36 +134,77 @@
         </div>
 
         <!-- header-end -->
-        <script type="text/javascript">
-            document.getElementById('#button').addEventListener('click',
-            function () {
-                //e.preventDefault();
+        {% block javascript %}
+            <script src="https://code.jquery.com/jquery-3.3.0.min.js"></script>
 
-                $.ajax({
-                    type: 'POST',
-                    url: '{% url 'register' %}',
-                    data:{
-                        email: $('#email').val(),
-                        name: $('#username').val(),
-                        password: $('#password').val(),
-                        password2: $('#password2').val(),
-                        csrfmiddlewaretoken: $("[name=csrfmiddlewaretoken]").val()
-                    },
-
-                    success:function(){
-                        alert("Created new user");
+            <script>
+             function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = jQuery.trim(cookies[i]);
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
                     }
+                }
+                return cookieValue;
+            }
 
+            var csrftoken = getCookie('csrftoken');
+
+            function csrfSafeMethod(method) {
+                // these HTTP methods do not require CSRF protection
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
+            $.ajaxSetup({
+                beforeSend: function(xhr, settings) {
+                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+            </script>
+
+            <script type="text/javascript">
+                var $myForm = $('.my-form');
+                $myForm.submit(function(event){
+                    event.preventDefault();
+                    var $formData = $(this).serialize();
+                    var $thisURL = $myForm.attr('data-url') || window.location.href;
+                    $.ajax({
+                        method: "POST",
+                        url: {% url 'register' %},
+                        data: $formData,
+                        success: handleFormSuccess,
+                        error: handleFormError,
+                    })
+                    $(function () {
+                        $('#registro').modal('toggle');
+                    });
                 });
 
-            });
+                function handleFormSuccess(data, textStatus, jqXHR) {
+                    console.log(data);
+                    console.log(textStatus);
+                    console.log(jqXHR);
+                    $myForm.reset();
+                }
 
-        </script>
+                function handleFormError(jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR);
+                    console.log(textStatus);
+                    console.log(errorThrown);
+                }
 
-        <script src="https://code.jquery.com/jquery-3.3.0.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-        <script src="{% static "js/bootstrap.min.js" %}"></script>
-        <script defer src="{% static "js/all.js" %}"></script>
+            </script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+            <script src="{% static "js/bootstrap.min.js" %}"></script>
+            <script defer src="{% static "js/all.js" %}"></script>
+        {% endblock %}
     </body>
 
 </html>

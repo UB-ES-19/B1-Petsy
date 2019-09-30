@@ -11,6 +11,7 @@ from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 #from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm
+from django.contrib.auth.models import User
 
 
 def index(request):
@@ -35,21 +36,15 @@ def signup(request):
     :return: ????????
     """
     if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        print(request.POST['username'])
-        print(request.POST['email'])
-        print(request.POST['password'])
-        print(request.POST['password2'])
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('/')
-    else:
         form = SignUpForm()
-    return render(request, 'signup.html', {'form': form})
+        username = (request.POST['username'])
+        email = (request.POST['email'])
+        password = (request.POST['password'])
+        password2 = (request.POST['password2'])
+
+        user = User.objects.create_user(username=username, email=email, password=password)
+        user.save()
+    return redirect('index')
 
 
 def login_user(request):
