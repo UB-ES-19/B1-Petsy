@@ -40,7 +40,6 @@ def signup(request):
         username = (request.POST['username'])
         email = (request.POST['email'])
         password = (request.POST['password'])
-        password2 = (request.POST['password2'])
 
         user = User.objects.create_user(username=username, email=email, password=password)
         user.save()
@@ -55,17 +54,20 @@ def login_user(request):
     :return: User if connected, None otherwise
     """
     if request.method == 'POST':
-        username = request.POST["username"]
-        password = request.POST["password"]
-        go_to_url = request.POST["redirect_url"] or "/"
+        username = request.POST["email_login"]
+        password = request.POST["password_login"]
+        #go_to_url = request.POST["redirect_url"] or "/"
 
-        user = authenticate(username=username, password=password)
+        print(username)
+        print(password)
+
+        user = authenticate(email=username, password=password)
 
         if user is not None:
             login(request, user)
-            return redirect(go_to_url)
-        else:
-            return ""
+            print("patata")
+
+        return render(request, 'petsy/index.html')
 
 
 def _check_user_connected(request):

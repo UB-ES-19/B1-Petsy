@@ -37,9 +37,12 @@
                 </ul>	  
 
                 <ul class="nav navbar-nav ml-auto">
-                    <li><a href="#" style="margin-right: 30px" data-toggle="modal" data-target="#registro"><i  style = "color: grey"></i> Registrar-se</a></li>
-                    <li><a href="#" style="color: black" data-toggle="modal" data-target="#login">Iniciar Sessió</a></li>
-                    <li><a href="https://www.google.es"><i class="fas fa-github-square"></i></a></li>
+                    {% if not request.user.is_authenticated %}
+                        <li><a href="#" style="margin-right: 30px" data-toggle="modal" data-target="#registro"><i  style = "color: grey"></i> Registrar-se</a></li>
+                        <li><a href="#" style="color: black" data-toggle="modal" data-target="#login">Iniciar Sessió</a></li>
+                    {% else %}
+                        <li><a href="https://www.google.es"><i class="fas fa-github-square"></i></a></li>
+                    {% endif %}
                 </ul>
 
 
@@ -59,8 +62,9 @@
                 <h5 class="modal-title" id="exampleModalLongTitle">Registrarse es muy fácil.</h5>
 
               </div>
-              <form class="my-form" method="POST" action="{% url 'register' %}">
+              <form class="my-form-register" method="POST" action="{% url 'register' %}">
               <div class="modal-body">
+                    {%  csrf_token %}
 
                     {% if form.errors %}
                     <p class="error">Sorry, that's not a valid username or password</p>
@@ -80,9 +84,6 @@
                     <br>
                     <input type="password" name="password" value="" id="password">
                     <br><br>
-                    <label for="password2">Confirm Password:</label>
-                    <input type="password" name="password2" value="" id="password2">
-                    <br>
                     <input type="hidden" name="next" value="{{ next|escape }}" />
                     <br>
 
@@ -107,8 +108,9 @@
                 <h3 class="modal-title" id="exampleModalLongTitle">Inicia sesión para continuar</h3>
 
               </div>
-              <form class="my-form" method="POST">
+              <form class="my-form-login" method="POST" action="{% url 'login' %}">
               <div class="modal-body">
+                    {% csrf_token %}
 
                     {% if form.errors %}
                     <p class="error">Sorry, that's not a valid username or password</p>
@@ -169,21 +171,60 @@
             });
             </script>
 
+            <script>
+                function checkPassword() {
+                    var pass1 = document.getElementById("password");
+                    var bol = false;
+                    if (pass1.value.length>=8){
+                        bol = true;
+                    }
+                    if (bol == true){
+                        return true;
+                    }
+                    return false;
+                }
+            </script>
+
             <script type="text/javascript">
-                var $myForm = $('.my-form');
+                var $myForm = $('.my-form-register');
+                var $myFormLogin = $('.my-form-login');
+
                 $myForm.submit(function(event){
                     event.preventDefault();
                     var $formData = $(this).serialize();
                     var $thisURL = $myForm.attr('data-url') || window.location.href;
+                    var $check = checkPassword();
+                    if($check){
+                        $.ajax({
+                            method: "POST",
+                            url: {% url 'register' %},
+                            data: $formData,
+                            success: handleFormSuccess,
+                            error: handleFormError,
+                        });
+
+                        $(function () {
+                            $('#registro').modal('toggle');
+                        });
+                    }else{
+                        $('.my-form-register').trigger("reset");
+                    }
+                });
+
+                $myFormLogin.submit(function(event){
+                    event.preventDefault();
+                    var $formData = $(this).serialize();
+                    var $thisURL = $myFormLogin.attr('data-url') || window.location.href;
                     $.ajax({
                         method: "POST",
-                        url: {% url 'register' %},
+                        url: {% url 'login' %},
                         data: $formData,
                         success: handleFormSuccess,
                         error: handleFormError,
-                    })
+                    });
+
                     $(function () {
-                        $('#registro').modal('toggle');
+                        $('#login').modal('toggle');
                     });
                 });
 
