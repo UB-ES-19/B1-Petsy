@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.http import HttpResponse, HttpResponseRedirect
 # User registration stuff
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import render, redirect, reverse
 
 from django.views.generic.edit import CreateView
@@ -41,9 +41,17 @@ def signup(request):
         email = (request.POST['email'])
         password = (request.POST['password'])
 
-        user = User.objects.create_user(username=username, email=email, password=password)
+        try:
+            users = User.objects.get(username=username)
+        except:
+            user = User.objects.create_user(username=username, email=email, password=password)
+
+        print("\n******************************")
+        print(user)
+        print("******************************\n")
+
         user.save()
-    return redirect('index')
+    return render(request, 'petsy/index.html')
 
 
 def login_user(request):
@@ -54,20 +62,27 @@ def login_user(request):
     :return: User if connected, None otherwise
     """
     if request.method == 'POST':
-        username = request.POST["email_login"]
+        mail = request.POST["email_login"]
         password = request.POST["password_login"]
-        #go_to_url = request.POST["redirect_url"] or "/"
+        go_to_url = "petsy/index.html"  # request.POST["redirect_url"] or "petsy/index.html"
 
-        print(username)
+        print(mail)
         print(password)
 
-        user = authenticate(email=username, password=password)
+        try:
+            username = User.objects.get(email=mail).username
+        except:
+            return render(request, go_to_url)
+
+        user = authenticate(username=username, password=password)
 
         if user is not None:
             login(request, user)
-            print("patata")
+            print(user, " has logged in.")
+        else:
+            print("User is None :/")
 
-        return render(request, 'petsy/index.html')
+        return render(request, "registration/signup.html")
 
 
 def _check_user_connected(request):
@@ -81,3 +96,8 @@ def _check_user_connected(request):
         return request.user
     else:
         return None
+
+
+def logout_user(request):
+    logout(request)
+    return render(request, 'petsy/index.html')

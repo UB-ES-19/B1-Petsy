@@ -34,21 +34,27 @@
                         </div>
                     </ul>
 
-                </ul>	  
+                </ul>
 
                 <ul class="nav navbar-nav ml-auto">
                     {% if not request.user.is_authenticated %}
                         <li><a href="#" style="margin-right: 30px" data-toggle="modal" data-target="#registro"><i  style = "color: grey"></i> Registrar-se</a></li>
                         <li><a href="#" style="color: black" data-toggle="modal" data-target="#login">Iniciar Sessió</a></li>
                     {% else %}
-                        <li><a href="https://www.google.es"><i class="fas fa-github-square"></i></a></li>
+                        <li>
+                            <div id="logout">
+                                <form action="{% url 'logout' %}" method="POST">
+                                    {%  csrf_token %}
+                                    <button> Log Out </button>
+                                </form>
+                            </div>
+                        </li>
                     {% endif %}
                 </ul>
 
 
             </nav>
         </header>
-
 
         <!-- Modal Registro -->
         <div class="modal fade" id="registro" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -170,7 +176,11 @@
                 }
             });
             </script>
-
+            <script>
+                function reload_page(){
+                    location.reload()
+                }
+            </script>
             <script>
                 function checkPassword() {
                     var pass1 = document.getElementById("password");
