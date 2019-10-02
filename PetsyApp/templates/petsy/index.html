@@ -39,7 +39,7 @@
                 <ul class="nav navbar-nav ml-auto">
                     {% if not request.user.is_authenticated %}
                         <li><a href="#" style="margin-right: 30px" data-toggle="modal" data-target="#registro"><i  style = "color: grey"></i> Registrar-se</a></li>
-                        <li><a href="#" style="color: black" data-toggle="modal" data-target="#login" type="submit">Iniciar Sessió</a></li>
+                        <li><a href="#" style="color: black" data-toggle="modal" data-target="#login" ><i  style = "color: grey"></i> Iniciar Sessió</a></li>
                     {% else %}
                         <li>
                             <div id="logout">
@@ -221,25 +221,6 @@
                     }
                 });
 
-                $myFormLogin.submit(function(event){
-                    event.preventDefault();
-                    var $formData = $(this).serialize();
-                    var $thisURL = $myFormLogin.attr('data-url') || window.location.href;
-                    $.ajax({
-                        method: "POST",
-                        url: {% url 'login' %},
-                        data: $formData,
-                        success: handleFormSuccess,
-                        error: handleFormError,
-                    });
-
-                    $(function () {
-                        $('#login').modal('toggle');
-                        //location.reload();
-                    });
-
-
-                });
 
                 function handleFormSuccess(data, textStatus, jqXHR) {
                     console.log(data);
