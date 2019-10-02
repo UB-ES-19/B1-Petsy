@@ -20,7 +20,7 @@
         <header>
             <nav class="navbar navbar-expand-sm" >
                 <ul class="navbar-nav" >
-                    <a class = "navbar-brand " href="factors.html">
+                    <a class = "navbar-brand " href="{% url 'index' %}">
                         <img src="{% static "images/etsy.png" %}" alt="Logo" style="width: 40px;">
                     </a>
                 </ul>
@@ -39,13 +39,13 @@
                 <ul class="nav navbar-nav ml-auto">
                     {% if not request.user.is_authenticated %}
                         <li><a href="#" style="margin-right: 30px" data-toggle="modal" data-target="#registro"><i  style = "color: grey"></i> Registrar-se</a></li>
-                        <li><a href="#" style="color: black" data-toggle="modal" data-target="#login">Iniciar Sessió</a></li>
+                        <li><a href="#" style="color: black" data-toggle="modal" data-target="#login" type="submit">Iniciar Sessió</a></li>
                     {% else %}
                         <li>
                             <div id="logout">
                                 <form action="{% url 'logout' %}" method="POST">
                                     {%  csrf_token %}
-                                    <button> Log Out </button>
+                                    <button type="submit" class="btn btn-secondary"> Log Out </button>
                                 </form>
                             </div>
                         </li>
@@ -188,7 +188,7 @@
                     if (pass1.value.length>=8){
                         bol = true;
                     }
-                    if (bol == true){
+                    if (bol){
                         return true;
                     }
                     return false;
@@ -235,7 +235,10 @@
 
                     $(function () {
                         $('#login').modal('toggle');
+                        //location.reload();
                     });
+
+
                 });
 
                 function handleFormSuccess(data, textStatus, jqXHR) {
@@ -243,6 +246,7 @@
                     console.log(textStatus);
                     console.log(jqXHR);
                     $myForm.reset();
+                    //location.reload();
                 }
 
                 function handleFormError(jqXHR, textStatus, errorThrown) {

@@ -73,6 +73,7 @@ def login_user(request):
             username = User.objects.get(email=mail).username
         except:
             return render(request, go_to_url)
+            #return HttpResponseRedirect('/')
 
         user = authenticate(username=username, password=password)
 
@@ -82,7 +83,8 @@ def login_user(request):
         else:
             print("User is None :/")
 
-        return render(request, "registration/signup.html")
+        #return render(request, "petsy/index.html")
+        return HttpResponseRedirect("")
 
 
 def _check_user_connected(request):
@@ -100,4 +102,4 @@ def _check_user_connected(request):
 
 def logout_user(request):
     logout(request)
-    return render(request, 'petsy/index.html')
+    return HttpResponseRedirect('/')
