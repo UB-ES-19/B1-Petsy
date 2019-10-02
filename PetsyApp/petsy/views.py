@@ -83,7 +83,7 @@ def login_user(request):
         else:
             print("User is None :/")
 
-        return render(request, "petsy/index.html")
+        return HttpResponseRedirect('/')
 
 
 def _check_user_connected(request):
