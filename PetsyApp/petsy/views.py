@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 # User registration stuff
 from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import render, redirect, reverse
@@ -36,22 +36,30 @@ def signup(request):
     :return: ????????
     """
     if request.method == 'POST':
-        form = SignUpForm()
         username = (request.POST['username'])
         email = (request.POST['email'])
         password = (request.POST['password'])
 
         try:
-            users = User.objects.get(username=username)
+            user = User.objects.get(username=username)
+            return JsonResponse({
+                'signup_successful': False,
+                'response_code': 403  # That username already exists
+            })
         except:
-            user = User.objects.create_user(username=username, email=email, password=password)
-
-        print("\n******************************")
-        print(user)
-        print("******************************\n")
-
-        user.save()
-    return render(request, 'petsy/index.html')
+            try:
+                user = User.objects.get(email=email)
+                return JsonResponse({
+                    'signup_successful': False,
+                    'response_code': 402  # That email already exists
+                })
+            except:
+                user = User.objects.create_user(username=username, email=email, password=password)
+                user.save()
+                return JsonResponse({
+                    'signup_successful': True,
+                    'response_code': 200  # That username already exists
+                })
 
 
 def login_user(request):
@@ -64,26 +72,33 @@ def login_user(request):
     if request.method == 'POST':
         mail = request.POST["email_login"]
         password = request.POST["password_login"]
-        go_to_url = "petsy/index.html"  # request.POST["redirect_url"] or "petsy/index.html"
 
-        print(mail)
-        print(password)
+        # print(mail)
+        # print(password)
 
         try:
             username = User.objects.get(email=mail).username
         except:
-            return render(request, go_to_url)
-            #return HttpResponseRedirect('/')
+            return JsonResponse({
+                'login_successful': False,
+                'response_code': 404  # Username with that email does not exists
+            })
 
         user = authenticate(username=username, password=password)
 
         if user is not None:
             login(request, user)
             print(user, " has logged in.")
+            return JsonResponse({
+                'login_successful': True,
+                'response_code': 200
+            })
         else:
             print("User is None :/")
-
-        return HttpResponseRedirect('/')
+            return JsonResponse({
+                'login_successful': False,
+                'response_code': 403  # Wrong password
+            })
 
 
 def _check_user_connected(request):
