@@ -177,9 +177,26 @@
             });
             </script>
             <script>
-                function reload_page(){
-                    location.reload()
-                }
+                $("#my-form-login").submit(function () {
+                  var form = $("#my-form-login");
+                  $.ajax({
+                    url: '/ajax/validate_user/',
+                    data: form.serialize(),
+                    dataType: 'json',
+                    success: function (data) {
+                      if (data.login_successful) {
+                        alert("Login successful");
+                      }else{
+                        var error_msg = "Login unsuccessful due to the following reason\n";
+                        if(data.response_code == 404){
+                            error_msg += "User doesn't exist";
+                        }else if(data.response_code == 403){
+                            error_msg += "Wrong password";
+                        }
+                        alert(error_msg);
+                      }
+                    }
+                  });
             </script>
             <script>
                 function checkPassword() {
