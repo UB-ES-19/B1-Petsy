@@ -118,7 +118,7 @@
                 <h3 class="modal-title" id="exampleModalLongTitle">Inicia sesión para continuar</h3>
 
               </div>
-              <form class="my-form-login" method="POST" action="{% url 'login' %}">
+              <form id="my_form_login" class="my-form-login" method="POST" action="{% url 'login' %}">
               <div class="modal-body">
                     {% csrf_token %}
 
@@ -138,11 +138,7 @@
 
                 </div>
               <div class="modal-footer">
-                <button type="submit" class="btn btn-secondary" id="button_login" value="OK" onclick="function f() {
-                    if(validaLogin()){
-                        sendLogin();
-                    }
-                };">Entrar</button>
+                <button type="submit" class="btn btn-secondary" id="button_login" value="OK">Entrar</button>
               </div>
             </form>
             </div>

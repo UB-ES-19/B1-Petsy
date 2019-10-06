@@ -1,18 +1,13 @@
-function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = jQuery.trim(cookies[i]);
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
+$(document).ready(function () {
+    $("#my_form_login").submit(function (e) {
+        e.preventDefault();
+        if(validaLogin()){
+            sendLogin();
         }
-    }
-    return cookieValue;
-}
+    });
+});
+
+
 
 function validaLogin() {
     if($("#email_login").val() == ""){
@@ -25,15 +20,14 @@ function validaLogin() {
         $("#password_login").focus();       // Esta función coloca el foco de escritura del usuario en el campo Nombre directamente.
         return false;
     }
-    console.log("OK")
+
     return true;
 }
 
-function sendLogin(e) {
-    e.preventDefault();
-    var form = $("#my-form-login");
+function sendLogin() {
+    var form = $("#my_form_login");
     $.ajax({
-        url: '/login/',
+        url: "/login",
         data: form.serialize(),
         dataType: 'json',
         success: function (data) {
