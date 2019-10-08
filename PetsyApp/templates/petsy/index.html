@@ -36,16 +36,16 @@
 
                 </ul>
 
-                <ul class="nav navbar-nav ml-auto">
+                <ul id="ul_navbar" class="nav navbar-nav ml-auto">
                     {% if not request.user.is_authenticated %}
-                        <li><a href="#" style="margin-right: 30px" data-toggle="modal" data-target="#registro"><i  style = "color: grey"></i> Registrar-se</a></li>
-                        <li><a href="#" style="color: black" data-toggle="modal" data-target="#login" ><i  style = "color: grey"></i> Iniciar Sessió</a></li>
+                        <li><a href="#" style="margin-right: 30px" data-toggle="modal" data-target="#register_modal"><i  style = "color: grey" id="register_label"></i> Registrar-se</a></li>
+                        <li><a href="#" style="color: black" data-toggle="modal" data-target="#login_modal" ><i  style = "color: grey" id="login_label"></i> Iniciar Sessió</a></li>
                     {% else %}
                         <li>
                             <div id="logout">
                                 <form action="{% url 'logout' %}" method="POST">
                                     {%  csrf_token %}
-                                    <button type="submit" class="btn btn-secondary"> Log Out </button>
+                                    <button type="submit" class="btn btn-secondary" id="logout_button"> Log Out </button>
                                 </form>
                             </div>
                         </li>
@@ -57,7 +57,7 @@
         </header>
 
         <!-- Modal Registro -->
-        <div class="modal fade" id="registro" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="register_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -68,7 +68,7 @@
                 <h5 class="modal-title" id="exampleModalLongTitle">Registrarse es muy fácil.</h5>
 
               </div>
-              <form class="my-form-register" method="POST">
+              <form id="register_form" class="my-form-register" method="POST">
               <div class="modal-body">
                     {%  csrf_token %}
 
@@ -95,11 +95,7 @@
 
                 </div>
               <div class="modal-footer">
-                <button type="submit" class="btn btn-secondary" onclick="function f() {
-                    if(validaRegister()){
-                        sendRegister();
-                    }
-                };">Registrarme</button>
+                <button type="submit" class="btn btn-secondary" id="register_button">Registrarme</button>
               </div>
             </form>
             </div>
@@ -108,7 +104,7 @@
 
 
         <!-- Modal Login -->
-        <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="login_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -118,7 +114,7 @@
                 <h3 class="modal-title" id="exampleModalLongTitle">Inicia sesión para continuar</h3>
 
               </div>
-              <form id="my_form_login" class="my-form-login" method="POST" action="{% url 'login' %}">
+              <form id="login_form" class="my-form-login" method="POST" action="{% url 'login' %}">
               <div class="modal-body">
                     {% csrf_token %}
 
@@ -127,18 +123,18 @@
                     {% endif %}
                     <label for="email_login">Dirección de correo electrónico *:</label>
                     <br>
-                    <input type="text" name="email_login" value="" id="email_login">
+                    <input type="text" name="email_login" value="" id="email_login" required>
                     <br>
                     <br>
                     <label for="password_login">Contraseña *:</label>
                     <br>
-                    <input type="password" name="password_login" value="" id="password_login">
+                    <input type="password" name="password_login" value="" id="password_login" required>
                     <input type="hidden" name="next" value="{{ next|escape }}" />
                     <br>
-
                 </div>
               <div class="modal-footer">
-                <button type="submit" class="btn btn-secondary" id="button_login" value="OK">Entrar</button>
+                  <p id="test" class="text-danger"></p>
+                  <button type="submit" class="btn btn-secondary" id="login_button">Entrar</button>
               </div>
             </form>
             </div>

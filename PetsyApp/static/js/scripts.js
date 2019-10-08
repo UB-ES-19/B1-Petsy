@@ -1,13 +1,16 @@
-$(document).ready(function () {
-    $("#my_form_login").submit(function (e) {
-        e.preventDefault();
-        if(validaLogin()){
-            sendLogin();
-        }
-    });
+$("#login_form").submit(function (e) {
+    e.preventDefault();
+    if (validaLogin()) {
+        sendLogin();
+    }
 });
 
-
+$("#register_form").submit(function (e) {
+    e.preventDefault();
+    if(validaRegister()){
+        sendRegister();
+    }
+});
 
 function validaLogin() {
     if($("#email_login").val() == ""){
@@ -20,30 +23,33 @@ function validaLogin() {
         $("#password_login").focus();       // Esta función coloca el foco de escritura del usuario en el campo Nombre directamente.
         return false;
     }
-
     return true;
 }
 
 function sendLogin() {
-    var form = $("#my_form_login");
+    var form = $("#login_form");
     $.ajax({
-        url: "/login",
+        url: "/login/",
         data: form.serialize(),
+        type:'POST',
         dataType: 'json',
         success: function (data) {
             if (data.login_successful) {
                 alert("Login successful");
-                $('#registro').modal('toggle');
+                location.reload();
             } else {
-                var error_msg = "Login unsuccessful due to the following reason\n";
+                //var error_msg = "Login unsuccessful due to the following reason\n";
+                var error_msg = "";
                 if (data.response_code == 404) {
                     error_msg += "User doesn't exist";
-                    $("#email_login").value = "";
+                    $('#test').append(error_msg);
+                    $("#email_login").val('');
+                    $("#password_login").val('');
                 } else if (data.response_code == 403) {
                     error_msg += "Wrong password";
-                    $("#password_login").value = "";
+                    $('#test').append(error_msg);
+                    $("#password_login").val('');
                 }
-                alert(error_msg);
             }
         }
     });
@@ -72,16 +78,16 @@ function validaRegister() {
     return false;
 }
 
-function sendRegister(e) {
-    e.preventDefault();
-    var form = $("#my-form-register");
+function sendRegister() {
+    var form = $("#form_register");
     $.ajax({
         url: '/register/',
         data: form.serialize(),
+        type: 'POST',
         dataType: 'json',
         success: function (data) {
             if (data.login_successful) {
-                alert("Login successful");
+                alert("Register successful");
             } else {
                 var error_msg = "Login unsuccessful due to the following reason\n";
                 if (data.response_code == 404) {

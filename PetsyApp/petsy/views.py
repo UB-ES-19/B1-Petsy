@@ -1,7 +1,8 @@
 from django.shortcuts import render
 
 # Create your views here.
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.http.response import JsonResponse
 # User registration stuff
 from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import render, redirect, reverse
@@ -69,6 +70,7 @@ def login_user(request):
     :param request: Request
     :return: User if connected, None otherwise
     """
+
     if request.method == 'POST':
         mail = request.POST["email_login"]
         password = request.POST["password_login"]
