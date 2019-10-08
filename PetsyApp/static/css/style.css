@@ -1,6 +1,7 @@
-h3{
-    font-weight: bold;
+a hover{
+    color: orangered;
 }
+
 .navbar ul{
     margin: 0;
     padding: 0;
@@ -20,4 +21,34 @@ h3{
 }
 .modal-header{
     display: inline;
+}
+.card{
+    border: none;
+}
+.image_background{
+    background-image: url(https://img1.etsystatic.com/site-assets/vesta-homepage-headers-v3/jewelry_ep_2020x335.4.jpg);
+    background-size: cover;
+
+}
+.background_color{
+    background-color: #FDEBD2 !important;
+}
+.center{
+    text-align: center;
+}
+.card-text{
+    text-align: center;
+}
+.margin-auto{
+    margin: auto;
+}
+.btn-transparent{
+    border: solid black;
+    border-radius: 22px 22px;
+}
+.margin-1{
+    margin-top: 10px;
+    margin-bottom: 22px;
+    border-top: solid gray 0.5px;
+    padding-top: 12px;
 }
