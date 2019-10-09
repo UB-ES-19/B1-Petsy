@@ -42,12 +42,12 @@ function sendLogin() {
                 var error_msg = "";
                 if (data.response_code == 404) {
                     error_msg += "User doesn't exist";
-                    $('#test').append(error_msg);
+                    $('#login_error_msg').append(error_msg);
                     $("#email_login").val('');
                     $("#password_login").val('');
                 } else if (data.response_code == 403) {
                     error_msg += "Wrong password";
-                    $('#test').append(error_msg);
+                    $('#login_error_msg').append(error_msg);
                     $("#password_login").val('');
                 }
             }
@@ -79,24 +79,33 @@ function validaRegister() {
 }
 
 function sendRegister() {
-    var form = $("#form_register");
+    var form = $("#register_form");
     $.ajax({
         url: '/register/',
         data: form.serialize(),
         type: 'POST',
         dataType: 'json',
         success: function (data) {
-            if (data.login_successful) {
+            if (data.signup_successful) {
                 alert("Register successful");
+                location.reload();
             } else {
-                var error_msg = "Login unsuccessful due to the following reason\n";
-                if (data.response_code == 404) {
-                    error_msg += "User doesn't exist";
-                } else if (data.response_code == 403) {
-                    error_msg += "Wrong password";
+                var error_msg = "No s'ha pogut completar el registre perque: \n";
+                if (data.response_code == 403) {
+                    error_msg += "El nom ja existeix";
+                    $("#register_error_msg").append(error_msg);
+                    $("#username").val("");
+                } else if (data.response_code == 402) {
+                    error_msg += "Email ja existeix";
+                    $("#register_error_msg").append(error_msg);
+                    $("#email").val("");
                 }
-                alert(error_msg);
+                //alert(error_msg);
             }
+        },
+        error: function (error) {
+            alert(error);
+
         }
     });
 }
