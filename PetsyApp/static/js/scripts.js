@@ -107,6 +107,7 @@ function sendRegister() {
                     $("#username").val("");
                 } else if (data.response_code == 402) {
                     error_msg += "Email ya existente";
+                    $("#register_error_msg").empty();
                     $("#register_error_msg").append(error_msg);
                     $("#email").val("");
                 }
