@@ -1,7 +1,9 @@
+h3{
+    font-weight: bold;
+}
 a hover{
     color: orangered;
 }
-
 .navbar ul{
     margin: 0;
     padding: 0;
@@ -51,4 +53,10 @@ a hover{
     margin-bottom: 22px;
     border-top: solid gray 0.5px;
     padding-top: 12px;
+}
+
+.error_message_footer {
+    width: 100%;
+    color: red;
+    text-align: center;
 }
