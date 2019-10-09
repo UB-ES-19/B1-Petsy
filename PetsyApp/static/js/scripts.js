@@ -1,3 +1,5 @@
+var error_msg = "";
+
 $("#login_form").submit(function (e) {
     e.preventDefault();
     if (validaLogin()) {
@@ -35,18 +37,20 @@ function sendLogin() {
         dataType: 'json',
         success: function (data) {
             if (data.login_successful) {
-                alert("Login successful");
+                alert("Inicio de sesión con exito!!");
                 location.reload();
             } else {
                 //var error_msg = "Login unsuccessful due to the following reason\n";
-                var error_msg = "";
+                error_msg = '';
                 if (data.response_code == 404) {
-                    error_msg += "User doesn't exist";
+                    error_msg += "Este usuario no existe";
+                    $('#login_error_msg').empty();
                     $('#login_error_msg').append(error_msg);
                     $("#email_login").val('');
                     $("#password_login").val('');
                 } else if (data.response_code == 403) {
-                    error_msg += "Wrong password";
+                    error_msg += "Contraseña erronea";
+                    $('#login_error_msg').empty();
                     $('#login_error_msg').append(error_msg);
                     $("#password_login").val('');
                 }
@@ -73,8 +77,13 @@ function validaRegister() {
     }
     if(checkPassword()){
         return true;
+    }else{
+        $("#register_error_msg").empty();
+        error_msg = '';
+        error_msg += "Esta contraseña no cumple los requisitos: <br>";
+        error_msg += "  - Longitud mínima de 8 carácteres"
+        $("#register_error_msg").append(error_msg);
     }
-
     return false;
 }
 
@@ -90,22 +99,18 @@ function sendRegister() {
                 alert("Register successful");
                 location.reload();
             } else {
-                var error_msg = "No s'ha pogut completar el registre perque: \n";
+                error_msg = '';
                 if (data.response_code == 403) {
-                    error_msg += "El nom ja existeix";
+                    error_msg += "El nombre ya existe";
+                    $("#register_error_msg").empty();
                     $("#register_error_msg").append(error_msg);
                     $("#username").val("");
                 } else if (data.response_code == 402) {
-                    error_msg += "Email ja existeix";
+                    error_msg += "Email ya existente";
                     $("#register_error_msg").append(error_msg);
                     $("#email").val("");
                 }
-                //alert(error_msg);
             }
-        },
-        error: function (error) {
-            alert(error);
-
         }
     });
 }
