@@ -21,3 +21,9 @@ h3{
 .modal-header{
     display: inline;
 }
+
+.error_message_footer {
+    width: 100%;
+    color: red;
+    text-align: center;
+}
