@@ -23,7 +23,6 @@ class ProductCreate(CreateView):
     fields = ['name', 'description', 'price', 'category']
 
 
-
 class ProductUpdate(UpdateView):
     model = Product
     fields = ['name', 'description', 'price', 'category']
