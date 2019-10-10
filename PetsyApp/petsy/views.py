@@ -5,13 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.http.response import JsonResponse
 # User registration stuff
 from django.contrib.auth import login, authenticate, logout
-from django.shortcuts import render, redirect, reverse
-
-from django.views.generic.edit import CreateView
-
-from django.urls import reverse_lazy
-#from django.contrib.auth.forms import UserCreationForm
-from .forms import SignUpForm
+from django.shortcuts import render
 from django.contrib.auth.models import User
 
 
