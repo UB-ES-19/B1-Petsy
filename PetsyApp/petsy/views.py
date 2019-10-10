@@ -4,13 +4,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 # User registration stuff
 from django.contrib.auth import login, authenticate, logout
-from django.shortcuts import render, redirect, reverse
-
-from django.views.generic.edit import CreateView
-
-from django.urls import reverse_lazy
-#from django.contrib.auth.forms import UserCreationForm
-from .forms import SignUpForm
+from django.shortcuts import render
 from django.contrib.auth.models import User
 
 
@@ -36,7 +30,6 @@ def signup(request):
     :return: ????????
     """
     if request.method == 'POST':
-        form = SignUpForm()
         username = (request.POST['username'])
         email = (request.POST['email'])
         password = (request.POST['password'])
