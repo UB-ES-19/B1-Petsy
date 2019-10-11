@@ -16,7 +16,7 @@ from django.contrib.auth.models import User
 
 
 def index(request):
-    return render(request, 'petsy/index.html')
+    return render(request, 'petsy/homepage.html')
 
 
 # Vista de productos (testing)
