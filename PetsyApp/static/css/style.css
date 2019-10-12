@@ -1,7 +1,7 @@
 h3{
     font-weight: bold;
 }
-a hover{
+a:hover{
     color: orangered;
 }
 .navbar ul{
@@ -47,6 +47,7 @@ a hover{
 .btn-transparent{
     border: solid black;
     border-radius: 22px 22px;
+    border-width: thin;
 }
 .margin-1{
     margin-top: 10px;
@@ -59,4 +60,32 @@ a hover{
     width: 100%;
     color: red;
     text-align: center;
+}
+
+.navbar a{
+    border-color: orange;
+    color: orange;
+}
+.navbar a:hover{
+    border-color: #FDEBD2;
+    color: #FDEBD2;
+}
+
+.navbar .btn:focus{
+    box-shadow: none;
+}
+.navbar button{
+    border-color: orange;
+    color: orange;
+}
+.btn-transparent-border{
+    border: transparent;
+    border-radius: 22px 22px;
+    border-width: thin;
+
+}
+.btn-background{
+    background-color: orange;
+    color: white !important;
+    cursor: pointer;
 }
