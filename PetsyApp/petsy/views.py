@@ -10,13 +10,13 @@ from django.shortcuts import render, redirect, reverse
 from django.views.generic.edit import CreateView
 
 from django.urls import reverse_lazy
-#from django.contrib.auth.forms import UserCreationForm
+# from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm
 from django.contrib.auth.models import User
 
 
 def index(request):
-    return render(request, 'petsy/index.html')
+    return render(request, 'petsy/homepage.html')
 
 
 # Vista de productos (testing)
@@ -119,3 +119,7 @@ def _check_user_connected(request):
 def logout_user(request):
     logout(request)
     return HttpResponseRedirect('/')
+
+
+def create(request):
+    return render(request, 'petsy/create-product.html')
