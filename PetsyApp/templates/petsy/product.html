@@ -7,7 +7,7 @@
                     <div class="row">
 
                         <div class="col-md-7">
-                            <img class="d-block w-100" src="{{ img }}" alt="image">
+                            <img class="d-block w-100" src="{{ img }}" alt="imagen produto">
                         </div>
 
                         <div class="col-md-5">
@@ -46,7 +46,7 @@
                             <div class="row">
                                 <div class="col-md-2">
                                     <figure>
-                                        <a href="#"><img src="{{ review.user.profile_pic }}" class="img rounded-circle img-fluid"></a>
+                                        <a href="#"><img src="{{ review.user.profile_pic }}" class="img rounded-circle img-fluid" alt="foto perfil"></a>
                                     </figure>
                                 </div>
                                 <div class="col-md-10">
@@ -55,13 +55,14 @@
                                         {{ review.message }}
                                     </p>
                                     <figure>
-                                        <p><a href="#" class="review-link"><img src="{{ review.user.profile_pic }}" class="img img-responsive review-image"> {{ titulo }}</a></p>
+                                        <p><a href="#" class="review-link"><img src="{{ review.user.profile_pic }}" class="img img-responsive review-image" alt="foto producto"> {{ titulo }}</a></p>
                                     </figure>
                                 </div>
                             </div>
                         </div>
                     </div>
                 {% endfor %}
+
             </div>
 
     </section>
