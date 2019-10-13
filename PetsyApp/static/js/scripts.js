@@ -1,3 +1,4 @@
+
 var error_msg = "";
 
 $("#login_form").submit(function (e) {
@@ -127,3 +128,5 @@ function checkPassword() {
         }
         return false;
 }
+
+$("#input-id-rating").rating();
