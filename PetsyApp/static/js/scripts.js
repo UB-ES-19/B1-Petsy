@@ -128,5 +128,3 @@ function checkPassword() {
         }
         return false;
 }
-
-$("#input-id-rating").rating();

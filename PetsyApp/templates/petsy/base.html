@@ -39,13 +39,9 @@
         <link rel="stylesheet" href="{% static "css/style.css" %}">
         <link href="{% static "css/all.css" %}" rel="stylesheet">
 
-
-
     </head>
     
     <body>
-        
-        
         <header>
             <nav class="navbar navbar-expand-sm" >
                 <ul class="navbar-nav" >
@@ -74,11 +70,10 @@
                             <div id="logout">
                                 <form action="{% url 'logout' %}" method="POST">
                                     {%  csrf_token %}
-                                    <a href ="{%url 'create'%}"class = "btn btn-background"><i class="fas fa-plus" style="color:white"></i>&nbsp;Añadir producto</a>
-
+                                    <a href ="{% url 'createProduct' %}"class = "btn btn-background"><i class="fas fa-plus" style="color:white"></i>&nbsp;Añadir producto</a>
                                     <button type="submit" class="btn btn-transparent-border" id="logout_button"> Log Out </button>
-
                                 </form>
+
                             </div>
                         </li>
                     {% endif %}

@@ -18,7 +18,17 @@
                 <br>
                 <br>
                 Categoría:
-                <input type="text" name="categoria" value="" required>
+                <select id="createProduct_dropDown" name="categoria" required>
+                    <option value="Joya">Joyeria y complementos</option>
+                    <option value="Ropa">Ropa y calzado</option>
+                    <option value="Casa">Hogar y decoracion</option>
+                    <option value="Boda">Bodas y fiestas</option>
+                    <option value="Toys">Juguetes y ocio</option>
+                    <option value="Cole">Arte y objetos de decoración</option>
+                    <option value="Arte">Herramientas para la artesania</option>
+                    <option value="Vint">Vintage</option>
+                    <option value="Otro">Otras categorias</option>
+                </select>
                 <br>
                 <br>
                 Materiales:
@@ -30,6 +40,9 @@
                 <input id="input-id" type="file" class="file" data-preview-file-type="text" >
                 <br>
                 <br>
+
+                <script src="jquery.js"></script>
+                <script src="jquery.rateyo.js"></script>
 
                 <button class="btn btn-secondary" type="submit" id="add_product_form_button">Añade el producto</button>
             </form>
