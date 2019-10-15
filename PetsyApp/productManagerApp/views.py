@@ -10,7 +10,7 @@ from django.urls import reverse_lazy
 
 from .models import Product
 
-
+'''
 class ProductListView(ListView):
     model = Product
     # template_name = 'productManagerApp/list'
@@ -18,6 +18,7 @@ class ProductListView(ListView):
 
 class ProductDetailView(DetailView):
     model = Product
+    
 
 
 class ProductCreate(CreateView):
@@ -37,12 +38,10 @@ class ProductDelete(DeleteView):
 
 def MyProducts(ListView):
     template_name = 'productManagerApp/list'
-
+'''
 
 def get_product_by_id(request, id_product=None):
     """
-
-
     :param request:
     :param id_product:
     :return:
@@ -52,6 +51,7 @@ def get_product_by_id(request, id_product=None):
 
         try:
             product = Product.objects.get(idProduct=product_id)
+
         except:
             return JsonResponse({
                 "response_msg": "Error: El producto no existe",
@@ -120,3 +120,26 @@ def review_product_by_id(request):
 
     actual_reviews = product_to_update.reviews
 
+
+def remove_product(request, id_product=None):
+    """
+    :param request:
+    :param id_product:
+    :return:
+    """
+    if request.method == 'GET':
+        product_id = id_product if id_product is not None else request.GET['product_id']
+
+        try:
+            product = Product.objects.get(idProduct=product_id)
+            product.remove()
+
+        except:
+            return JsonResponse({
+                "response_msg": "Error: El producto no existe",
+                "response_code": 404  # Product not found
+            })
+
+        return JsonResponse({
+            "result_code": 200
+        })
