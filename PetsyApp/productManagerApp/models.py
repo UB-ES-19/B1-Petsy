@@ -26,7 +26,7 @@ class Product(models.Model):
     sold = models.IntegerField()
     shop_id = models.IntegerField()
     # By default assign a house image to the product
-    # featured_photo = models.ImageField(upload_to="photos", default="static/images/etsy.png")
+    featured_photo = models.ImageField(upload_to="photos", default="static/images/etsy.png")
     rate = models.DecimalField(max_digits=3, decimal_places=1, default=0)
     num_votes = models.IntegerField()  # numero persones que han votat un producte
     sum_votes = models.IntegerField()  # suma total del rate dels productes
