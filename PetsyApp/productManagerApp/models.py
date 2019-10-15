@@ -37,8 +37,8 @@ class Product(models.Model):
 class Review(models.Model):
     # id_rev = models.AutoField(primary_key=True)
     # Relation between the User and the Review
-    title_message = models.CharField(blank=False)
-    message = models.TextField(blank=False)
+    title_message = models.CharField(max_length=100, blank=False)
+    message = models.TextField()
     date = models.DateTimeField()
     rating = models.DecimalField(max_digits=2,
                                  decimal_places=1,
