@@ -22,6 +22,7 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^petsy/', include('petsy.urls')),
     url(r'', include('petsy.urls')),
+    url(r'^product/', include('productManagerApp.urls')),
     url(r'^admin/', admin.site.urls),
 ]
 
