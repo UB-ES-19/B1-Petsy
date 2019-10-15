@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 from django.views.generic.list import ListView
@@ -8,7 +9,7 @@ from django.views.generic.edit import CreateView
 
 from django.urls import reverse_lazy
 
-from .models import Product
+from .models import Product, Shop
 
 '''
 class ProductListView(ListView):
@@ -40,6 +41,7 @@ def MyProducts(ListView):
     template_name = 'productManagerApp/list'
 '''
 
+
 def get_product_by_id(request, id_product=None):
     """
     :param request:
@@ -68,7 +70,8 @@ def get_product_by_id(request, id_product=None):
                 "sold": product.sold,
                 "photo": product.featured_photo,
                 "num_votes": product.num_votes,
-                "sum_votes": product.sum_votes
+                "sum_votes": product.sum_votes,
+                "shop_id": product.shop_id
             },
             "response_code": 200
         })
@@ -153,15 +156,41 @@ def create_product(request):
     :return: ????????
     """
     if request.method == 'POST':
+
+        username = request.user
+        user = User.objects.get(username=username)
+        try:
+            shop = Shop.objects.get(user_owner=user).id_shop
+        except:
+            shop = Shop(
+                shop_name="Shop",
+                user_owner=user
+            )
+            shop.save()
+
+        print("Cosas de shop")
         product_name = (request.POST['titulo'])
         img = (request.POST['img'])
         descripcio = request.POST['descripcion']
         price = request.POST['precio']
         category = request.POST['categoria']
         material = request.POST['materiales']
-
+        print("Cosas de product variables")
         # save product into database
-
-        return HttpResponse('/', {
-            "error_code": 200
+        product = Product(
+            product_name=product_name,
+            img=img,
+            description=descripcio,
+            price=price,
+            category=category,
+            materials=material,
+            sold=0,
+            shop_id=shop.id_shop
+        )
+        product.save()
+        print("pre httpresponse")
+        return HttpResponse('', {
+            "response_code": 200
         })
+
+    return HttpResponse('')
