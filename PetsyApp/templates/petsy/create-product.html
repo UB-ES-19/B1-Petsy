@@ -1,8 +1,40 @@
 {% extends 'petsy/base.html' %}
 {% block content %}
 <main style="background-color:#FDEBD2">
-    <section style="background-color:#FDEBD2">
+    <section style="background-color:white">
+        <div class="container">
+            <form id="add_product_form" class="my-form-add-product" method="POST" action="">
+                <br>
+                Nombre del producto:
+                <input type="text" name="titulo" value="" required>
+                <br>
+                <br>
+                Descripcion:
+                <textarea class="form-control" rows="5" id="comment" name="descripcion"></textarea>
+                <br>
+                <br>
+                Precio:
+                <input type="number" name="precio" value="" step="0.1" required>
+                <br>
+                <br>
+                Categoría:
+                <input type="text" name="categoria" value="" required>
+                <br>
+                <br>
+                Materiales:
+                <input type="text" name="materiales" value="" required>
+                <br>
+                <br>
 
+                <h4>Añade una imagen</h4>
+                <input id="input-id" type="file" class="file" data-preview-file-type="text" >
+                <br>
+                <br>
+
+                <button class="btn btn-secondary" type="submit" id="add_product_form_button">Añade el producto</button>
+            </form>
+        </div>
     </section>
 </main>
 {% endblock %}
+
