@@ -24,6 +24,7 @@ class Product(models.Model):
     price_average = models.DecimalField(max_digits=5, decimal_places=3)
     materials = models.TextField()
     sold = models.IntegerField()
+    shop_id = models.IntegerField()
     # By default assign a house image to the product
     # featured_photo = models.ImageField(upload_to="photos", default="static/images/etsy.png")
     rate = models.DecimalField(max_digits=3, decimal_places=1, default=0)
@@ -37,7 +38,7 @@ class Product(models.Model):
 class Review(models.Model):
     # id_rev = models.AutoField(primary_key=True)
     # Relation between the User and the Review
-    title_message = models.CharField(max_length=100, blank=False)
+    title_message = models.CharField(max_length=100,    blank=False)
     message = models.TextField()
     date = models.DateTimeField()
     rating = models.DecimalField(max_digits=2,

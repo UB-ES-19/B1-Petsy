@@ -16,12 +16,12 @@ class ReviewForm(forms.ModelForm):
 
     class Meta:
         model = Review
-        fields = ["title", "message", "date", "rating"]
+        fields = ["title", "message", "rating"]
 
         widgets = {
             "title": TextInput(attrs={'class': 'form-control', 'style': 'width:100%; resize:none'}),
             "message": Textarea(attrs={'class': 'form-control', 'rows': 3, 'style': 'width:100%; resize:none'}),
-            "date": DateTimeInput(attrs={'class': 'form-control', 'style': 'width:100%; resize:none'}) ,
+            # "date": DateTimeInput(attrs={'class': 'form-control', 'style': 'width:100%; resize:none'}) ,
             "rating": NumberInput(attrs={'min': '1', 'max': '5', 'default': 1, 'style': 'display:none'})
         }
         
@@ -37,3 +37,8 @@ class ReviewForm(forms.ModelForm):
             self.add_error("message", "You can't send an empty message")
             raise ValidationError("You can't send an empty message")
         return message
+
+
+class Shop(forms.ModelForm):
+    model = Product
+    fields = ['shop_name']
