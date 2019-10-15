@@ -143,3 +143,25 @@ def remove_product(request, id_product=None):
         return JsonResponse({
             "result_code": 200
         })
+
+
+def create_product(request):
+    """
+    Register a new user into database
+
+    :param request: Request
+    :return: ????????
+    """
+    if request.method == 'POST':
+        product_name = (request.POST['titulo'])
+        img = (request.POST['img'])
+        descripcio = request.POST['descripcion']
+        price = request.POST['precio']
+        category = request.POST['categoria']
+        material = request.POST['materiales']
+
+        # save product into database
+
+        return HttpResponse('/', {
+            "error_code": 200
+        })

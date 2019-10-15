@@ -27,7 +27,7 @@ class Product(models.Model):
     # By default assign a house image to the product
     # featured_photo = models.ImageField(upload_to="photos", default="static/images/etsy.png")
     rate = models.DecimalField(max_digits=3, decimal_places=1, default=0)
-    num_votes = models.IntegerField()  # número persones que han votat un producte
+    num_votes = models.IntegerField()  # numero persones que han votat un producte
     sum_votes = models.IntegerField()  # suma total del rate dels productes
 
     def get_human_category(self):
@@ -49,3 +49,9 @@ class Review(models.Model):
     user_rev = models.ForeignKey(User)
     product = models.ForeignKey(Product)
 
+
+class Shop(models.Model):
+    id_shop = models.AutoField(primary_key=True)
+    shop_name = models.TextField()
+    user_owner = models.TextField()
+    from time import time
