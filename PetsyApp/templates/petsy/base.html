@@ -24,7 +24,7 @@
                         <img src="{% static "images/etsy.png" %}" alt="Logo" style="width: 40px;">
                     </a>
                 </ul>
-                <ul class="navbar-nav mx-auto">
+                <ul class="navbar-nav mx-auto" style="margin-left: 305px !important;">
                     <ul class="nav navbar-nav" style = "margin-right:200px">
                         <div class="input-group " style ="width: 400px">
                             <input class="form-control" type="text" placeholder="Buscar articulos y tiendas" aria-label="Search">
@@ -38,14 +38,17 @@
 
                 <ul id="ul_navbar" class="nav navbar-nav ml-auto">
                     {% if not request.user.is_authenticated %}
-                        <li><a href="#" style="margin-right: 30px" data-toggle="modal" data-target="#register_modal"><i  style = "color: grey" id="register_label"></i> Registrar-se</a></li>
-                        <li><a href="#" style="color: black" data-toggle="modal" data-target="#login_modal" ><i  style = "color: grey" id="login_label"></i> Iniciar Sessió</a></li>
+                        <li><a href="#" style="margin-right: 30px" data-toggle="modal" data-target="#register_modal"  class="btn btn-transparent-border"><i id="register_label"></i> Registrarse</a></li>
+                        <li><a href="#"  data-toggle="modal" data-target="#login_modal" class="btn btn-transparent"><i id="login_label"></i> Iniciar Sesión</a></li>
                     {% else %}
                         <li>
                             <div id="logout">
                                 <form action="{% url 'logout' %}" method="POST">
                                     {%  csrf_token %}
-                                    <button type="submit" class="btn btn-secondary" id="logout_button"> Log Out </button>
+                                    <a href ="{%url 'create'%}"class = "btn btn-background"><i class="fas fa-plus" style="color:white"></i>&nbsp;Añadir producto</a>
+
+                                    <button type="submit" class="btn btn-transparent-border" id="logout_button"> Log Out </button>
+
                                 </form>
                             </div>
                         </li>
@@ -135,6 +138,8 @@
           </div>
         </div>
 
+
+
         <!-- header-end -->
         {% block javascript %}
             <script src="https://code.jquery.com/jquery-3.3.0.min.js"></script>
@@ -143,6 +148,10 @@
             <script defer src="{% static "js/all.js" %}"></script>
             <script src="{% static "js/scripts.js" %}"></script>
         {% endblock %}
+     <div class=content>
+        {% block content %}{% endblock %}
+    </div>
+
     </body>
 
 </html>
