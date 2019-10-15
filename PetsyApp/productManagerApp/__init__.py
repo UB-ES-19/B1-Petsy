@@ -1,0 +1,1 @@
+from django.forms.forms import *  # NOQA

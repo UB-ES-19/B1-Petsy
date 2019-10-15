@@ -3,7 +3,8 @@
 <main style="background-color:#FDEBD2">
     <section style="background-color:white">
         <div class="container">
-            <form id="add_product_form" class="my-form-add-product" method="POST" action="">
+            <form id="add_product_form" class="my-form-add-product" method="POST" action="{% url 'create_product' %}">
+                {% csrf_token %}
                 <br>
                 Nombre del producto:
                 <input type="text" name="titulo" value="" required>
