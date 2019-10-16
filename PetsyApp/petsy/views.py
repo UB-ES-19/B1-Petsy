@@ -123,4 +123,4 @@ def logout_user(request):
 
 
 def create(request):
-    return render(request, 'petsy/create-product.html')
+    return render(request, 'petsy/createProduct.html')

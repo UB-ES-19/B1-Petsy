@@ -18,26 +18,32 @@ class Product(models.Model):
     _d_categories = dict(CATEGORIES)
 
     nameProduct = models.CharField(max_length=30)
-    idProduct = models.DecimalField(max_digits=5, decimal_places=3)
+    idProduct = models.AutoField(primary_key=True, default=1)
     description = models.CharField(max_length=1000)
-    category = models.CharField(max_length=5, choices=CATEGORIES)
+    category = models.CharField(max_length=5, choices=CATEGORIES, default='Otro')
     price_average = models.DecimalField(max_digits=5, decimal_places=3)
-    materials = models.TextField()
+    materials = models.TextField(default='')
     sold = models.IntegerField()
     # By default assign a house image to the product
-    # featured_photo = models.ImageField(upload_to="photos", default="static/images/etsy.png")
+    featured_photo = models.ImageField(upload_to="photos", default="static/images/etsy.png")
     rate = models.DecimalField(max_digits=3, decimal_places=1, default=0)
-    num_votes = models.IntegerField()  # numero persones que han votat un producte
-    sum_votes = models.IntegerField()  # suma total del rate dels productes
+    num_votes = models.IntegerField(default=0)  # numero persones que han votat un producte
+    sum_votes = models.IntegerField(default=0)  # suma total del rate dels productes
 
     def get_human_category(self):
         return self._d_categories[self.category]
 
 
+class Shop(models.Model):
+    id_shop = models.AutoField(primary_key=True)
+    shop_name = models.TextField(default='Shop')
+    user_owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
 class Review(models.Model):
     # id_rev = models.AutoField(primary_key=True)
     # Relation between the User and the Review
-    title_message = models.CharField(max_length=100, blank=False)
+    title_message = models.CharField(max_length=100,    blank=False)
     message = models.TextField()
     date = models.DateTimeField()
     rating = models.DecimalField(max_digits=2,
@@ -48,10 +54,3 @@ class Review(models.Model):
                                  )
     user_rev = models.ForeignKey(User)
     product = models.ForeignKey(Product)
-
-
-class Shop(models.Model):
-    id_shop = models.AutoField(primary_key=True)
-    shop_name = models.TextField()
-    user_owner = models.TextField()
-    from time import time
