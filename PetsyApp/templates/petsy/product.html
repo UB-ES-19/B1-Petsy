@@ -1,0 +1,87 @@
+{% extends 'petsy/base.html' %}
+{% block content %}
+    <main style="background-color:white">
+        <section style="background-color:white">
+
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-7">
+                        <img class="d-block w-100" src="{{ img }}" alt="imagen produto">
+                    </div>
+
+                    <div class="col-md-5">
+                        <h2>{{ titulo }}</h2>
+                        <p>{{ descripcion }}</p>
+                        <p><b>{{ precio }}</b></p>
+                        <h5><b>Categoria:</b></h5>
+                        <p>{{ categoria }}</p>
+                        <h5><b>Materiales:</b></h5>
+                        <p>{{ materiales }}</p>
+
+                        <form method="post">
+                            {% csrf_token %}
+                            <p>Cantidad:</p>
+                            <select name="quantity">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                            <br><br>
+                            <button type="submit" class="btn btn-dark">Añadir a la cesta</button>
+                        </form>
+
+                    </div>
+
+                </div>
+
+                <div class="separator"></div>
+                {% for review in reviews %}
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <figure>
+                                        <a href="#"><img src="{{ review.user.profile_pic }}" class="img rounded-circle img-fluid" alt="foto perfil"></a>
+                                    </figure>
+                                </div>
+                                <div class="col-md-10">
+                                    <p><a href="#"><strong>{{ review.user.username }}</strong></a> {{ review.date }}</p>
+                                    <p>
+                                        {{ review.message }}
+                                    </p>
+                                    <figure>
+                                        <p><a href="#" class="review-link"><img src="{{ review.user.profile_pic }}" class="img img-responsive review-image" alt="foto producto"> {{ titulo }}</a></p>
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="form-group">
+                    <form method="POST" action="#">
+                        {% csrf_token %}
+                        <label for="rating">Puntuación</label>
+                        <select id="rating">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        </select>
+                        <br>
+                        <label for="message">Danos tu opinión</label>
+                        <textarea class="form-control" id="message" rows="3"></textarea>
+                        <button type="submit" class="btn btn-secondary" id="review_button">Enviar reseña</button>
+                    </form>
+                </div>
+
+            </div>
+
+    </section>
+</main>
+{% endblock %}

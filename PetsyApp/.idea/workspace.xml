@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6076208e-f158-49f2-9ad4-be5dd3781224" name="Default Changelist" comment="Errores front OK">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/petsy/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/petsy/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/petsy/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/petsy/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/petsy/createProduct.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/petsy/createProduct.html" afterDir="false" />
+    <list default="true" id="6076208e-f158-49f2-9ad4-be5dd3781224" name="Default Changelist" comment="merge con dev us5 frontback">
+      <change beforePath="$PROJECT_DIR$/.idea/PetsyApp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/PetsyApp.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -135,6 +131,7 @@
       <workItem from="1571164004795" duration="761000" />
       <workItem from="1571164863192" duration="2334000" />
       <workItem from="1571169177131" duration="505000" />
+      <workItem from="1571223427392" duration="325000" />
     </task>
     <task id="LOCAL-00001" summary="a">
       <created>1569773847927</created>
