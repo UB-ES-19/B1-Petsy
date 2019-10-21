@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -48,6 +48,7 @@ def get_product_by_id(request, id_product=None):
     :param id_product:
     :return:
     """
+
     if request.method == 'GET':
         product_id = id_product if id_product is not None else request.GET['product_id']
 
@@ -60,18 +61,19 @@ def get_product_by_id(request, id_product=None):
                 "response_code": 404  # Product not found
             })
 
-        return JsonResponse({
+        # aqui hauriem de redirigir a una url per mostrar el producte.
+        return HttpResponseRedirect('', {
             "product": {
                 "name": product.nameProduct,
                 "description": product.description,
                 "category": product.category,
-                "price_average": product.price_average,
+                "price_average": product.price,
                 "materials": product.materials,
                 "sold": product.sold,
                 "photo": product.featured_photo,
                 "num_votes": product.num_votes,
                 "sum_votes": product.sum_votes,
-                "shop_id": product.shop_id
+                "shop_id": product.id_shop
             },
             "response_code": 200
         })
@@ -161,13 +163,16 @@ def create_product(request):
         user = User.objects.get(username=username)
         try:
             shop = Shop.objects.get(user_owner=user).id_shop
+            print("Shop already exists.")
         except:
+            print("No shop yet, creating a new one.")
             shop = Shop(
                 shop_name="Shop",
                 user_owner=user
             )
             shop.save()
 
+        shop = Shop.objects.get(user_owner=user)
         print("Cosas de shop")
         product_name = (request.POST['titulo'])
         img = (request.POST['img'])
@@ -178,14 +183,14 @@ def create_product(request):
         print("Cosas de product variables")
         # save product into database
         product = Product(
-            product_name=product_name,
-            img=img,
+            nameProduct=product_name,
+            featured_photo=img,
             description=descripcio,
             price=price,
             category=category,
             materials=material,
-            sold=0,
-            shop_id=shop.id_shop
+            # sold=0,
+            id_shop=shop.id_shop
         )
         product.save()
         print("pre httpresponse")

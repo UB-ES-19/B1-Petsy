@@ -21,14 +21,15 @@ class Product(models.Model):
     idProduct = models.AutoField(primary_key=True, default=1)
     description = models.CharField(max_length=1000)
     category = models.CharField(max_length=5, choices=CATEGORIES, default='Otro')
-    price_average = models.DecimalField(max_digits=5, decimal_places=3)
+    price = models.DecimalField(max_digits=5, decimal_places=3, default=0)
     materials = models.TextField(default='')
-    sold = models.IntegerField()
+    sold = models.IntegerField(default=0)
     # By default assign a house image to the product
     featured_photo = models.ImageField(upload_to="photos", default="static/images/etsy.png")
     rate = models.DecimalField(max_digits=3, decimal_places=1, default=0)
     num_votes = models.IntegerField(default=0)  # numero persones que han votat un producte
     sum_votes = models.IntegerField(default=0)  # suma total del rate dels productes
+    id_shop = models.IntegerField(default=0)
 
     def get_human_category(self):
         return self._d_categories[self.category]
