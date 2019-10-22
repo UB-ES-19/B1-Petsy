@@ -1,4 +1,9 @@
 {% extends 'petsy/base.html' %}
+{% load static %}
+
+{% block links %}
+{%  endblock %}
+
 {% block content %}
     <main style="background-color:white">
         <section style="background-color:white">
@@ -86,4 +91,8 @@
 
     </section>
 </main>
+
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'js/pages/product.js' %}"></script>
 {% endblock %}
