@@ -128,3 +128,12 @@ function checkPassword() {
         }
         return false;
 }
+
+function alert200() {
+    alert("Operacion realizada correctamente");
+}
+
+$("#input-fa").fileinput({
+    theme: "fa",
+    uploadUrl: "/file-upload-batch/2"
+});
