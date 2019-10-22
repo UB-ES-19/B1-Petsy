@@ -75,7 +75,6 @@ def login_user(request):
     if request.method == 'POST':
         mail = request.POST["email_login"]
         password = request.POST["password_login"]
-
         # print(mail)
         # print(password)
 

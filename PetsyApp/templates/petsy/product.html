@@ -1,25 +1,4 @@
 {% extends 'petsy/base.html' %}
-
-{% block links %}
-<!-- default styles -->
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.6/css/star-rating.min.css" media="all" rel="stylesheet" type="text/css" />
-
-<!-- optionally if you need to use a theme, then include the theme CSS file as mentioned below -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.6/themes/krajee-svg/theme.css" media="all" rel="stylesheet" type="text/css" />
-
-<!-- important mandatory libraries -->
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.6/js/star-rating.min.js" type="text/javascript"></script>
-
-<!-- optionally if you need to use a theme, then include the theme JS file as mentioned below -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.6/themes/krajee-svg/theme.js"></script>
-
-<!-- optionally if you need translation for your language then include locale file as mentioned below -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.6/js/locales/<lang>.js"></script>
-
-{% endblock %}
-
 {% block content %}
     <main style="background-color:white">
         <section style="background-color:white">
@@ -28,7 +7,8 @@
                 <div class="row">
 
                     <div class="col-md-7">
-                        <img class="d-block w-100" src="{{ img }}" alt="imagen produto">
+                        {#                        <img class="d-block w-100" src="photos/{{ img }}" alt="imagen produto">#}
+                        <img class="d-block w-100" src="../../../photos/{{ img }}" alt="imagen produto">
                     </div>
 
                     <div class="col-md-5">
@@ -67,7 +47,8 @@
                             <div class="row">
                                 <div class="col-md-2">
                                     <figure>
-                                        <a href="#"><img src="{{ review.user.profile_pic }}" class="img rounded-circle img-fluid" alt="foto perfil"></a>
+                                        <a href="#"><img src="../../../photos/{{ review.user.profile_pic }}"
+                                                         class="img rounded-circle img-fluid" alt="foto perfil"></a>
                                     </figure>
                                 </div>
                                 <div class="col-md-10">
@@ -84,11 +65,10 @@
                     </div>
                 {% endfor %}
                 <div class="form-group">
-                    <form method="POST" action="#">
+                    <form method="POST" action="{% url 'review_product_by_id' %}">
                         {% csrf_token %}
                         <label for="rating">Puntuación</label>
-                        <input id="input-id" type="text" class="rating" data-size="lg" >
-                        <select id="rating">
+                        <select id="rating" name="rate">
                         <option>1</option>
                         <option>2</option>
                         <option>3</option>
@@ -97,7 +77,7 @@
                         </select>
                         <br>
                         <label for="message">Danos tu opinión</label>
-                        <textarea class="form-control" id="message" rows="3"></textarea>
+                        <textarea class="form-control" id="message" rows="3" name="review"></textarea>
                         <button type="submit" class="btn btn-secondary" id="review_button">Enviar reseña</button>
                     </form>
                 </div>
