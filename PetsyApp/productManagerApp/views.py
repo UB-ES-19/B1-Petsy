@@ -194,8 +194,9 @@ def create_product(request):
         )
         product.save()
         print("pre httpresponse")
-        return HttpResponse('', {
-            "response_code": 200
+
+        return HttpResponseRedirect('/', {
+            "response_code": 200,
         })
 
     return HttpResponse('')
