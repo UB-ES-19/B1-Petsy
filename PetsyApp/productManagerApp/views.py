@@ -76,7 +76,8 @@ def get_product_by_id(request, id_product=None):
             "img": product.featured_photo,
             "num_votes": product.num_votes,
             "sum_votes": product.sum_votes,
-            "shop_id": product.id_shop
+            "shop_id": product.id_shop,
+            "reviews": ast.literal_eval(product.reviews)
         })
         # aqui hauriem de redirigir a una url per mostrar el producte.
         # return HttpResponseRedirect('', {
