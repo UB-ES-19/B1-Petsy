@@ -7,7 +7,8 @@
                 <div class="row">
 
                     <div class="col-md-7">
-                        <img class="d-block w-100" src="{{ img }}" alt="imagen produto">
+                        {#                        <img class="d-block w-100" src="photos/{{ img }}" alt="imagen produto">#}
+                        <img class="d-block w-100" src="../../../photos/{{ img }}" alt="imagen produto">
                     </div>
 
                     <div class="col-md-5">
@@ -46,7 +47,8 @@
                             <div class="row">
                                 <div class="col-md-2">
                                     <figure>
-                                        <a href="#"><img src="{{ review.user.profile_pic }}" class="img rounded-circle img-fluid" alt="foto perfil"></a>
+                                        <a href="#"><img src="../../../photos/{{ review.user.profile_pic }}"
+                                                         class="img rounded-circle img-fluid" alt="foto perfil"></a>
                                     </figure>
                                 </div>
                                 <div class="col-md-10">
@@ -63,10 +65,10 @@
                     </div>
                 {% endfor %}
                 <div class="form-group">
-                    <form method="POST" action="#">
+                    <form method="POST" action="{% url 'review_product_by_id' %}">
                         {% csrf_token %}
                         <label for="rating">Puntuación</label>
-                        <select id="rating">
+                        <select id="rating" name="rate">
                         <option>1</option>
                         <option>2</option>
                         <option>3</option>
@@ -75,7 +77,7 @@
                         </select>
                         <br>
                         <label for="message">Danos tu opinión</label>
-                        <textarea class="form-control" id="message" rows="3"></textarea>
+                        <textarea class="form-control" id="message" rows="3" name="review"></textarea>
                         <button type="submit" class="btn btn-secondary" id="review_button">Enviar reseña</button>
                     </form>
                 </div>
