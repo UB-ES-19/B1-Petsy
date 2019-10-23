@@ -55,12 +55,23 @@ def get_product_by_id(request, id_product=None):
     :return:
     """
 
+    products = Product.objects.all()
+
+    print("\n**********************")
+    for product in products:
+        print("Name: ", product.nameProduct)
+        print("Shop_id: ", product.id_shop)
+        print("Reviews: ", product.reviews)
+        print("id_product: ", product.idProduct)
+        print("rating: ", product.sum_votes / product.num_votes if product.num_votes != 0 else 0)
+        print()
+    print("**********************\n")
+
     if request.method == 'GET':
         product_id = id_product if id_product is not None else request.GET['product_id']
 
         try:
             product = Product.objects.get(idProduct=product_id)
-
         except:
             return JsonResponse({
                 "response_msg": "Error: El producto no existe",
@@ -77,7 +88,8 @@ def get_product_by_id(request, id_product=None):
             "num_votes": product.num_votes,
             "sum_votes": product.sum_votes,
             "shop_id": product.id_shop,
-            "reviews": ast.literal_eval(product.reviews)
+            "reviews": ast.literal_eval(product.reviews),
+            "id_product": product.idProduct
         })
         # aqui hauriem de redirigir a una url per mostrar el producte.
         # return HttpResponseRedirect('', {
@@ -111,18 +123,11 @@ def review_product_by_id(request):
     :param request
     :return: JsonResponse
     """
-    print("***************************")
-    print("***************************")
-    print("***************************")
-    print(request.POST)
-    print("***************************")
-    print("***************************")
-    print("***************************")
-    id_product = 1  # request.POST['product_id']
+    id_product = request.POST['product_id']
     product_to_update = Product.objects.get(idProduct=id_product)
     new_review = request.POST['review']
     new_rate = request.POST['rate']
-    user = "joseluis"  # request.POST['username']
+    user = request.user.username  # "joseluis"  # request.POST['username']
 
     actual_reviews = product_to_update.reviews
     review_array = ast.literal_eval(actual_reviews)
@@ -147,6 +152,19 @@ def review_product_by_id(request):
 
     product = Product.objects.get(idProduct=id_product)
 
+    # return HttpResponseRedirect('id/'+str(id_product), {
+    #     "titulo": product.nameProduct,
+    #     "descripcion": product.description,
+    #     "categoria": product.category,
+    #     "precio": product.price,
+    #     "materiales": product.materials,
+    #     "img": product.featured_photo,
+    #     "num_votes": product.num_votes,
+    #     "sum_votes": product.sum_votes,
+    #     "shop_id": product.id_shop,
+    #     "reviews": ast.literal_eval(product.reviews)
+    # })
+    #
     return render(request, 'petsy/product.html', {
         "titulo": product.nameProduct,
         "descripcion": product.description,
@@ -157,7 +175,8 @@ def review_product_by_id(request):
         "num_votes": product.num_votes,
         "sum_votes": product.sum_votes,
         "shop_id": product.id_shop,
-        "reviews": ast.literal_eval(product.reviews)
+        "reviews": ast.literal_eval(product.reviews),
+        "id_product": product.idProduct
     })
 
 
@@ -230,7 +249,7 @@ def create_product(request):
         product.save()
         print("pre httpresponse")
 
-        return render(request, 'petsy/product.html', {
+        return HttpResponseRedirect('id/' + str(product.idProduct), {
             "titulo": product.nameProduct,
             "descripcion": product.description,
             "categoria": product.category,
@@ -240,11 +259,22 @@ def create_product(request):
             "num_votes": product.num_votes,
             "sum_votes": product.sum_votes,
             "shop_id": product.id_shop,
-            "reviews": ast.literal_eval(product.reviews)
+            "reviews": ast.literal_eval(product.reviews),
+            "id_product": product.idProduct
         })
 
-        # return HttpResponse('', {
-        #     "response_code": 200
+        # return render(request, 'petsy/product.html', {
+        #     "titulo": product.nameProduct,
+        #     "descripcion": product.description,
+        #     "categoria": product.category,
+        #     "precio": product.price,
+        #     "materiales": product.materials,
+        #     "img": product.featured_photo,
+        #     "num_votes": product.num_votes,
+        #     "sum_votes": product.sum_votes,
+        #     "shop_id": product.id_shop,
+        #     "reviews": ast.literal_eval(product.reviews),
+        #     "product_id": product.idProduct
         # })
 
     return HttpResponse('')

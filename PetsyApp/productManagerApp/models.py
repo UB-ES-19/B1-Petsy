@@ -25,7 +25,7 @@ class Product(models.Model):
     materials = models.TextField(default='')
     sold = models.IntegerField(default=0)
     # By default assign a house image to the product
-    featured_photo = models.ImageField(upload_to="photos", default="static/images/etsy.png")
+    featured_photo = models.ImageField(upload_to="photos", default="etsy.png")
     rate = models.DecimalField(max_digits=3, decimal_places=1, default=0)
     num_votes = models.IntegerField(default=0)  # numero persones que han votat un producte
     sum_votes = models.IntegerField(default=0)  # suma total del rate dels productes

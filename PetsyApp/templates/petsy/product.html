@@ -62,7 +62,10 @@
                                         {{ review.message }}
                                     </p>
                                     <figure>
-                                        <p><a href="#" class="review-link"><img src="{{ review.user.profile_pic }}" class="img img-responsive review-image" alt="foto producto"> {{ titulo }}</a></p>
+                                        <p><a href="#" class="review-link"><img src="../../../photos/{{ img }}"
+                                                                                class="img img-responsive review-image"
+                                                                                alt="foto producto"> {{ titulo }}</a>
+                                        </p>
                                     </figure>
                                 </div>
                             </div>
@@ -81,9 +84,13 @@
                         <option>5</option>
                         </select>
                         <br>
+                        <textarea style="display: none;" name="product_id">
+                            {{ id_product }}
+                        </textarea>
                         <label for="message">Danos tu opinión</label>
                         <textarea class="form-control" id="message" rows="3" name="review"></textarea>
                         <button type="submit" class="btn btn-secondary" id="review_button">Enviar reseña</button>
+
                     </form>
                 </div>
 
