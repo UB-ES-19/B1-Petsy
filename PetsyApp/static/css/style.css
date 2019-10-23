@@ -14,9 +14,14 @@ img{
     object-fit: cover;
 }
 
+.labelProduct{
+    color: orangered;
+}
+
 a:hover{
     color: orangered;
 }
+
 .navbar ul{
     margin: 0;
     padding: 0;
@@ -124,4 +129,12 @@ a:hover{
 
 .review-link{
     color: gray;
+}
+
+.margin-increase{
+    margin: 20px;
+}
+
+.margin-input{
+    margin-bottom: 20px;
 }

@@ -1,12 +1,15 @@
 {% extends 'petsy/base.html' %}
 {% load static %}
 
+
+
 {% block links %}
 
         <link href="{% static 'css/fileinput.min.css' %}" rel="stylesheet">
         <link href="{% static 'themes/explorer/theme.min.css' %}" rel="stylesheet">
 
 {% endblock %}
+
 
 {% block content %}
 <main style="background-color:#FDEBD2">
@@ -15,43 +18,45 @@
             <form id="add_product_form" class="my-form-add-product" method="POST" action="{% url 'create_product' %}">
                 {% csrf_token %}
                 <br>
-                Nombre del producto:
-                <input type="text" name="titulo" value="" required>
-                <br>
-                <br>
-                Descripcion:
-                <textarea class="form-control" rows="5" id="comment" name="descripcion"></textarea>
-                <br>
-                <br>
-                Precio:
-                <input type="number" name="precio" value="" step="0.1" required>
-                <br>
-                <br>
-                Categoría:
-                <select id="createProduct_dropDown" name="categoria" required>
-                    <option value="Joya">Joyeria y complementos</option>
-                    <option value="Ropa">Ropa y calzado</option>
-                    <option value="Casa">Hogar y decoracion</option>
-                    <option value="Boda">Bodas y fiestas</option>
-                    <option value="Toys">Juguetes y ocio</option>
-                    <option value="Cole">Arte y objetos de decoración</option>
-                    <option value="Arte">Herramientas para la artesania</option>
-                    <option value="Vint">Vintage</option>
-                    <option value="Otro">Otras categorias</option>
-                </select>
-                <br>
-                <br>
-                Materiales:
-                <input type="text" name="materiales" value="" required>
-                <br>
-                <br>
+                <div class="container" style="background: antiquewhite">
+                    <label>¿Qué estas vendiendo?</label><br>
+                    <input class="margin-input" type="text" name="titulo" value="" placeholder="Nombre del producto" size="70%" autofocus required><br>
+                    <label>Descripción</label><br>
+                    <textarea class="form-control margin-input" rows="5" id="comment" name="descripcion" placeholder="Añade información relevante como estado, color..." required></textarea>
+                    <label>Precio</label><br>
+                    <input class="margin-input" type="number" name="precio" value="" step="0.1" placeholder="(No te flipes cruck)" required>  €<br>
+                    <label>¿Qué subirás?</label>
+                    <select id="createProduct_dropDown" name="categoria" required>
+                        <option value="Joya">Joyeria y complementos</option>
+                        <option value="Ropa">Ropa y calzado</option>
+                        <option value="Casa">Hogar y decoracion</option>
+                        <option value="Boda">Bodas y fiestas</option>
+                        <option value="Toys">Juguetes y ocio</option>
+                        <option value="Cole">Arte y objetos de decoración</option>
+                        <option value="Arte">Herramientas para la artesania</option>
+                        <option value="Vint">Vintage</option>
+                        <option value="Otro">Otras categorias</option>
+                    </select><br>
+                    <label>¿Qué materiales has utilizado?</label><br>
+                    <input class="margin-input" type="text" name="materiales" value="" placeholder="Madera, papel, tela..." size="70%" autofocus required><br>
+                    <label>Añade unas imagenes del producto</label><br>
+                    <input id="input-fa" name="img" type="file"  accept="image/*" class="file" multiple required>
 
-                <h4>Añade una imagen</h4>
-                <input id="input-fa" name="img" type="file"  accept="image/*" class="file" multiple>
-                <br>
-                <br>
+                    <div class="container-fluid">
+                        <div class="row w-100 align-items-center">
+                            <div class="col text-center">
+                                <button class="btn btn-secondary margin-increase" type="submit" id="add_product_form_button">Añade el producto</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                <button class="btn btn-secondary" type="submit" id="add_product_form_button">Añade el producto</button>
+
+
+
+
+
+
             </form>
         </div>
     </section>
