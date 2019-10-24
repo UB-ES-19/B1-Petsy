@@ -1,3 +1,22 @@
+h3{
+    font-weight: bold;
+}
+
+img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+a:hover{
+    color: orangered;
+}
 .navbar ul{
     margin: 0;
     padding: 0;
@@ -14,4 +33,95 @@
 
 .navbar ul li form{
     text-align: center;
+}
+.modal-header{
+    display: inline;
+}
+.card{
+    border: none;
+}
+.image_background{
+    background-image: url(https://img1.etsystatic.com/site-assets/vesta-homepage-headers-v3/jewelry_ep_2020x335.4.jpg);
+    background-size: cover;
+
+}
+.background_color{
+    background-color: #FDEBD2 !important;
+}
+.center{
+    text-align: center;
+}
+.card-text{
+    text-align: center;
+}
+.margin-auto{
+    margin: auto;
+}
+.btn-transparent{
+    border: solid black;
+    border-radius: 22px 22px;
+    border-width: thin;
+}
+.margin-1{
+    margin-top: 10px;
+    margin-bottom: 22px;
+    border-top: solid gray 0.5px;
+    padding-top: 12px;
+}
+
+.error_message_footer {
+    width: 100%;
+    color: red;
+    text-align: center;
+}
+
+.navbar a{
+    border-color: orange;
+    color: orange;
+}
+.navbar a:hover{
+    border-color: #FDEBD2;
+    color: #FDEBD2;
+}
+
+.navbar .btn:focus{
+    box-shadow: none;
+}
+.navbar button{
+    border-color: orange;
+    color: orange;
+}
+.btn-transparent-border{
+    border: transparent;
+    border-radius: 22px 22px;
+    border-width: thin;
+
+}
+.btn-background{
+    background-color: orange;
+    color: white !important;
+    cursor: pointer;
+}
+
+.profile-image-review{
+    width: 20%;
+    height: 50px;
+    object-fit: cover;
+}
+
+.review-card{
+    display: inline;
+}
+
+.separator{
+    padding-top: 50px;
+}
+
+.review-image{
+    max-width: 100px;
+    max-height: 100px;
+}
+
+.review-link{
+    color: gray;
 }
