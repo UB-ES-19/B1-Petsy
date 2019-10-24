@@ -1,0 +1,66 @@
+{% extends 'petsy/base.html' %}
+{% load static %}
+
+{% block links %}
+
+        <link href="{% static 'css/fileinput.min.css' %}" rel="stylesheet">
+        <link href="{% static 'themes/explorer/theme.min.css' %}" rel="stylesheet">
+
+{% endblock %}
+
+{% block content %}
+<main style="background-color:#FDEBD2">
+    <section style="background-color:white">
+        <div class="container">
+            <form id="add_product_form" class="my-form-add-product" method="POST" action="{% url 'create_product' %}">
+                {% csrf_token %}
+                <br>
+                Nombre del producto:
+                <input type="text" name="titulo" value="" required>
+                <br>
+                <br>
+                Descripcion:
+                <textarea class="form-control" rows="5" id="comment" name="descripcion"></textarea>
+                <br>
+                <br>
+                Precio:
+                <input type="number" name="precio" value="" step="0.1" required>
+                <br>
+                <br>
+                Categoría:
+                <select id="createProduct_dropDown" name="categoria" required>
+                    <option value="Joya">Joyeria y complementos</option>
+                    <option value="Ropa">Ropa y calzado</option>
+                    <option value="Casa">Hogar y decoracion</option>
+                    <option value="Boda">Bodas y fiestas</option>
+                    <option value="Toys">Juguetes y ocio</option>
+                    <option value="Cole">Arte y objetos de decoración</option>
+                    <option value="Arte">Herramientas para la artesania</option>
+                    <option value="Vint">Vintage</option>
+                    <option value="Otro">Otras categorias</option>
+                </select>
+                <br>
+                <br>
+                Materiales:
+                <input type="text" name="materiales" value="" required>
+                <br>
+                <br>
+
+                <h4>Añade una imagen</h4>
+                <input id="input-fa" name="img" type="file"  accept="image/*" class="file" multiple>
+                <br>
+                <br>
+
+                <button class="btn btn-secondary" type="submit" id="add_product_form_button">Añade el producto</button>
+            </form>
+        </div>
+    </section>
+</main>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/fileinput.min.js' %}"></script>
+    <script src="{% static 'themes/fa/theme.min.js' %}"></script>
+    <script src="{% static 'js/pages/createProduct.js' %}"></script>
+{% endblock %}
+

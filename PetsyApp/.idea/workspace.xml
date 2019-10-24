@@ -1,24 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6076208e-f158-49f2-9ad4-be5dd3781224" name="Default Changelist" comment="" />
+    <list default="true" id="6076208e-f158-49f2-9ad4-be5dd3781224" name="Default Changelist" comment="merge con dev us5 frontback">
+      <change beforePath="$PROJECT_DIR$/.idea/PetsyApp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/PetsyApp.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="PetsyApp" />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Python Script" />
+        <option value="JavaScript File" />
+        <option value="HTML File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="DavidAlvarezRios &lt;dalvarezrios@gmail.com&gt;" />
+      </list>
+    </option>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="dev-US5-createProductForm" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GithubProjectSettings">
+    <option name="CREATE_PULL_REQUEST_DEFAULT_BRANCH" value="dev" />
+    <option name="CREATE_PULL_REQUEST_DEFAULT_REPO_USER" value="UB-ES-19" />
+    <option name="CREATE_PULL_REQUEST_DEFAULT_REPO_NAME" value="B1-Petsy" />
+  </component>
   <component name="ProjectId" id="1RNkRUKtdbSxwS4XrZKdIAGShg7" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -69,10 +111,127 @@
       <option name="presentableId" value="Default" />
       <updated>1569514932425</updated>
       <workItem from="1569514934833" duration="1262000" />
+      <workItem from="1569772471577" duration="1333000" />
+      <workItem from="1569773919088" duration="14582000" />
+      <workItem from="1569839037088" duration="601000" />
+      <workItem from="1569873921950" duration="5299000" />
+      <workItem from="1570283578864" duration="6046000" />
+      <workItem from="1570377891099" duration="1255000" />
+      <workItem from="1570380199316" duration="3572000" />
+      <workItem from="1570566146081" duration="2909000" />
+      <workItem from="1570569196553" duration="4004000" />
+      <workItem from="1570634951560" duration="2854000" />
+      <workItem from="1570714717357" duration="385000" />
+      <workItem from="1570789419241" duration="74000" />
+      <workItem from="1570958092745" duration="364000" />
+      <workItem from="1570973038107" duration="6421000" />
+      <workItem from="1571080045513" duration="970000" />
+      <workItem from="1571130276783" duration="423000" />
+      <workItem from="1571146873944" duration="231000" />
+      <workItem from="1571164004795" duration="761000" />
+      <workItem from="1571164863192" duration="2334000" />
+      <workItem from="1571169177131" duration="505000" />
+      <workItem from="1571223427392" duration="325000" />
     </task>
+    <task id="LOCAL-00001" summary="a">
+      <created>1569773847927</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1569773847927</updated>
+    </task>
+    <task id="LOCAL-00002" summary="mandamos desde client el formulario al backend">
+      <created>1569874284219</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1569874284219</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Refresco log in OK">
+      <created>1570040312568</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1570040312568</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Tema URL login OK">
+      <created>1570040894589</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1570040894589</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Solucion tema errores ajax prev">
+      <created>1570289872235</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1570289872235</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Solucion tema errores ajax prev">
+      <created>1570382492360</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1570382492361</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Login con AJAX ok">
+      <created>1570573371334</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1570573371334</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Errores front OK">
+      <created>1570638125899</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1570638125899</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Create product form">
+      <created>1570982836414</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1570982836414</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Form US5 crear producto OK">
+      <created>1571168970316</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1571168970316</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="a" />
+    <MESSAGE value="mandamos desde client el formulario al backend" />
+    <MESSAGE value="Refresco log in OK" />
+    <MESSAGE value="Tema URL login OK" />
+    <MESSAGE value="Solucion tema errores ajax prev" />
+    <MESSAGE value="Login con AJAX ok" />
+    <MESSAGE value="Errores front OK" />
+    <MESSAGE value="Create product form" />
+    <MESSAGE value="Form US5 crear producto OK" />
+    <option name="LAST_COMMIT_MESSAGE" value="Form US5 crear producto OK" />
   </component>
 </project>
