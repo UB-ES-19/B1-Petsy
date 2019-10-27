@@ -1,0 +1,87 @@
+{% extends 'petsy/base.html' %}
+{% load static %}
+
+{% block links %}
+{%  endblock %}
+
+{% block content %}
+
+    <main style="background-color:white">
+        <section style="background-color:white">
+            <div>
+                <img class="branding-image" src="{{ shop.branding_image }}" alt="Third slide">
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-8">
+                        <img class="img-shop" src="{% static 'images/shop-icon.png' %}" alt="shop icon" align="left">
+                        <h4>{{ shop.name }}</h4>
+                        <p>{{ shop.description }}</p>
+                        <p>Rate</p>
+                        <a href="#" class="btn btn-sm btn-default"><span class="fa fa-heart"></span> Añadir a Favoritos</a>
+                    </div>
+
+                    <div class="col-md-4">
+                        <h4>Propietario de la tienda</h4>
+                        <figure>
+                            <a href="#"><img src="{% static 'images/profile.jpg'%}"  class="rounded-circle ml-4 my-2  img-profile"></a>
+                        </figure>
+                        <p>{{ shop.user_owner.username }}</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="container">
+                <h2>Artículos</h2>
+                <div class="row">
+                    <div class="col-md-2">
+                        <ul class="list-group">
+                            {% for category in categories %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <a>{{ categroy.name }}</a>
+                                <span class="badge badge-primary badge-pill">{{ category.num }}</span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="col-md-10">
+                        {% for item in items %}
+                            {% if forloop.counter0 == 0 %}
+                            <div class="row">
+                                <div class="card-deck">
+                            {% endif %}
+                                    <div class="card" style="width:400px">
+                                        <img class="card-img-top" src="{% static 'images/juansora.jpg' %}" alt="Card image">
+                                        <div class="card-body">
+                                            <h4 class="card-title">{{ item.nameProduct }}</h4>
+                                            <p class="card-text">{{ item.description }}</p>
+                                            <a href="#" class="stretched-link"></a>
+                                        </div>
+                                    </div>
+
+                            {% if forloop.counter0|divisibleby:3 and not forloop.last %}
+                                </div>
+                            </div>
+                            <div class="separator"></div>
+                            <div class="row">
+                                <div class="card-deck">
+                            {% endif %}
+
+                            {% if forloop.last %}
+                                </div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock %}
