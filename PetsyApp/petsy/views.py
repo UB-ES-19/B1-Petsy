@@ -123,3 +123,7 @@ def logout_user(request):
 
 def create(request):
     return render(request, 'petsy/createProduct.html')
+'''
+def search_shop(shop_search, edit_distance):
+    from .levenshtein import levenshtein_func
+'''

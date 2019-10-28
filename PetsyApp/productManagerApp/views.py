@@ -13,36 +13,6 @@ from .models import Product, Shop
 import ast
 import time
 
-'''
-class ProductListView(ListView):
-    model = Product
-    # template_name = 'productManagerApp/list'
-
-
-class ProductDetailView(DetailView):
-    model = Product
-    
-
-
-class ProductCreate(CreateView):
-    model = Product
-    fields = ['name', 'description', 'price', 'category']
-
-
-class ProductUpdate(UpdateView):
-    model = Product
-    fields = ['name', 'description', 'price', 'category']
-
-
-class ProductDelete(DeleteView):
-    model = Product
-    success_url = reverse_lazy('list_product')
-
-
-def MyProducts(ListView):
-    template_name = 'productManagerApp/list'
-'''
-
 
 def index(request):
     return render(request, 'petsy/product.html')
@@ -107,6 +77,35 @@ def get_product_by_id(request, id_product=None):
         #     },
         #     "response_code": 200
         # })
+
+def get_user(request):
+    """
+
+    :param request:
+    :return: {
+                "user": ESdinou,
+                "photo": photo.png
+                "description": hola soc ESdinou
+                "follower_count:
+    """
+    shop = Shop.objects.get(user_owner=request.user)
+    products = Product.objects.get(id_shop=shop.id_shop)
+    print(products)
+    product_array = []
+    for i in range(4):
+        product_array.append(products[i])
+
+    return render(request, 'petsy/userpage.html', {
+        "user": request.POST['username'],
+        "photo": request.POST['photo'],
+        "description": request.POST['description'],
+        "follower_count": request.POST['follower_count'],
+        "following_users": request.POST['following_users'],
+        "favorite_products": request.POST['favorite_products'],
+        "shop_name": shop.shop_name,
+        "id_shop": shop.id_shop,
+        "products_array": product_array
+    })
 
 
 def review_product_by_id(request):

@@ -25,7 +25,7 @@ class Product(models.Model):
     materials = models.TextField(default='')
     sold = models.IntegerField(default=0)
     # By default assign a house image to the product
-    featured_photo = models.ImageField(upload_to="photos", default="etsy.png")
+    featured_photo = models.FileField(upload_to="photos/", default="etsy.png")
     rate = models.DecimalField(max_digits=3, decimal_places=1, default=0)
     num_votes = models.IntegerField(default=0)  # numero persones que han votat un producte
     sum_votes = models.IntegerField(default=0)  # suma total del rate dels productes
@@ -45,7 +45,7 @@ class Shop(models.Model):
 class Review(models.Model):
     # id_rev = models.AutoField(primary_key=True)
     # Relation between the User and the Review
-    title_message = models.CharField(max_length=100,    blank=False)
+    title_message = models.CharField(max_length=100, blank=False)
     message = models.TextField()
     date = models.DateTimeField()
     rating = models.DecimalField(max_digits=2,
@@ -56,3 +56,5 @@ class Review(models.Model):
                                  )
     user_rev = models.ForeignKey(User)
     product = models.ForeignKey(Product)
+
+
