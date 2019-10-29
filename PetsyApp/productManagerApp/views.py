@@ -244,7 +244,7 @@ def create_product(request):
             category=category,
             materials=material,
             # sold=0,
-            id_shop=shop.id_shop
+            id_shop=shop
         )
         product.save()
         print("pre httpresponse")

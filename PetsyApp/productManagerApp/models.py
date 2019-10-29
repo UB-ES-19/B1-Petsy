@@ -3,6 +3,12 @@ from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 
+class Shop(models.Model):
+    id_shop = models.AutoField(primary_key=True)
+    shop_name = models.TextField(default='Shop')
+    user_owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
 class Product(models.Model):
     CATEGORIES = (
         ("Joya", "Joyeria y complementos"),
@@ -29,17 +35,13 @@ class Product(models.Model):
     rate = models.DecimalField(max_digits=3, decimal_places=1, default=0)
     num_votes = models.IntegerField(default=0)  # numero persones que han votat un producte
     sum_votes = models.IntegerField(default=0)  # suma total del rate dels productes
-    id_shop = models.IntegerField(default=0)
+    id_shop = models.ForeignKey(Shop)
     reviews = models.TextField(default='[]')
 
     def get_human_category(self):
         return self._d_categories[self.category]
 
 
-class Shop(models.Model):
-    id_shop = models.AutoField(primary_key=True)
-    shop_name = models.TextField(default='Shop')
-    user_owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 class Review(models.Model):
