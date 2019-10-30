@@ -17,6 +17,13 @@ img{
 a:hover{
     color: orangered;
 }
+h1 {
+    font-weight: normal;
+}
+ #crear .form-control{
+    font-weight: lighter;
+    border: none;
+}
 .navbar ul{
     margin: 0;
     padding: 0;
@@ -62,6 +69,9 @@ a:hover{
     border-radius: 22px 22px;
     border-width: thin;
 }
+.background_crear{
+    background-image: url("../../photos/fons.jpg");}
+
 .margin-1{
     margin-top: 10px;
     margin-bottom: 22px;
@@ -124,4 +134,61 @@ a:hover{
 
 .review-link{
     color: gray;
+}
+.titol_crear{
+    color: orange;
+    font-weight: bold;
+    margin-left: 1em;
+}
+.margin-form{
+    margin-top: 1em;
+}
+.margin-form div p {
+    margin-bottom: 0.3em;
+    font-weight: lighter;
+    font-size: 1.3em;
+    color: gray;
+    margin-top: 1.5em;
+}
+.formulari{
+    font-size: 15px;
+    font-weight: lighter;
+    width: 50%;
+}
+.precio{
+    height: 32px;
+    width: 10%;
+    color: grey;
+}
+.categoria{
+    border: none;
+    width: 50%;
+    font-size: 15px;
+    font-weight: lighter;
+    height: 33px;
+    color: gray;
+    font-weight: lighter;
+}
+.input-group-btn{
+    background-color: antiquewhite;
+    color: white;
+}
+.btn-file{
+    background-color:antiquewhite;
+    color:black;
+    border-color: black;
+}
+#add_product_form_button{
+    margin-left: 22em;
+    margin-top: 2em;
+}
+#crear{
+    width: 70%;
+    padding-top: 3em;
+}
+#add_product_form input{
+    border: none;
+    border-radius: 7px;
+    padding-left: 6px;
+    height: 33px;
 }
