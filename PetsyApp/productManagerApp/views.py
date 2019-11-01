@@ -57,6 +57,8 @@ def get_product_by_id(request, id_product=None):
 
     products = Product.objects.all()
 
+    print("Get ID: "+id_product)
+
     print("\n**********************")
     for product in products:
         print("Name: ", product.nameProduct)
@@ -249,19 +251,7 @@ def create_product(request):
         product.save()
         print("pre httpresponse")
 
-        return HttpResponseRedirect('id/' + str(product.idProduct), {
-            "titulo": product.nameProduct,
-            "descripcion": product.description,
-            "categoria": product.category,
-            "precio": product.price,
-            "materiales": product.materials,
-            "img": product.featured_photo,
-            "num_votes": product.num_votes,
-            "sum_votes": product.sum_votes,
-            "shop_id": product.id_shop,
-            "reviews": ast.literal_eval(product.reviews),
-            "id_product": product.idProduct
-        })
+        return HttpResponseRedirect(str(product.idProduct))
 
         # return render(request, 'petsy/product.html', {
         #     "titulo": product.nameProduct,
