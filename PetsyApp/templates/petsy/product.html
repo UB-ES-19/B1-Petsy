@@ -14,7 +14,7 @@
                     <div class="col-md-6">
                         {#                        <img class="d-block w-100" src="photos/{{ img }}" alt="imagen produto">#}
                         <div>
-                            <img class="d-block w-100 img-product" src="../../../photos/fons.jpg" alt="imagen produto">
+                            <img class="d-block w-100 img-product" src="{{product.img.url}}" alt="imagen produto">
                         </div>
 
                         <div class="separator">
@@ -59,7 +59,7 @@
                                     </select>
                                     <br>
                                     <textarea style="display: none;" name="product_id">
-                                        {{ id_product }}
+                                        {{ product.idProduct }}
                                     </textarea>
                                     <textarea placeholder="Escribe aquí tu reseña..." class="form-control" id="message" rows="3" name="review"></textarea>
                                     <button type="submit" class="btn btn-background" id="review_button">Enviar reseña</button>
@@ -70,9 +70,9 @@
                     </div>
 
                     <div class="col-md-4">
-                        <h2 id="titulo-producto">{{ titulo }}</h2>
-                        <p class="subtitulo-s">{{ descripcion }}</p>
-                        <p><b>{{ precio }}€</b></p>
+                        <h2 id="titulo-producto">{{ product.nameProduct }}</h2>
+                        <p class="subtitulo-s">{{ product.description }}</p>
+                        <p><b>{{ product.price }}€</b></p>
                         <div class="display-grid">
                             <form method="post">
                             {% csrf_token %}
@@ -91,9 +91,9 @@
                         <div class="border-top caracteristicas">
                             <p class="titulo-s"><b>Información del producto</b></p>
                             <p class="titulo-xs"><b>Categoria</b></p>
-                            <p class="texto-s" style="font-size: 0.8em;font-weight: lighter;">{{ categoria }}</p>
+                            <p class="texto-s" style="font-size: 0.8em;font-weight: lighter;">{{ product.category }}</p>
                             <p class="titulo-xs"><b>Materiales</b></p>
-                            <p class="texto-s" >{{ materiales }}</p>
+                            <p class="texto-s" >{{ product.materials }}</p>
                         </div>
 
                     </div>

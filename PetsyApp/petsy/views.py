@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 # Create your views here.
@@ -11,6 +12,8 @@ from django.views.generic.edit import CreateView
 
 from django.urls import reverse_lazy
 # from django.contrib.auth.forms import UserCreationForm
+from productManagerApp.forms import ProductForm
+from productManagerApp.models import Product
 from .forms import SignUpForm
 from django.shortcuts import render
 from django.contrib.auth.models import User
@@ -121,5 +124,10 @@ def logout_user(request):
     return HttpResponseRedirect('/')
 
 
+@login_required
 def create(request):
-    return render(request, 'petsy/createProduct.html')
+    context = {
+        'dict_cat': Product._d_categories,
+        'product_form': ProductForm()
+    }
+    return render(request, 'petsy/createProduct.html', context)
