@@ -149,6 +149,7 @@ h1 {
 }
 .margin-form{
     margin-top: 1em;
+    padding-bottom: 2em;
 }
 .margin-form div p {
     margin-bottom: 0.3em;
@@ -190,6 +191,7 @@ h1 {
 }
 .boder-top div.row{
     padding-top: 3em;
+    padding-bottom: 3em;
 }
 .caracteristicas{
     padding-top: 2em;
@@ -244,6 +246,7 @@ h1 {
 #crear{
     width: 70%;
     padding-top: 3em;
+    padding-bottom: 3em;
 }
 #add_product_form input{
     border: none;
