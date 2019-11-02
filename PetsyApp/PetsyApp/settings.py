@@ -131,6 +131,7 @@ STATICFILES_DIRS = [
     "static"
 ]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, "photos")
-
 MEDIA_URL = '/photos/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'photos')
+
+LOGIN_URL = "index"

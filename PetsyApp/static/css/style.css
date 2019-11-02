@@ -17,6 +17,13 @@ img{
 a:hover{
     color: orangered;
 }
+h1 {
+    font-weight: normal;
+}
+ #crear .form-control{
+    font-weight: lighter;
+    border: none;
+}
 .navbar ul{
     margin: 0;
     padding: 0;
@@ -62,6 +69,9 @@ a:hover{
     border-radius: 22px 22px;
     border-width: thin;
 }
+.background_crear{
+    background-image: url("../../photos/fons.jpg");}
+
 .margin-1{
     margin-top: 10px;
     margin-bottom: 22px;
@@ -97,6 +107,11 @@ a:hover{
     border-width: thin;
 
 }
+.btn-background:hover{
+    background-color:transparent;
+    border: solid orange 1px;
+    color: orange !important;
+}
 .btn-background{
     background-color: orange;
     color: white !important;
@@ -114,7 +129,9 @@ a:hover{
 }
 
 .separator{
-    padding-top: 50px;
+    margin-top: 1em;
+    padding-top: 3em;
+    border-top: solid lightgray 1px;
 }
 
 .review-image{
@@ -124,4 +141,142 @@ a:hover{
 
 .review-link{
     color: gray;
+}
+.titol_crear{
+    color: orange;
+    font-weight: bold;
+    margin-left: 1em;
+}
+.margin-form{
+    margin-top: 1em;
+    padding-bottom: 2em;
+}
+.margin-form div p {
+    margin-bottom: 0.3em;
+    font-weight: lighter;
+    font-size: 1.3em;
+    color: gray;
+    margin-top: 1.5em;
+}
+.formulari{
+    font-size: 15px;
+    font-weight: lighter;
+    width: 50%;
+}
+.precio{
+    height: 32px;
+    width: 10%;
+    color: grey;
+}
+.categoria{
+    border: none;
+    width: 50%;
+    font-size: 15px;
+    font-weight: lighter;
+    height: 33px;
+    color: gray;
+    font-weight: lighter;
+}
+.input-group-btn{
+    background-color: antiquewhite;
+    color: white;
+}
+.btn-file{
+    background-color:antiquewhite;
+    color:black;
+    border-color: black;
+}
+.boder-top{
+    border-top: solid lightgray 1px;
+}
+.boder-top div.row{
+    padding-top: 3em;
+    padding-bottom: 3em;
+}
+.caracteristicas{
+    padding-top: 2em;
+    margin-top: 1em;
+}
+.titulo-m{
+    font-size: 1.5em;
+    font-weight: lighter;
+}
+.titulo-s{
+    font-size: 1em;
+}
+.titulo-xs{
+    font-size: 0.8em;
+    margin-bottom: 1px;
+}
+.texto-s{
+    font-size: 0.8em;
+    font-weight: lighter;
+}
+.subtitulo-s{
+    font-size: 1.1em;
+    font-weight: lighter;
+}
+.txt-center{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    font-weight: lighter;
+    font-size: medium;
+}
+.comprar{
+    width: 151px;
+    height: 25px;
+    position: relative;
+    border-radius: 9px;
+}
+.comprar:hover{
+    color: orange;
+    border-color: orange;
+}
+.background_product{
+    background-color: antiquewhite;
+
+}
+#add_product_form_button{
+    margin-left: 22em;
+    margin-top: 2em;
+}
+#crear{
+    width: 70%;
+    padding-top: 3em;
+    padding-bottom: 3em;
+}
+#add_product_form input{
+    border: none;
+    border-radius: 7px;
+    padding-left: 6px;
+    height: 33px;
+}
+#titulo-producto{
+    font-weight: bold;
+    font-size: 2.5em;
+}
+#review_button{
+    margin-top: 16px;
+    margin-left: 429px;
+    height: 32px;
+    width: 107px;
+    font-size: small;
+}
+#rating{
+    height: 19px;
+    font-size: 11px;
+    color: darkgray;
+}
+#message{
+    font-size: 12px;
+    margin-top: 17px;
+}
+#logout i {
+    color: white;
+}
+#logout i:hover{
+    color: orange;
 }

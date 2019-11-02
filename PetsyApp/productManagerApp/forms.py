@@ -4,11 +4,21 @@ from django.forms import Textarea, NumberInput, TextInput, DateTimeInput
 from django.forms import ValidationError
 
 
+
 class ProductForm(forms.ModelForm):
+
 
     class Meta:
         model = Product
-        fields = ['nameProduct', 'description', 'price_average', 'category', 'materials', 'img']
+        fields = ['nameProduct', 'description', 'price', 'category', 'materials', 'img']
+        widgets = {
+            'nameProduct': forms.TextInput(attrs={'placeholder': 'En pocas palabras...',  'class': 'formulari'}),
+            'description': forms.Textarea(attrs={'class': 'form-control','placeholder': 'Añade información relevante como estado, modelo, color...'}),
+            'price': forms.NumberInput(attrs={'step': '0,1', 'class': 'precio'}),
+            'category': forms.Select(attrs={'class': 'categoria'}, choices=Product.CATEGORIES),
+            'materials': forms.TextInput(attrs={'class': 'formulari', 'placeholder': 'Dinos de que está hecho tu producto...'}),
+            'img': forms.FileInput(attrs={'id': 'input-fa', 'accept': 'image/*', 'class': 'file'})
+        }
 
 
 
