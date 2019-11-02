@@ -12,8 +12,9 @@ from django.views.generic.edit import CreateView
 
 from django.urls import reverse_lazy
 # from django.contrib.auth.forms import UserCreationForm
+from petsy.models import UserPetsy
 from productManagerApp.forms import ProductForm
-from productManagerApp.models import Product
+from productManagerApp.models import Product, Shop
 from .forms import SignUpForm
 from django.shortcuts import render
 from django.contrib.auth.models import User
@@ -59,8 +60,16 @@ def signup(request):
                     'response_code': 402  # That email already exists
                 })
             except:
-                user = User.objects.create_user(username=username, email=email, password=password)
+                user = UserPetsy.objects.create_user(username=username, email=email, password=password)
                 user.save()
+                shop_user = Shop(
+                    shop_name="Shop",
+                    user_owner=user
+                )
+                shop_user.save()
+                user.shop_list = shop_user
+                user.save()
+
                 return JsonResponse({
                     'signup_successful': True,
                     'response_code': 200  # That username already exists
@@ -131,3 +140,18 @@ def create(request):
         'product_form': ProductForm()
     }
     return render(request, 'petsy/createProduct.html', context)
+
+@login_required
+def profile(request):
+    context = {
+
+    }
+    return render(request, 'petsy/profile.html', context)
+
+
+@login_required
+def shop(request):
+    context = {
+
+    }
+    return HttpResponseRedirect('', context)

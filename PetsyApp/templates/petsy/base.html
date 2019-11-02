@@ -43,8 +43,8 @@
                                 <form action="{% url 'logout' %}" method="POST">
                                     {%  csrf_token %}
                                     <a href ="{% url 'create' %}"class = "btn btn-background"><i class="fas fa-plus" style="color:white"></i>&nbsp;Añadir producto</a>
-                                    <a href ="profile.html" class = "btn btn-transparent-border">
-                                            <img class="img-icon" src=profile_img>
+                                    <a href ="{% url 'profile' %}" class = "btn btn-transparent-border">
+                                            <img class="img-icon" src={% static 'images/defautlProfile.png' %}>
                                             {{ request.user.username }}
                                     </a>
                                     <button type="submit" class="btn btn-transparent-border" id="logout_button"> Log Out </button>

@@ -1,8 +1,8 @@
 from datetime import datetime
 
 from django.db import models
-from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
+from petsy.models import UserPetsy
 
 
 def get_image_filename_post(instance, filename):
@@ -11,7 +11,7 @@ def get_image_filename_post(instance, filename):
 class Shop(models.Model):
     id_shop = models.AutoField(primary_key=True)
     shop_name = models.TextField(default='Shop')
-    user_owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_owner = models.ForeignKey(UserPetsy, on_delete=models.CASCADE)
 
 
 class Product(models.Model):
@@ -59,5 +59,5 @@ class Review(models.Model):
                                              MaxValueValidator(5, "Value must be between 1 and 5")
                                              ]
                                  )
-    user_rev = models.ForeignKey(User)
+    user_rev = models.ForeignKey(UserPetsy)
     product = models.ForeignKey(Product)

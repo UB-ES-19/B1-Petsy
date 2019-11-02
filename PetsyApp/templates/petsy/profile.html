@@ -19,8 +19,8 @@
                 </div>
                 <div class="col-3">
                     <h3><b>{{ request.user.username }}</b></h3>
-                    <a class="text-dark" href="">Sigue a <span><b>{{ num_followed }} (mantenimiento)</b></span></a>&nbsp;
-                    <a class="text-dark" href=""><b>{{ num_followers }} (mantenimiento)</b> seguidores</a>
+                    <a class="text-dark" href="">Sigue a <span><b> (mantenimiento)</b></span></a>&nbsp;
+                    <a class="text-dark" href=""><b> (mantenimiento)</b> seguidores</a>
                 </div>
                 <div class="col-3">
                     <h5><b>Biografía</b></h5>
@@ -93,9 +93,9 @@
                                 <a href="{% url 'shop' product.id_shop%}" class="card-text"><small class="text-muted">product.id_shop.shop_name</small></a>
                                 </div>
                             </div>
+                            {% ct += 1 %}
                 {% endif %}
 
-                {% ct += 1 %}
             {% endfor %}
         </div>
     </section>

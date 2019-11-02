@@ -235,8 +235,9 @@ h1 {
     color: orange;
     border-color: orange;
 }
-.background_product{
+.background_product {
     background-color: antiquewhite;
+}
 
 .img-icon{
     width: 20px;
@@ -249,7 +250,6 @@ h1 {
     max-height: 250px;
 }
 
-}
 #add_product_form_button{
     margin-left: 22em;
     margin-top: 2em;
