@@ -24,7 +24,6 @@ from django.conf import settings
 urlpatterns = [
     url(r'^petsy/', include('petsy.urls')),
     url(r'', include('petsy.urls')),
-    url(r'^product/', include('productManagerApp.urls')),
     url(r'^admin/', admin.site.urls),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

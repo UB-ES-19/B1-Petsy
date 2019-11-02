@@ -12,27 +12,28 @@
 {% block content %}
 <main style="background-color:#FDEBD2">
     <section style="background-color:white">
+    <br>
         <div class="container">
             <div class="row">
                 <div class="col-4">
-                    <img class="img-profile" src="profile_img">
+                    <img class="img-profile" src="{% static 'images/defautlProfile.png' %}">
                 </div>
                 <div class="col-3">
-                    <h3><b>{{ request.user.username }}</b></h3>
-                    <a class="text-dark" href="">Sigue a <span><b> (mantenimiento)</b></span></a>&nbsp;
-                    <a class="text-dark" href=""><b> (mantenimiento)</b> seguidores</a>
+                    <h3><b>{{ user.username }}</b></h3>
+                    <a class="text-dark" href="">Sigue a <span><b> {{user.followed_users}}</b></span></a>&nbsp;
+                    <a class="text-dark" href=""><b> {{user.following_users}}</b> seguidores</a>
                 </div>
                 <div class="col-3">
                     <h5><b>Biografía</b></h5>
                     <div class="text-muted">
-                        <p>(mantenimiento)</p>
+                        <p>{{user.description}}</p>
                         <!-- <p>Se unió el 18 de septiembre de 2018</p>&nbsp; -->
                     </div>
                     <div class="position-relative">
                         <h5>Tus Tiendas:</h5>
                         {% for shop in shop_list %}
                             <a href="{% url 'shop' shop.id_shop %}" style="margin-top: 5px">
-                                <img class="img-shop-icon mr-xs-2" src="static/images/shop-icon.png">
+                                <img class="img-shop-icon mr-xs-2" src="{% static 'images/shop-icon.png' %}">
                                 <div class="d-inline position-absolute margin-url">
                                     <p class="text-muted small margin-url" style="margin-top: 20px;">{{ shop.shop_name }}</p>
                                     <p class="margin-url">Visita la tienda<i ></i></p>
@@ -57,43 +58,40 @@
             </ul>
         </div>
         <div class="container margin-div">
-            {% ct = 0 %}
             {% for product in list_products %}
-                {% if ct == 0 %}
+                {% if forloop.counter0 == 0 or forloop.counter0|divisibleby:4 %}
                     <div class="row">
                         <div class="card-deck">
                             <div class="card">
-                                <img class="card-img-top img-card" src="{{product.featured_photo}}" alt="Card image cap">
+                                <img class="card-img-top img-card" src="{{product.img.url}}" alt="Card image cap">
                                 <div class="card-body">
-                                <h5 class="card-title text-center">{{ product.nameProduct }}</h5>
-                                <p class="card-text">{{ product.description }}</p>
-                                <a href="{% url 'shop' product.id_shop%}" class="card-text"><small class="text-muted">product.id_shop.shop_name</small></a>
+                                    <h5 class="card-title text-center">{{ product.nameProduct }}</h5>
+                                    <p class="card-text">{{ product.description }}</p>
+                                    <a href="" class="card-text"><small class="text-muted">{{product.shop.shop_name}}</small></a>
                                 </div>
                             </div>
 
-                {% elif ct == 3 or forloop.last %}
+                {% elif forloop.counter0|divisibleby:3 or forloop.last %}
                             <div class="card">
-                                <img class="card-img-top img-card" src="{{product.featured_photo}}" alt="Card image cap">
+                                <img class="card-img-top img-card" src="{{product.img.url}}" alt="Card image cap">
                                 <div class="card-body">
-                                <h5 class="card-title text-center">{{ product.nameProduct }}</h5>
-                                <p class="card-text">{{ product.description }}</p>
-                                <a href="{% url 'shop' product.id_shop%}" class="card-text"><small class="text-muted">product.id_shop.shop_name</small></a>
+                                    <h5 class="card-title text-center">{{ product.nameProduct }}</h5>
+                                    <p class="card-text">{{ product.description }}</p>
+                                    <a href="" class="card-text"><small class="text-muted">{{ product.shop.shop_name }}</small></a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    {% ct = 0 %}
 
                 {% else %}
                             <div class="card">
-                                <img class="card-img-top img-card" src="{{product.featured_photo}}" alt="Card image cap">
+                                <img class="card-img-top img-card" src="{{product.img.url}}" alt="Card image cap">
                                 <div class="card-body">
-                                <h5 class="card-title text-center">{{ product.nameProduct }}</h5>
-                                <p class="card-text">{{ product.description }}</p>
-                                <a href="{% url 'shop' product.id_shop%}" class="card-text"><small class="text-muted">product.id_shop.shop_name</small></a>
+                                    <h5 class="card-title text-center">{{ product.nameProduct }}</h5>
+                                    <p class="card-text">{{ product.description }}</p>
+                                    <a href="" class="card-text"><small class="text-muted">{{product.shop.shop_name}}</small></a>
                                 </div>
                             </div>
-                            {% ct += 1 %}
                 {% endif %}
 
             {% endfor %}
