@@ -21,7 +21,6 @@ class ProductForm(forms.ModelForm):
         }
 
 
-
 class ReviewForm(forms.ModelForm):
 
     class Meta:
@@ -34,8 +33,6 @@ class ReviewForm(forms.ModelForm):
             # "date": DateTimeInput(attrs={'class': 'form-control', 'style': 'width:100%; resize:none'}) ,
             "rating": NumberInput(attrs={'min': '1', 'max': '5', 'default': 1, 'style': 'display:none'})
         }
-        
-
 
     def clean_message(self):
         """
@@ -50,5 +47,6 @@ class ReviewForm(forms.ModelForm):
 
 
 class Shop(forms.ModelForm):
+
     model = Product
     fields = ['shop_name']

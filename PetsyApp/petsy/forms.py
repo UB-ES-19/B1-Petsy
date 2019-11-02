@@ -23,3 +23,8 @@ class SignUpForm(UserCreationForm):
 
         return user
 
+class UserForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = ['photo', 'description']
