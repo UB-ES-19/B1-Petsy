@@ -9,50 +9,42 @@
 {% endblock %}
 
 {% block content %}
-<main style="background-color:#FDEBD2">
-    <section style="background-color:white">
-        <div class="container">
-            <form id="add_product_form" class="my-form-add-product" method="POST" action="{% url 'create_product' %}">
+<main >
+    <section class="background_crear" >
+        <div class="container" id="crear">
+
+            <div class = "container margin-form" style="background-color: antiquewhite">
+                <span class ="titol_crear"><h1>Información del producto</h1></span>
+                <form id="add_product_form" class="my-form-add-product" method="POST" action="{% url 'create_product' %}" enctype="multipart/form-data">
                 {% csrf_token %}
-                <br>
-                Nombre del producto:
-                <input type="text" name="titulo" value="" required>
-                <br>
-                <br>
-                Descripcion:
-                <textarea class="form-control" rows="5" id="comment" name="descripcion"></textarea>
-                <br>
-                <br>
-                Precio:
-                <input type="number" name="precio" value="" step="0.1" required>
-                <br>
-                <br>
-                Categoría:
-                <select id="createProduct_dropDown" name="categoria" required>
-                    <option value="Joya">Joyeria y complementos</option>
-                    <option value="Ropa">Ropa y calzado</option>
-                    <option value="Casa">Hogar y decoracion</option>
-                    <option value="Boda">Bodas y fiestas</option>
-                    <option value="Toys">Juguetes y ocio</option>
-                    <option value="Cole">Arte y objetos de decoración</option>
-                    <option value="Arte">Herramientas para la artesania</option>
-                    <option value="Vint">Vintage</option>
-                    <option value="Otro">Otras categorias</option>
-                </select>
-                <br>
-                <br>
-                Materiales:
-                <input type="text" name="materiales" value="" required>
-                <br>
-                <br>
+                <div>
+                    <p>Título del producto</p>
+                    {{product_form.nameProduct}}
+                </div>
+                <div>
+                     <p>Descripción</p>
+                    {{product_form.description}}
+                </div>
+               <div>
+                   <p>Precio</p>
+                    {{product_form.price}}
+               </div>
+               <div>
+                    <p>Categoría</p>
+                    {{product_form.category}}
+               </div>
+               <div>
+                    <p>Materiales</p>
+                    {{product_form.materials}}
+               </div>
+                <div>
+                    <p>Añade una imagen</p>
+                    {{product_form.img}}
+                </div>
 
-                <h4>Añade una imagen</h4>
-                <input id="input-fa" name="img" type="file"  accept="image/*" class="file" multiple>
-                <br>
-                <br>
-
-                <button class="btn btn-secondary" type="submit" id="add_product_form_button">Añade el producto</button>
-            </form>
+                <button class="btn btn-transparent" type="submit" id="add_product_form_button">Añade el producto</button>
+                </form>
+            </div>
         </div>
     </section>
 </main>

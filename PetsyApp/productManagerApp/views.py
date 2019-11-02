@@ -9,6 +9,7 @@ from django.views.generic.edit import CreateView
 
 from django.urls import reverse_lazy
 
+from productManagerApp.forms import ProductForm
 from .models import Product, Shop
 import ast
 import time
@@ -55,18 +56,6 @@ def get_product_by_id(request, id_product=None):
     :return:
     """
 
-    products = Product.objects.all()
-
-    print("\n**********************")
-    for product in products:
-        print("Name: ", product.nameProduct)
-        print("Shop_id: ", product.id_shop)
-        print("Reviews: ", product.reviews)
-        print("id_product: ", product.idProduct)
-        print("rating: ", product.sum_votes / product.num_votes if product.num_votes != 0 else 0)
-        print()
-    print("**********************\n")
-
     if request.method == 'GET':
         product_id = id_product if id_product is not None else request.GET['product_id']
 
@@ -79,34 +68,8 @@ def get_product_by_id(request, id_product=None):
             })
 
         return render(request, 'petsy/product.html', {
-            "titulo": product.nameProduct,
-            "descripcion": product.description,
-            "categoria": product.category,
-            "precio": product.price,
-            "materiales": product.materials,
-            "img": product.featured_photo,
-            "num_votes": product.num_votes,
-            "sum_votes": product.sum_votes,
-            "shop_id": product.id_shop,
-            "reviews": ast.literal_eval(product.reviews),
-            "id_product": product.idProduct
+            "product": product
         })
-        # aqui hauriem de redirigir a una url per mostrar el producte.
-        # return HttpResponseRedirect('', {
-        #     "product": {
-        #         "name": product.nameProduct,
-        #         "description": product.description,
-        #         "category": product.category,
-        #         "price_average": product.price,
-        #         "materials": product.materials,
-        #         "sold": product.sold,
-        #         "photo": product.featured_photo,
-        #         "num_votes": product.num_votes,
-        #         "sum_votes": product.sum_votes,
-        #         "shop_id": product.id_shop
-        #     },
-        #     "response_code": 200
-        # })
 
 
 def review_product_by_id(request):
@@ -227,41 +190,12 @@ def create_product(request):
             shop.save()
 
         shop = Shop.objects.get(user_owner=user)
-        print("Cosas de shop")
-        product_name = (request.POST['titulo'])
-        img = (request.POST['img'])
-        descripcio = request.POST['descripcion']
-        price = request.POST['precio']
-        category = request.POST['categoria']
-        material = request.POST['materiales']
-        print("Cosas de product variables")
-        # save product into database
-        product = Product(
-            nameProduct=product_name,
-            featured_photo=img,
-            description=descripcio,
-            price=price,
-            category=category,
-            materials=material,
-            # sold=0,
-            id_shop=shop
-        )
-        product.save()
-        print("pre httpresponse")
-
-        return HttpResponseRedirect('id/' + str(product.idProduct), {
-            "titulo": product.nameProduct,
-            "descripcion": product.description,
-            "categoria": product.category,
-            "precio": product.price,
-            "materiales": product.materials,
-            "img": product.featured_photo,
-            "num_votes": product.num_votes,
-            "sum_votes": product.sum_votes,
-            "shop_id": product.id_shop,
-            "reviews": ast.literal_eval(product.reviews),
-            "id_product": product.idProduct
-        })
+        product = ProductForm(request.POST, request.FILES)
+        if product.is_valid():
+            p = product.save(commit=False)
+            p.shop = shop
+            p.save()
+            return HttpResponseRedirect(str(p.idProduct))
 
         # return render(request, 'petsy/product.html', {
         #     "titulo": product.nameProduct,
