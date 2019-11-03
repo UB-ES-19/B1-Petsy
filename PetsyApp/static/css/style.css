@@ -238,6 +238,12 @@ h1 {
     height: 400px;
 }
 
+.branding-image-temporal {
+    max-width: 1920px;
+    max-height: 400px;
+    object-fit: fill;
+}
+
 .img-shop {
     max-width:150px;
     max-height:150px;

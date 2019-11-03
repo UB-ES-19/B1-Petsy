@@ -11,6 +11,14 @@ import time
 
 #Petsy
 def index(request):
+
+    if request.user.is_authenticated:
+        user = UserPetsy.objects.all().get(email=request.user.email)
+        context = {
+            "user": user
+        }
+        return render(request, 'petsy/homepage.html', context)
+
     return render(request, 'petsy/homepage.html')
 
 def signup(request):
@@ -130,26 +138,30 @@ def products(request, username=None):
 
 """
 @login_required
-def profile(request):
+def profile(request, id_user=None):
+
+    user = UserPetsy.objects.all().get(id_user=id_user)
     products = list(Product.objects.all())
-    shops = Shop.objects.all().filter(user_owner=request.user)
+    shops = Shop.objects.all().filter(user_owner=user)
     context = {
-        "user": request.user,
+        "user": user,
         "list_products": products,
         "shop_list": shops
     }
     return render(request, 'petsy/profile.html', context)
+    #return HttpResponseRedirect('profile/', context)
 
 
 def shop(request, id_shop=None):
-    shop = Shop.objects.all().get(id_shop=id_shop)
-    product_list = list(Product.objects.all().filter(shop=shop))
-    context = {
-        "shop": shop,
-        "items": product_list
-    }
-    return HttpResponseRedirect('', context)
 
+    _shop = Shop.objects.all().get(id_shop=id_shop)
+    product_list = list(Product.objects.all().filter(shop=_shop))
+    context = {
+        "shop": _shop,
+        "list_products": product_list
+    }
+    #return HttpResponseRedirect('', context)
+    return render(request, 'petsy/shop.html', context)
 
 #ProductManagerApp
 def get_product_by_id(request, id_product=None):
