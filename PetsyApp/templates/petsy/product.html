@@ -70,6 +70,7 @@
                     </div>
 
                     <div class="col-md-4">
+                        <a href="{% url 'shop' product.shop.id_shop %}">{{ product.shop.shop_name }}</a>
                         <h2 id="titulo-producto">{{ product.nameProduct }}</h2>
                         <p class="subtitulo-s">{{ product.description }}</p>
                         <p><b>{{ product.price }}€</b></p>

@@ -1,0 +1,100 @@
+{% extends 'petsy/base.html' %}
+{% load static %}
+
+{% block links %}
+{%  endblock %}
+
+{% block content %}
+
+    <main style="background-color:white">
+        <section style="background-color:white">
+            <div>
+                <img class="branding-image-temporal" src="{% static 'images/juansora.jpg' %}">
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-8">
+                        <img class="img-shop" src="{% static 'images/shop-icon.png' %}" alt="shop icon" align="left">
+                        <h4>{{ shop.shop_name }}</h4>
+                        <p>Descripción futura</p>
+                        <p>Rate</p>
+                        <a href="#" class="btn btn-sm btn-default"><span class="fa fa-heart"></span> Añadir a Favoritos</a>
+                    </div>
+
+                    <div class="col-md-4">
+                        <h4>Propietario de la tienda</h4>
+                        <figure>
+                            <a href="{% url 'profile' shop.user_owner.id_user %}"><img src="{% static 'images/profile.jpg'%}"  class="rounded-circle ml-4 my-2  img-profile"></a>
+                        </figure>
+                        <p>{{ shop.user_owner.username }}</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="separator"></div>
+
+            <div class="container">
+                <h2>Artículos</h2>
+                <div class="row">
+                    <div class="col-md-2">
+                        <ul class="list-group">
+                            {% for category in categories %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <a>{{ categroy.name }}</a>
+                                <span class="badge badge-primary badge-pill">{{ category.num }}</span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="container margin-div">
+                            {% for product in list_products %}
+                                {% if forloop.counter0 == 0 or forloop.counter0|divisibleby:4 %}
+                                    <div class="row">
+                                        <div class="card-deck">
+                                            <div class="card">
+                                                <img class="card-img-top img-card" src="{{product.img.url}}" alt="Card image cap">
+                                                <div class="card-body">
+                                                    <h5 class="card-title text-center">{{ product.nameProduct }}</h5>
+                                                    <p class="card-text">{{ product.description }}</p>
+                                                    <a href="{% url 'product_by_id' product.idProduct %}" class="card-text stretched-link"><small class="text-muted">{{product.shop.shop_name}}</small></a>
+                                                </div>
+                                            </div>
+
+                                {% elif forloop.counter0|divisibleby:3 or forloop.last %}
+                                            <div class="card">
+                                                <img class="card-img-top img-card" src="{{product.img.url}}" alt="Card image cap">
+                                                <div class="card-body">
+                                                    <h5 class="card-title text-center">{{ product.nameProduct }}</h5>
+                                                    <p class="card-text">{{ product.description }}</p>
+                                                    <a href="{% url 'product_by_id' product.idProduct %}" class="card-text stretched-link"><small class="text-muted">{{ product.shop.shop_name }}</small></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+
+                                {% else %}
+                                            <div class="card">
+                                                <img class="card-img-top img-card" src="{{product.img.url}}" alt="Card image cap">
+                                                <div class="card-body">
+                                                    <h5 class="card-title text-center">{{ product.nameProduct }}</h5>
+                                                    <p class="card-text">{{ product.description }}</p>
+                                                    <a href="{% url 'product_by_id' product.idProduct %}" class="card-text stretched-link"><small class="text-muted">{{product.shop.shop_name}}</small></a>
+                                                </div>
+                                            </div>
+                                {% endif %}
+
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock %}
