@@ -47,7 +47,7 @@
                             {% endfor %}
                             <div class="form-group">
                                 <p class="titulo-m">Danos tu opinión...</p>
-                                <form method="POST" action="{% url 'review_product_by_id' %}">
+                                <form id="review_form" method="POST" action="{% url 'review_product_by_id' %}">
                                     {% csrf_token %}
                                     <label class="titulo-xs" for="rating">Puntuación</label>
                                     <select id="rating" name="rate">
