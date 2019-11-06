@@ -5,7 +5,7 @@ from petsy.forms import *
 from petsy.models import *
 from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import ast
 import time
 
@@ -149,7 +149,6 @@ def profile(request, id_user=None):
         "shop_list": shops
     }
     return render(request, 'petsy/profile.html', context)
-    #return HttpResponseRedirect('profile/', context)
 
 
 def shop(request, id_shop=None):
@@ -162,7 +161,6 @@ def shop(request, id_shop=None):
         "list_products": product_list,
         "user": user
     }
-    #return HttpResponseRedirect('', context)
     return render(request, 'petsy/shop.html', context)
 
 #ProductManagerApp
@@ -265,36 +263,7 @@ def review_product_by_id(request):
 
     product = Product.objects.get(idProduct=id_product)
 
-    # return HttpResponseRedirect('id/'+str(id_product), {
-    #     "titulo": product.nameProduct,
-    #     "descripcion": product.description,
-    #     "categoria": product.category,
-    #     "precio": product.price,
-    #     "materiales": product.materials,
-    #     "img": product.featured_photo,
-    #     "num_votes": product.num_votes,
-    #     "sum_votes": product.sum_votes,
-    #     "shop_id": product.id_shop,
-    #     "reviews": ast.literal_eval(product.reviews)
-    # })
-    #
-
-    context = {
-        "titulo": product.nameProduct,
-        "descripcion": product.description,
-        "categoria": product.category,
-        "precio": product.price,
-        "materiales": product.materials,
-        "img": product.img,
-        "num_votes": product.num_votes,
-        "sum_votes": product.sum_votes,
-        "shop_id": product.shop.id_shop,
-        "reviews": ast.literal_eval(product.reviews),
-        "id_product": product.idProduct
-    }
-
-    #return render(request, 'petsy/product.html', context)
-    return HttpResponseRedirect('/product/'+str(product.idProduct), context)
+    return redirect(get_product_by_id, id_product=product.idProduct)
 
 def remove_product(request, id_product=None):
     """
@@ -350,6 +319,6 @@ def create_product(request):
             p = product.save(commit=False)
             p.shop = shop
             p.save()
-            return HttpResponseRedirect(str(p.idProduct))
+            return redirect(get_product_by_id, id_product=p.idProduct)
     return HttpResponse('')
 
