@@ -5,7 +5,7 @@ from petsy.forms import *
 from petsy.models import *
 from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import ast
 import time
 
@@ -149,18 +149,18 @@ def profile(request, id_user=None):
         "shop_list": shops
     }
     return render(request, 'petsy/profile.html', context)
-    #return HttpResponseRedirect('profile/', context)
 
 
 def shop(request, id_shop=None):
 
     _shop = Shop.objects.all().get(id_shop=id_shop)
     product_list = list(Product.objects.all().filter(shop=_shop))
+    user = UserPetsy.objects.all().get(email=request.user.email)
     context = {
         "shop": _shop,
-        "list_products": product_list
+        "list_products": product_list,
+        "user": user
     }
-    #return HttpResponseRedirect('', context)
     return render(request, 'petsy/shop.html', context)
 
 #ProductManagerApp
@@ -173,6 +173,7 @@ def get_product_by_id(request, id_product=None):
 
     if request.method == 'GET':
         product_id = id_product if id_product is not None else request.GET['product_id']
+        user = UserPetsy.objects.all().get(email=request.user.email)
 
         try:
             product = Product.objects.get(idProduct=product_id)
@@ -183,7 +184,10 @@ def get_product_by_id(request, id_product=None):
             })
 
         return render(request, 'petsy/product.html', {
-            "product": product
+            "product": product,
+            "reviews": ast.literal_eval(product.reviews),
+            "user": user
+
         })
 
 def get_user(request):
@@ -203,7 +207,7 @@ def get_user(request):
     for i in range(4):
         product_array.append(products[i])
 
-    return render(request, 'petsy/profile.html.html', {
+    return render(request, 'petsy/profile.html', {
         "user": request.POST['username'],
         "photo": request.POST['photo'],
         "description": request.POST['description'],
@@ -242,7 +246,7 @@ def review_product_by_id(request):
     new_review_obj = {
         "user": {
             "profile_pic": "default_user.png",
-            "username": user
+            "username": user,
         },
         "date": time.strftime('%y/%m/%d %X'),
         "message": new_review
@@ -259,33 +263,7 @@ def review_product_by_id(request):
 
     product = Product.objects.get(idProduct=id_product)
 
-    # return HttpResponseRedirect('id/'+str(id_product), {
-    #     "titulo": product.nameProduct,
-    #     "descripcion": product.description,
-    #     "categoria": product.category,
-    #     "precio": product.price,
-    #     "materiales": product.materials,
-    #     "img": product.featured_photo,
-    #     "num_votes": product.num_votes,
-    #     "sum_votes": product.sum_votes,
-    #     "shop_id": product.id_shop,
-    #     "reviews": ast.literal_eval(product.reviews)
-    # })
-    #
-    return render(request, 'petsy/product.html', {
-        "titulo": product.nameProduct,
-        "descripcion": product.description,
-        "categoria": product.category,
-        "precio": product.price,
-        "materiales": product.materials,
-        "img": product.featured_photo,
-        "num_votes": product.num_votes,
-        "sum_votes": product.sum_votes,
-        "shop_id": product.id_shop,
-        "reviews": ast.literal_eval(product.reviews),
-        "id_product": product.idProduct
-    })
-
+    return redirect(get_product_by_id, id_product=product.idProduct)
 
 def remove_product(request, id_product=None):
     """
@@ -341,6 +319,6 @@ def create_product(request):
             p = product.save(commit=False)
             p.shop = shop
             p.save()
-            return HttpResponseRedirect(str(p.idProduct))
+            return redirect(get_product_by_id, id_product=p.idProduct)
     return HttpResponse('')
 
