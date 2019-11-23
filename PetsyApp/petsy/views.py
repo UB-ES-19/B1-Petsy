@@ -412,3 +412,27 @@ def create_product(request):
             p.save()
             return redirect(get_product_by_id, id_product=p.idProduct)
     return HttpResponse('')
+
+def searching(object, search, edit_distance):
+    """
+
+    """
+    from .levenshtein import levenshtein_func
+
+    if(object=='product'):
+        result = list(set(Product.objects.values_list('result', flat=True)))
+
+    elif(object=='username'):
+        result = list(set(UserPetsy.objects.values_list('result', flat=True)))
+
+    elif(object=='shop'):
+        result = list(set(Shop.objects.values_list('result', flat=True)))
+
+    search_dist = [(x, levenshtein_func(x.lower(), search.lower())) for x in result if levenshtein_func(x.lower(), search.lower()) <= edit_distance]
+    search_dist += [(x, len(x)-len(search)) for x in result if search.lower() in x.lower()]
+    search_dist.sort(key=lambda x: x[1])
+    if len(search_dist) == 0:
+        return []
+
+    result, _ = zip(*search_dist)
+    return list(set(result))

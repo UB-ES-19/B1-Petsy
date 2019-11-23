@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6076208e-f158-49f2-9ad4-be5dd3781224" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/PetsyApp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/PetsyApp.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/petsy/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/petsy/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,6 +19,52 @@
   <component name="FavoritesManager">
     <favorites_list name="PetsyApp" />
   </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/petsy/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="390">
+              <caret line="62" column="40" selection-start-line="62" selection-start-column="40" selection-end-line="62" selection-end-column="40" />
+              <folding>
+                <element signature="e#0#32#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/petsy/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="195">
+              <caret line="424" column="32" selection-start-line="424" selection-start-column="32" selection-end-line="424" selection-end-column="32" />
+              <folding>
+                <element signature="e#0#57#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/petsy/profile.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="510">
+              <caret line="60" column="43" selection-start-line="60" selection-start-column="30" selection-end-line="60" selection-end-column="43" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/PetsyApp/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="585">
+              <caret line="39" column="12" selection-start-line="39" selection-start-column="12" selection-end-line="39" selection-end-column="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -27,27 +75,93 @@
       </list>
     </option>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>Many</find>
+      <find>/product</find>
+      <find>list_products</find>
+      <find>shop_set</find>
+    </findStrings>
+  </component>
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
+        <option value="murgelyv32 &lt;murgelyv32@alumnes.ub.edu&gt;" />
         <option value="DavidAlvarezRios &lt;dalvarezrios@gmail.com&gt;" />
       </list>
     </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/.." value="dev-millorarFront" />
+        <entry key="$PROJECT_DIR$/.." value="dev" />
       </map>
     </option>
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="SIGN_OFF_COMMIT" value="true" />
   </component>
   <component name="GithubProjectSettings">
     <option name="CREATE_PULL_REQUEST_DEFAULT_BRANCH" value="dev" />
     <option name="CREATE_PULL_REQUEST_DEFAULT_REPO_USER" value="UB-ES-19" />
     <option name="CREATE_PULL_REQUEST_DEFAULT_REPO_NAME" value="B1-Petsy" />
   </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/templates/petsy/product.html" />
+        <option value="$PROJECT_DIR$/PetsyApp/settings.py" />
+        <option value="$PROJECT_DIR$/petsy/models.py" />
+        <option value="$PROJECT_DIR$/petsy/views.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="67" />
+    <option name="y" value="25" />
+    <option name="width" value="650" />
+    <option name="height" value="743" />
+  </component>
   <component name="ProjectId" id="1RNkRUKtdbSxwS4XrZKdIAGShg7" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="PetsyApp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PetsyApp" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PetsyApp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PetsyApp" type="462c0819:PsiDirectoryNode" />
+              <item name="petsy" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PetsyApp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PetsyApp" type="462c0819:PsiDirectoryNode" />
+              <item name="PetsyApp" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PetsyApp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PetsyApp" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PetsyApp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PetsyApp" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="petsy" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
@@ -55,7 +169,7 @@
     <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../SD/B_9" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -151,6 +265,9 @@
       <workItem from="1572459276551" duration="332000" />
       <workItem from="1572459643160" duration="874000" />
       <workItem from="1572460602915" duration="10307000" />
+      <workItem from="1574363724736" duration="10000" />
+      <workItem from="1574363746059" duration="3425000" />
+      <workItem from="1574502094554" duration="6234000" />
     </task>
     <task id="LOCAL-00001" summary="a">
       <created>1569773847927</created>
@@ -229,8 +346,52 @@
       <option name="project" value="LOCAL" />
       <updated>1572453568457</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="bug fixed about reviews">
+      <created>1574364130038</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1574364130038</updated>
+    </task>
+    <task id="LOCAL-00013" summary="us6 i us9 a falta de comprovar amb front">
+      <created>1574506977200</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1574506977200</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="9669000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="67" y="25" width="1299" height="743" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25379092" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Database Changes" order="7" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.257329" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Python Console" order="11" />
+      <window_info anchor="bottom" id="Docker" order="12" show_stripe_button="false" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="SciView" order="3" />
+      <window_info anchor="right" id="Database" order="4" />
+    </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -241,8 +402,28 @@
         <entry key="MAIN">
           <value>
             <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
               <option name="COLUMN_ORDER" />
             </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
           </value>
         </entry>
       </map>
@@ -259,6 +440,54 @@
     <MESSAGE value="Create product form" />
     <MESSAGE value="Form US5 crear producto OK" />
     <MESSAGE value="Pagina crear millorada" />
-    <option name="LAST_COMMIT_MESSAGE" value="Pagina crear millorada" />
+    <MESSAGE value="bug fixed about reviews" />
+    <MESSAGE value="us6 i us9 a falta de comprovar amb front" />
+    <option name="LAST_COMMIT_MESSAGE" value="us6 i us9 a falta de comprovar amb front" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/templates/petsy/product.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-300">
+          <caret line="37" column="127" selection-start-line="37" selection-start-column="127" selection-end-line="37" selection-end-column="127" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PetsyApp/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="585">
+          <caret line="39" column="12" selection-start-line="39" selection-start-column="12" selection-end-line="39" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/petsy/profile.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="60" column="43" selection-start-line="60" selection-start-column="30" selection-end-line="60" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/petsy/levenshtein.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/petsy/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="62" column="40" selection-start-line="62" selection-start-column="40" selection-end-line="62" selection-end-column="40" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/petsy/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="424" column="32" selection-start-line="424" selection-start-column="32" selection-end-line="424" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#57#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
   </component>
 </project>
