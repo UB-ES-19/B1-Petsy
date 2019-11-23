@@ -21,7 +21,14 @@
                 <div class="col-3">
                     <h3><b>{{ user.username }}</b></h3>
                     <a class="text-dark" href="">Sigue a <span><b> {{user.followed_users}}</b></span></a>&nbsp;
-                    <a class="text-dark" href=""><b> {{user.following_users}}</b> seguidores</a>
+                    <a class="text-dark" href=""><b> {{user.following_users}}</b> seguidores</a><br>
+                    {% if request_user.id != user.id %}
+
+                    <button type="submit" class="btn btn-secondary" id="follow_user" onclick="follow()">Seguir Usuario</button>
+
+                    {% endif %}
+
+
                 </div>
                 <div class="col-3">
                     <h5><b>Biografía</b></h5>
@@ -98,5 +105,27 @@
         </div>
     </section>
 </main>
+
+    <script>
+        var csrf_token = "{{ csrf_token }}";
+        function follow() {
+            $.ajax({
+                url: '/follow/',
+                data: {
+                    "csrfmiddlewaretoken": csrf_token,
+                    "follower": {{ request_user.id }},
+                    "followed": {{ user.id }}
+                },
+                type:'POST',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.response_code == 200) {
+                        alert("Usuario seguido con exito!!");
+                        location.reload();
+                    }
+                }
+            });
+        }
+    </script>
 {% endblock %}
 

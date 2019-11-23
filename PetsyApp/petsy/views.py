@@ -147,6 +147,7 @@ def profile(request, id_user=None):
     products = list(Product.objects.all())
     shops = Shop.objects.all().filter(user_owner=user)
     context = {
+        "request_user": request.user,
         "user": user,
         "list_products": products,
         "shop_list": shops
@@ -281,8 +282,8 @@ def following_users(request):
     :return:
     """
 
-    follower = UserPetsy.objects.get(username=request.POST['follower'])
-    followed = UserPetsy.objects.get(username=request.POST['followed'])
+    follower = UserPetsy.objects.get(id_user=request.POST['follower'])
+    followed = UserPetsy.objects.get(id_user=request.POST['followed'])
 
     following_string = follower.following_users_string
     following_array = ast.literal_eval(following_string)

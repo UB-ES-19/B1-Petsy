@@ -9,8 +9,6 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from annoying.fields import AutoOneToOneField
 
 
-
-
 class UserPetsy(User):
     id_user = models.AutoField(primary_key=True)
     photo = models.ImageField(max_length=500, blank=True, default="default_user.png")
@@ -30,9 +28,10 @@ class Shop(models.Model):
     user_owner = models.ForeignKey(UserPetsy, on_delete=models.CASCADE)
 
     def __str__(self):
-        return "ID_shop: "+str(self.id_shop)+", " \
-                "shop_name: "+self.shop_name+", " \
-                "user_owner: "+str(self.user_owner.username)
+        return "ID_shop: " + str(self.id_shop) + ", " \
+                                                 "shop_name: " + self.shop_name + ", " \
+                                                                                  "user_owner: " + str(
+            self.user_owner.username)
 
 
 class Product(models.Model):
@@ -68,8 +67,6 @@ class Product(models.Model):
         return self._d_categories[self.category]
 
 
-
-
 class Review(models.Model):
     # id_rev = models.AutoField(primary_key=True)
     # Relation between the User and the Review
@@ -84,4 +81,3 @@ class Review(models.Model):
                                  )
     user_rev = models.ForeignKey(UserPetsy)
     product = models.ForeignKey(Product)
-

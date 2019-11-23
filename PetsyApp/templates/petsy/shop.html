@@ -22,7 +22,7 @@
                         <h4>{{ shop.shop_name }}</h4>
                         <p>Descripción futura</p>
                         <p>Rate</p>
-                        <a href="#" class="btn btn-sm btn-default"><span class="fa fa-heart"></span> Añadir a Favoritos</a>
+                        <button id="follow_shop" onclick="favorited()">Añadir a favoritos</button>
                     </div>
 
                     <div class="col-md-4">
@@ -97,4 +97,27 @@
             </div>
         </section>
     </main>
+
+    <script>
+    var csrf_token = "{% csrf_token %}";
+
+    function favorited(){
+        $.ajax({
+            url: '/favorited/',
+            data: {
+                "csrfmiddlewaretoken": csrf_token,
+                "follower": {{ request_user.id }},
+                "shop_id": {{ shop.id_shop }}
+            },
+            type:'POST',
+            dataType: 'json',
+            success: function (data) {
+                if (data.response_code == 200) {
+                    alert("Usuario seguido con exito!!");
+                    location.reload();
+                }
+            }
+        });
+    }
+    </script>
 {% endblock %}
