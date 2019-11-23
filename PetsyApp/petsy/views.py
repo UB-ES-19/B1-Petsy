@@ -413,10 +413,9 @@ def create_product(request):
             return redirect(get_product_by_id, id_product=p.idProduct)
     return HttpResponse('')
 
-def searching(object, search, edit_distance):
-    """
 
-    """
+def searching(object, search, edit_distance):
+
     from .levenshtein import levenshtein_func
 
     if(object=='product'):
@@ -436,3 +435,11 @@ def searching(object, search, edit_distance):
 
     result, _ = zip(*search_dist)
     return list(set(result))
+
+
+def search(request):
+    if request.method['GET']:
+        return JsonResponse({
+            "result_code": 200,
+            "results": searching(request.GET['object'], request.GET['search'], 10)
+        })
