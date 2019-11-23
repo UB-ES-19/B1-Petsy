@@ -6,6 +6,7 @@ from django.db import models
 from datetime import datetime
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+from annoying.fields import AutoOneToOneField
 
 
 

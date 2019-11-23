@@ -9,7 +9,7 @@ from django.shortcuts import render, redirect
 import ast
 import time
 
-#Petsy
+
 def index(request):
 
     if request.user.is_authenticated:
@@ -20,6 +20,7 @@ def index(request):
         return render(request, 'petsy/homepage.html', context)
 
     return render(request, 'petsy/homepage.html')
+
 
 def signup(request):
     """
@@ -61,6 +62,7 @@ def signup(request):
                     'response_code': 200  # That username already exists
                 })
 
+
 def login_user(request):
     """
     This method checks whether the combination user/password exists or not
@@ -98,6 +100,7 @@ def login_user(request):
                 'login_successful': False,
                 'response_code': 403  # Wrong password
             })
+
 
 def _check_user_connected(request):
     """
@@ -163,7 +166,7 @@ def shop(request, id_shop=None):
     }
     return render(request, 'petsy/shop.html', context)
 
-#ProductManagerApp
+
 def get_product_by_id(request, id_product=None):
     """
     :param request:
@@ -177,6 +180,7 @@ def get_product_by_id(request, id_product=None):
 
         try:
             product = Product.objects.get(idProduct=product_id)
+
         except:
             return JsonResponse({
                 "response_msg": "Error: El producto no existe",
@@ -190,9 +194,9 @@ def get_product_by_id(request, id_product=None):
 
         })
 
+
 def get_user(request):
     """
-
     :param request:
     :return: {
                 "user": ESdinou,
@@ -265,6 +269,93 @@ def review_product_by_id(request):
 
     return redirect(get_product_by_id, id_product=product.idProduct)
 
+
+def following_users(request):
+    """
+    That function expects a request with the following body:
+    {
+        "follower: username,
+        "followed: username
+    }
+    :param request:
+    :return:
+    """
+
+    follower = UserPetsy.objects.get(username=request.POST['follower'])
+    followed = UserPetsy.objects.get(username=request.POST['followed'])
+
+    following_string = follower.following_users_string
+    following_array = ast.literal_eval(following_string)
+
+    followed_string = followed.followed_users_string
+    followed_array = ast.literal_eval(followed_string)
+
+    followed_array.append(follower.username)
+    following_array.append(followed.username)
+
+    updated_followers = len(followed_array)
+
+    UserPetsy.objects. \
+        filter(username=followed.username). \
+        update(followed_users_string=str(followed_array), followed_users=updated_followers)
+
+    updated_following = len(following_array)
+
+    UserPetsy.objects. \
+        filter(username=follower.username). \
+        update(following_users_string=str(following_array), following_users=updated_following)
+
+    return JsonResponse({
+        "result_code": 200
+    })
+
+
+def get_followers(request):
+    username = request.POST['username']
+    user = UserPetsy.objects.get(username=username)
+    followers_string = user.followed_users
+    followers_array = ast.literal_eval(followers_string)
+    return JsonResponse({
+        "result_code": 200,
+        "followers_array": followers_array,
+        "followers_count": len(followers_array)
+    })
+
+
+def get_following(request):
+    username = request.POST['username']
+    user = UserPetsy.objects.get(username=username)
+    following_string = user.following_users
+    following_array = ast.literal_eval(following_string)
+    return JsonResponse({
+        "result_code": 200,
+        "following_array": following_array,
+        "following_count": len(following_array)
+    })
+
+
+def feed_users(request):
+    username = request.POST['username']
+    user = UserPetsy.objects.get(username=username)
+    following_list = user.following_users
+    following_array = ast.literal_eval(following_list)
+    product_array = []
+    for i in range(10):
+        shop_tmp = Shop.objects.get(user_owner=following_array[i])
+        product_tmp = Product.objects.get(shop=shop_tmp)
+        try:
+            product_array.append(product_tmp[-1])
+
+        except:
+            product_array.append(product_tmp)
+
+    return JsonResponse({
+        "result_code": 200,
+        "product_array": product_array,
+        "following_list": following_array[:10]
+    })
+
+
 def remove_product(request, id_product=None):
     """
     :param request:
@@ -321,4 +412,3 @@ def create_product(request):
             p.save()
             return redirect(get_product_by_id, id_product=p.idProduct)
     return HttpResponse('')
-
