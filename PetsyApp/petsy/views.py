@@ -122,7 +122,9 @@ def logout_user(request):
 
 @login_required
 def create(request):
+    user = UserPetsy.objects.all().get(email=request.user.email)
     context = {
+        'user': user,
         'dict_cat': Product._d_categories,
         'product_form': ProductForm()
     }
