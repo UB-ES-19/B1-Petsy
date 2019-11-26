@@ -6,6 +6,8 @@
         <link href="{% static 'css/fileinput.min.css' %}" rel="stylesheet">
         <link href="{% static 'themes/explorer/theme.min.css' %}" rel="stylesheet">
         <link href="{% static 'css/profile.css'%}" rel="stylesheet">
+        <script src="{% static 'js/follow.js' %}"></script>
+
 
 {% endblock %}
 
@@ -20,16 +22,19 @@
                 </div>
                 <div class="col-3">
                     <h3><b>{{ user.username }}</b></h3>
-                    <a class="text-dark" href="">Sigue a <span><b> {{user.followed_users}}</b></span></a>&nbsp;
-                    <a class="text-dark" href=""><b> {{user.following_users}}</b> seguidores</a><br>
-                    {% if request_user.id != user.id %}
+                    <a class="text-dark" href="">Sigue a <span><b> {{following}}</b></span></a>&nbsp;
+                    <a class="text-dark" href=""><b id="follower_id"> {{followers}}</b> seguidores</a>
 
-                    <button type="submit" class="btn btn-secondary" id="follow_user" onclick="follow()">Seguir Usuario</button>
-
+                    {% if request.user.id != user.id %}
+                        <br><br>
+                        {% if not follow %}
+                            <button type="button" class="btn btn-secondary" id="follow_user" onclick="follow('{{ user.id }}','{{ csrf_token }}', this, $('#follower_id')[0])">Seguir usuario</button>
+                        {% else %}
+                            <button type="button" class="btn btn-secondary" id="follow_user" onclick="follow('{{ user.id }}','{{ csrf_token }}', this, $('#follower_id')[0])">Dejar de seguir</button>
+                        {% endif %}
                     {% endif %}
-
-
                 </div>
+
                 <div class="col-3">
                     <h5><b>Biografía</b></h5>
                     <div class="text-muted">

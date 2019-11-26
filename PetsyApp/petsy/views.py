@@ -5,7 +5,7 @@ from petsy.forms import *
 from petsy.models import *
 from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 import ast
 import time
 
@@ -140,17 +140,23 @@ def products(request, username=None):
     return HttpResponse(response)
 
 """
-@login_required
+
 def profile(request, id_user=None):
 
     user = UserPetsy.objects.all().get(id_user=id_user)
-    products = list(Product.objects.all())
+    products = Product.objects.all()
     shops = Shop.objects.all().filter(user_owner=user)
+    followers = user.follower.all().count()
+    following = user.following.all().count()
+    yo = UserPetsy.objects.all().get(id=request.user.id)
     context = {
         "request_user": request.user,
         "user": user,
+        "followers": followers,
+        "following": following,
         "list_products": products,
-        "shop_list": shops
+        "shop_list": shops,
+        "follow": yo.following.filter(following=user).count() == 1
     }
     return render(request, 'petsy/profile.html', context)
 
@@ -223,6 +229,32 @@ def get_user(request):
         "id_shop": shop.id_shop,
         "products_array": product_array
     })
+
+@login_required()
+def following_users(request):
+    if request.method == 'POST':
+        follower = get_object_or_404(UserPetsy, id=request.user.id)
+        following = get_object_or_404(UserPetsy, id=request.POST['following'])
+
+        relation = follower.following.filter(following=following)
+        if relation:
+            relation.delete()
+            return JsonResponse({
+                "response_msg": "Dejar de seguir OK!",
+                "response_code": 200
+            })
+        else:
+            follower.following.add(UserFollowing(following=following), bulk=False)
+            return JsonResponse({
+                "response_msg": "Seguir usuario OK!",
+                "response_code": 201
+            })
+
+    return JsonResponse({
+        "response_msg": "Error: GET encontrado",
+        "response_code": 400
+    })
+
 
 
 def review_product_by_id(request):
