@@ -110,27 +110,5 @@
         </div>
     </section>
 </main>
-
-    <script>
-        var csrf_token = "{{ csrf_token }}";
-        function follow() {
-            $.ajax({
-                url: '/follow/',
-                data: {
-                    "csrfmiddlewaretoken": csrf_token,
-                    "follower": {{ request_user.id }},
-                    "followed": {{ user.id }}
-                },
-                type:'POST',
-                dataType: 'json',
-                success: function (data) {
-                    if (data.response_code == 200) {
-                        alert("Usuario seguido con exito!!");
-                        location.reload();
-                    }
-                }
-            });
-        }
-    </script>
 {% endblock %}
 
