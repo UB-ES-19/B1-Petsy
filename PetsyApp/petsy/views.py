@@ -6,6 +6,7 @@ from petsy.models import *
 from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
+from itertools import chain
 import ast
 import time
 
@@ -138,19 +139,22 @@ def products(request, username=None):
 
 """
 
+
 def profile(request, id_user=None):
 
     user = UserPetsy.objects.all().get(id_user=id_user)
-    products = Product.objects.all()
     shops = Shop.objects.all().filter(user_owner=user)
     followers = user.follower.all().count()
     following = user.following.all().count()
     yo = UserPetsy.objects.all().get(id=request.user.id)
+    product_list = []
+    for shop in shops:
+        product_list.append(Product.objects.all().filter(shop=shop.id_shop))
     context = {
         "user": user,
         "followers": followers,
         "following": following,
-        "list_products": products,
+        "list_products": product_list[0],
         "shop_list": shops,
         "follow": yo.following.filter(following=user).count() == 1
     }
@@ -169,7 +173,7 @@ def shop(request, id_shop=None):
     }
     return render(request, 'petsy/shop.html', context)
 
-#ProductManagerApp
+
 def get_product_by_id(request, id_product=None):
     """
     :param request:
@@ -297,6 +301,7 @@ def review_product_by_id(request):
 
     return redirect(get_product_by_id, id_product=product.idProduct)
 
+
 def remove_product(request, id_product=None):
     """
     :param request:
@@ -331,8 +336,8 @@ def create_product(request):
     if request.method == 'POST':
 
         username = request.user
-        user = User.objects.get(username=username)
-        """
+        user = UserPetsy.objects.get(username=username)
+
         try:
             shop = Shop.objects.get(user_owner=user).id_shop
             print("Shop already exists.")
@@ -343,7 +348,6 @@ def create_product(request):
                 user_owner=user
             )
             shop.save()
-        """
 
         shop = Shop.objects.get(user_owner=user)
         product = ProductForm(request.POST, request.FILES)
