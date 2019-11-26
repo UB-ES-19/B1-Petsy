@@ -159,7 +159,7 @@ def shop(request, id_shop=None):
 
     _shop = Shop.objects.all().get(id_shop=id_shop)
     product_list = list(Product.objects.all().filter(shop=_shop))
-    user = UserPetsy.objects.all().get(email=request.user.email)
+    user = UserPetsy.objects.all().get(email=_shop.user_owner.email)
     context = {
         "shop": _shop,
         "list_products": product_list,
