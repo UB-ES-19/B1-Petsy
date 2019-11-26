@@ -7,20 +7,22 @@ from datetime import datetime
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
-
-
+def get_image_filename_post(instance, filename):
+    return "%s" % (str(datetime.now()) + filename)
 
 class UserPetsy(User):
     id_user = models.AutoField(primary_key=True)
     photo = models.ImageField(max_length=500, blank=True, default="default_user.png")
     description = models.TextField(blank=True)
     init_date = models.DateField(null=True, blank=True)
-    following_users = models.IntegerField(default=0)
-    followed_users = models.IntegerField(default=0)
 
 
-def get_image_filename_post(instance, filename):
-    return "%s" % (str(datetime.now()) + filename)
+class UserFollowing(models.Model):
+    follower = models.ForeignKey(UserPetsy, related_name='following', on_delete=models.CASCADE)
+    following = models.ForeignKey(UserPetsy, related_name='follower', on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('follower', 'following')
 
 
 class Shop(models.Model):
