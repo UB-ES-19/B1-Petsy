@@ -144,34 +144,35 @@ def products(request, username=None):
 """
 
 
-def profile(request, id_user=None):
-    user = UserPetsy.objects.all().get(id_user=id_user)
-    products = Product.objects.all()
+def profile(request, id=None):
+    user = UserPetsy.objects.all().get(id=id)
     shops = Shop.objects.all().filter(user_owner=user)
     followers = user.follower.all().count()
     following = user.following.all().count()
     fav_shops = user.shop_faved.all()
+
+    product_list = []
+    for shop in shops:
+        product_list.append(Product.objects.all().filter(shop=shop.id_shop))
+
     if request.user.is_authenticated:
         yo = UserPetsy.objects.all().get(id=request.user.id)
         context = {
-            "request_user": request.user,
             "user": user,
             "followers": followers,
             "following": following,
-            "list_products": products,
-            "shop_list": shops,
-            "fav_shops": fav_shops,
+            "list_products": product_list[0],
+            "list_items": fav_shops,
             "follow": yo.following.filter(following=user).count() == 1
         }
     else:
         context = {
-            "request_user": request.user,
             "user": user,
             "followers": followers,
             "following": following,
-            "list_products": products,
-            "shop_list": shops,
-            "fav_shops": fav_shops
+            "list_products": product_list[0],
+            "list_items": fav_shops,
+            "follow": False
         }
     return render(request, 'petsy/profile.html', context)
 

@@ -62,62 +62,51 @@
         </div>
 
 
-        <div class="container margin-div">
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Tiendas favoritas</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Seguidos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Seguidores</a>
-                </li>
-            </ul>
 
-            <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">hola</div>
-                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">adios</div>
-                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">pene</div>
-            </div>
-
-        </div>
         <div class="container margin-div">
         <h3>Tiendas favoritas</h3>
-            {% for fav in fav_shops %}
-                {% if forloop.counter0 == 0 or forloop.counter0|divisibleby:4 %}
-                    <div class="row">
-                        <div class="card-deck">
-                            <div class="card">
-                                <img class="card-img-top img-card" src="{% static 'images/shop-icon.png' %}" alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title text-center">{{ fav.shop_faved.shop_name }}</h5>
-                                    <a href="{% url 'shop' fav.shop_faved.id_shop %}" class="card-text"><small class="text-muted stretched-link"></small></a>
-                                </div>
-                            </div>
+            {% for shop in list_items %}
+                    {% if forloop.counter0 == 0 or forloop.counter0|divisibleby:4 %}
+                        <div class="row">
+                            <div class="card-deck">
+                                <div class="card text-center">
+                                    <a href="{% url 'shop' shop.shop_faved.id_shop %}">
+                                        <img class="card-img-top img-products-shop" src="{% static 'images/shop-icon.png' %}" alt="Card image cap">
+                                    </a>
+                                    <div class="card-body">
+                                        <h5 class="card-title text-center">{{ shop.shop_name }}</h5>
+                                        <a href="{% url 'profile' shop.shop_faved.user_owner.id %}" class="card-text"><small class="text-muted">{{ shop.shop_faved.user_owner.username }}</small></a>
 
-                {% elif forloop.counter0|divisibleby:3 or forloop.last %}
-                            <div class="card">
-                                <img class="card-img-top img-card" src="{% static 'images/shop-icon.png' %}" alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title text-center">{{ fav.shop_faved.shop_name }}</h5>
-                                    <a href="{% url 'shop' fav.shop_faved.id_shop %}" class="card-text"><small class="text-muted stretched-link"></small></a>
+                                    </div>
+                                </div>
+
+                    {% elif forloop.counter0|divisibleby:3 or forloop.last %}
+                                <div class="card text-center">
+                                    <a href="{% url 'shop' shop.shop_faved.id_shop %}">
+                                        <img class="card-img-top img-products-shop" src="{% static 'images/shop-icon.png' %}" alt="Card image cap">
+                                    </a>
+                                    <div class="card-body">
+                                        <h5 class="card-title text-center">{{ shop.shop_name }}</h5>
+                                        <a href="{% url 'profile' shop.shop_faved.user_owner.id %}" class="card-text"><small class="text-muted">{{ shop.shop_faved.user_owner.username }}</small></a>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                {% else %}
-                            <div class="card">
-                                <img class="card-img-top img-card" src="{% static 'images/shop-icon.png' %}" alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title text-center">{{ fav.shop_faved.shop_name }}</h5>
-                                    <a href="{% url 'shop' fav.shop_faved.id_shop %}" class="card-text"><small class="text-muted stretched-link"></small></a>
+                    {% else %}
+                                <div class="card text-center">
+                                    <a href="{% url 'shop' shop.shop_faved.id_shop %}">
+                                        <img class="card-img-top img-products-shop" src="{% static 'images/shop-icon.png' %}" alt="Card image cap">
+                                    </a>
+                                    <div class="card-body">
+                                        <h5 class="card-title text-center">{{ shop.shop_name }}</h5>
+                                        <a href="{% url 'profile' shop.shop_faved.user_owner.id %}" class="card-text"><small class="text-muted">{{ shop.shop_faved.user_owner.username }}</small></a>
+
+                                    </div>
                                 </div>
-                            </div>
-                {% endif %}
-
-            {% endfor %}
+                    {% endif %}
+                {% endfor %}
         </div>
     </section>
 </main>

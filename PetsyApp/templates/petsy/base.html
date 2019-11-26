@@ -50,7 +50,7 @@
                                 <form action="{% url 'logout' %}" method="POST">
                                     {%  csrf_token %}
                                     <a href ="{% url 'create' %}" class = "btn btn-background"><i class="fas fa-plus" style="color:white"></i>&nbsp;Añadir producto</a>
-                                    <a href ="{% url 'profile' user.id_user %}" class = "btn btn-transparent-border">
+                                    <a href ="{% url 'profile' request.user.id %}" class = "btn btn-transparent-border">
                                             <img class="img-icon" src={% static 'images/defautlProfile.png' %}>
                                             {{ request.user.username }}
                                     </a>

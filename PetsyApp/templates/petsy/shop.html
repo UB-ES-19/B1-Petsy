@@ -75,7 +75,7 @@
                                                 <div class="card-body">
                                                     <h5 class="card-title text-center">{{ product.nameProduct }}</h5>
                                                     <p class="card-text">{{ product.description }}</p>
-                                                    <a href="{% url 'product_by_id' product.idProduct %}" class="card-text stretched-link"><small class="text-muted">{{product.shop.shop_name}}</small></a>
+                                                    <a href="{% url 'product_by_id' product.idProduct %}" class="card-text stretched-link"></a>
                                                 </div>
                                             </div>
 
@@ -85,12 +85,11 @@
                                                 <div class="card-body">
                                                     <h5 class="card-title text-center">{{ product.nameProduct }}</h5>
                                                     <p class="card-text">{{ product.description }}</p>
-                                                    <a href="{% url 'product_by_id' product.idProduct %}" class="card-text stretched-link"><small class="text-muted">{{ product.shop.shop_name }}</small></a>
+                                                    <a href="{% url 'product_by_id' product.idProduct %}" class="card-text stretched-link"></a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
 
                                 {% else %}
                                             <div class="card">
@@ -98,11 +97,10 @@
                                                 <div class="card-body">
                                                     <h5 class="card-title text-center">{{ product.nameProduct }}</h5>
                                                     <p class="card-text">{{ product.description }}</p>
-                                                    <a href="{% url 'product_by_id' product.idProduct %}" class="card-text stretched-link"><small class="text-muted">{{product.shop.shop_name}}</small></a>
+                                                    <a href="{% url 'product_by_id' product.idProduct %}" class="card-text stretched-link"></a>
                                                 </div>
                                             </div>
                                 {% endif %}
-
                             {% endfor %}
                         </div>
                     </div>
