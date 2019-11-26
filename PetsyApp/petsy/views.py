@@ -6,10 +6,11 @@ from petsy.models import *
 from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
+from itertools import chain
 import ast
 import time
 
-
+#Petsy
 def index(request):
 
     if request.user.is_authenticated:
@@ -62,7 +63,6 @@ def signup(request):
                     'response_code': 200  # That username already exists
                 })
 
-
 def login_user(request):
     """
     This method checks whether the combination user/password exists or not
@@ -100,7 +100,6 @@ def login_user(request):
                 'login_successful': False,
                 'response_code': 403  # Wrong password
             })
-
 
 def _check_user_connected(request):
     """
@@ -228,6 +227,7 @@ def get_product_by_id(request, id_product=None):
 
 def get_user(request):
     """
+
     :param request:
     :return: {
                 "user": ESdinou,
@@ -352,50 +352,8 @@ def review_product_by_id(request):
     return redirect(get_product_by_id, id_product=product.idProduct)
 
 
-def get_followers(request):
-    username = request.POST['username']
-    user = UserPetsy.objects.get(username=username)
-    followers_string = user.followed_users
-    followers_array = ast.literal_eval(followers_string)
-    return JsonResponse({
-        "result_code": 200,
-        "followers_array": followers_array,
-        "followers_count": len(followers_array)
-    })
 
 
-def get_following(request):
-    username = request.POST['username']
-    user = UserPetsy.objects.get(username=username)
-    following_string = user.following_users
-    following_array = ast.literal_eval(following_string)
-    return JsonResponse({
-        "result_code": 200,
-        "following_array": following_array,
-        "following_count": len(following_array)
-    })
-
-
-def feed_users(request):
-    username = request.POST['username']
-    user = UserPetsy.objects.get(username=username)
-    following_list = user.following_users
-    following_array = ast.literal_eval(following_list)
-    product_array = []
-    for i in range(10):
-        shop_tmp = Shop.objects.get(user_owner=following_array[i])
-        product_tmp = Product.objects.get(shop=shop_tmp)
-        try:
-            product_array.append(product_tmp[-1])
-
-        except:
-            product_array.append(product_tmp)
-
-    return JsonResponse({
-        "result_code": 200,
-        "product_array": product_array,
-        "following_list": following_array[:10]
-    })
 
 
 def remove_product(request, id_product=None):
@@ -432,8 +390,8 @@ def create_product(request):
     if request.method == 'POST':
 
         username = request.user
-        user = User.objects.get(username=username)
-        """
+        user = UserPetsy.objects.get(username=username)
+
         try:
             shop = Shop.objects.get(user_owner=user).id_shop
             print("Shop already exists.")
@@ -444,7 +402,6 @@ def create_product(request):
                 user_owner=user
             )
             shop.save()
-        """
 
         shop = Shop.objects.get(user_owner=user)
         product = ProductForm(request.POST, request.FILES)
