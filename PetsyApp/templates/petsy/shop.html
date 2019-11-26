@@ -2,6 +2,10 @@
 {% load static %}
 
 {% block links %}
+        <link href="{% static 'css/fileinput.min.css' %}" rel="stylesheet">
+        <link href="{% static 'themes/explorer/theme.min.css' %}" rel="stylesheet">
+        <link href="{% static 'css/profile.css'%}" rel="stylesheet">
+        <script src="{% static 'js/follow.js' %}"></script>
 {%  endblock %}
 
 {% block content %}
@@ -22,15 +26,25 @@
                         <h4>{{ shop.shop_name }}</h4>
                         <p>Descripción futura</p>
                         <p>Rate</p>
-                        <a href="#" class="btn btn-sm btn-default"><span class="fa fa-heart"></span> Añadir a Favoritos</a>
+                        {% if request.user.is_authenticated %}
+                            {% if request.user.id != shop.user_owner.id %}
+                                <br><br>
+                                {% if not favorited %}
+                                    <button type="button" class="btn btn-secondary" id="favorite_shop" onclick="favorited('{{ shop.id_shop }}','{{ csrf_token }}', this)">Añadir a favoritos</button>
+                                {% else %}
+                                    <button type="button" class="btn btn-secondary" id="favorite_shop" onclick="favorited('{{ shop.id_shop }}','{{ csrf_token }}', this)">Quitar de favoritos</button>
+                                {% endif %}
+                            {% endif %}
+                    {% endif %}
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-4 text-center">
                         <h4>Propietario de la tienda</h4>
                         <figure>
-                            <a href="{% url 'profile' shop.user_owner.id_user %}"><img src="{% static 'images/profile.jpg'%}"  class="rounded-circle ml-4 my-2  img-profile"></a>
+                            <a href="{% url 'profile' shop.user_owner.id_user %}"><img src="{% static 'images/defautlProfile.png'%}"  class="rounded-circle ml-4 my-2  img-profile"></a>&nbsp;
+                            <a class="margin-url" href="{% url 'profile' shop.user_owner.id %}">{{ shop.user_owner.username }}</a>
                         </figure>
-                        <p>{{ shop.user_owner.username }}</p>
+
                     </div>
 
                 </div>
@@ -62,7 +76,7 @@
                                                 <div class="card-body">
                                                     <h5 class="card-title text-center">{{ product.nameProduct }}</h5>
                                                     <p class="card-text">{{ product.description }}</p>
-                                                    <a href="{% url 'product_by_id' product.idProduct %}" class="card-text stretched-link"><small class="text-muted">{{product.shop.shop_name}}</small></a>
+                                                    <a href="{% url 'product_by_id' product.idProduct %}" class="card-text stretched-link"></a>
                                                 </div>
                                             </div>
 
@@ -72,12 +86,11 @@
                                                 <div class="card-body">
                                                     <h5 class="card-title text-center">{{ product.nameProduct }}</h5>
                                                     <p class="card-text">{{ product.description }}</p>
-                                                    <a href="{% url 'product_by_id' product.idProduct %}" class="card-text stretched-link"><small class="text-muted">{{ product.shop.shop_name }}</small></a>
+                                                    <a href="{% url 'product_by_id' product.idProduct %}" class="card-text stretched-link"></a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
 
                                 {% else %}
                                             <div class="card">
@@ -85,11 +98,10 @@
                                                 <div class="card-body">
                                                     <h5 class="card-title text-center">{{ product.nameProduct }}</h5>
                                                     <p class="card-text">{{ product.description }}</p>
-                                                    <a href="{% url 'product_by_id' product.idProduct %}" class="card-text stretched-link"><small class="text-muted">{{product.shop.shop_name}}</small></a>
+                                                    <a href="{% url 'product_by_id' product.idProduct %}" class="card-text stretched-link"></a>
                                                 </div>
                                             </div>
                                 {% endif %}
-
                             {% endfor %}
                         </div>
                     </div>

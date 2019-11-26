@@ -22,6 +22,7 @@ def index(request):
 
     return render(request, 'petsy/homepage.html')
 
+
 def signup(request):
     """
     Register a new user into database
@@ -120,7 +121,9 @@ def logout_user(request):
 
 @login_required
 def create(request):
+    user = UserPetsy.objects.all().get(email=request.user.email)
     context = {
+        'user': user,
         'dict_cat': Product._d_categories,
         'product_form': ProductForm()
     }
@@ -140,24 +143,39 @@ def products(request, username=None):
 """
 
 
-def profile(request, id_user=None):
-
-    user = UserPetsy.objects.all().get(id_user=id_user)
+def profile(request, id=None):
+    user = UserPetsy.objects.all().get(id=id)
     shops = Shop.objects.all().filter(user_owner=user)
     followers = user.follower.all().count()
     following = user.following.all().count()
-    yo = UserPetsy.objects.all().get(id=request.user.id)
+    fav_shops = user.shop_faved.all()
+
+
+    """
     product_list = []
     for shop in shops:
         product_list.append(Product.objects.all().filter(shop=shop.id_shop))
-    context = {
-        "user": user,
-        "followers": followers,
-        "following": following,
-        "list_products": product_list[0],
-        "shop_list": shops,
-        "follow": yo.following.filter(following=user).count() == 1
-    }
+    """
+
+    if request.user.is_authenticated:
+        yo = UserPetsy.objects.all().get(id=request.user.id)
+        context = {
+            "user": user,
+            "followers": followers,
+            "following": following,
+            "list_shops": shops,
+            "list_items": fav_shops,
+            "follow": yo.following.filter(following=user).count() == 1
+        }
+    else:
+        context = {
+            "user": user,
+            "followers": followers,
+            "following": following,
+            "list_shops": shops,
+            "list_items": fav_shops,
+            "follow": False
+        }
     return render(request, 'petsy/profile.html', context)
 
 
@@ -165,12 +183,22 @@ def shop(request, id_shop=None):
 
     _shop = Shop.objects.all().get(id_shop=id_shop)
     product_list = list(Product.objects.all().filter(shop=_shop))
-    user = UserPetsy.objects.all().get(email=request.user.email)
-    context = {
-        "shop": _shop,
-        "list_products": product_list,
-        "user": user
-    }
+    user = UserPetsy.objects.all().get(email=_shop.user_owner.email)
+
+    if request.user.is_authenticated:
+        yo = UserPetsy.objects.all().get(id=request.user.id)
+        context = {
+            "shop": _shop,
+            "list_products": product_list,
+            "user": user,
+            "favorited": yo.shop_faved.filter(shop_faved=_shop).count() == 1
+        }
+    else:
+        context = {
+            "shop": _shop,
+            "list_products": product_list,
+            "user": user
+        }
     return render(request, 'petsy/shop.html', context)
 
 
@@ -183,10 +211,11 @@ def get_product_by_id(request, id_product=None):
 
     if request.method == 'GET':
         product_id = id_product if id_product is not None else request.GET['product_id']
-        user = UserPetsy.objects.all().get(email=request.user.email)
+        #user = UserPetsy.objects.all().get(email=request.user.email)
 
         try:
             product = Product.objects.get(idProduct=product_id)
+
         except:
             return JsonResponse({
                 "response_msg": "Error: El producto no existe",
@@ -195,10 +224,9 @@ def get_product_by_id(request, id_product=None):
 
         return render(request, 'petsy/product.html', {
             "product": product,
-            "reviews": ast.literal_eval(product.reviews),
-            "user": user
-
+            "reviews": ast.literal_eval(product.reviews)
         })
+
 
 def get_user(request):
     """
@@ -254,6 +282,31 @@ def following_users(request):
         "response_code": 400
     })
 
+@login_required()
+def favorite_shop(request):
+    if request.method == 'POST':
+        #print(request.POST['shop_favorited'])
+        follower = get_object_or_404(UserPetsy, id=request.user.id)
+        shop_favorited = get_object_or_404(Shop, id_shop=request.POST['following'])
+
+        relation = follower.shop_faved.filter(shop_faved=shop_favorited)
+        if relation:
+            relation.delete()
+            return JsonResponse({
+                "response_msg": "Dejar de seguir tienda OK!",
+                "response_code": 200
+            })
+        else:
+            follower.shop_faved.add(ShopFavorited(shop_faved=shop_favorited), bulk=False)
+            return JsonResponse({
+                "response_msg": "Seguir tienda OK!",
+                "response_code": 201
+            })
+
+    return JsonResponse({
+        "response_msg": "Error: GET encontrado",
+        "response_code": 400
+    })
 
 
 def review_product_by_id(request):
@@ -275,6 +328,7 @@ def review_product_by_id(request):
     new_review = request.POST['review']
     new_rate = request.POST['rate']
     user = request.user.username  # "joseluis"  # request.POST['username']
+    id = request.user.id
 
     actual_reviews = product_to_update.reviews
     review_array = ast.literal_eval(actual_reviews)
@@ -283,6 +337,7 @@ def review_product_by_id(request):
         "user": {
             "profile_pic": "default_user.png",
             "username": user,
+            "id": id
         },
         "date": time.strftime('%y/%m/%d %X'),
         "message": new_review
@@ -300,6 +355,28 @@ def review_product_by_id(request):
     product = Product.objects.get(idProduct=id_product)
 
     return redirect(get_product_by_id, id_product=product.idProduct)
+
+
+def show_profile_followers(request, id=None, type="follower"):
+    user = UserPetsy.objects.all().get(id=id)
+    if type == "following":
+        list_users = user.following.filter(follower=user)
+        aux = [user.following for user in list_users]
+
+    else:
+        list_users = user.follower.filter(following=user)
+        aux = [user.follower for user in list_users]
+
+    context = {
+        "type": "user",
+        "list_items": aux,
+    }
+    return render(request, 'petsy/show_products.html', context)
+
+
+
+
+
 
 
 def remove_product(request, id_product=None):
@@ -358,3 +435,33 @@ def create_product(request):
             return redirect(get_product_by_id, id_product=p.idProduct)
     return HttpResponse('')
 
+
+def searching(object, search, edit_distance):
+
+    from .levenshtein import levenshtein_func
+
+    if(object=='product'):
+        result = list(set(Product.objects.values_list('result', flat=True)))
+
+    elif(object=='username'):
+        result = list(set(UserPetsy.objects.values_list('result', flat=True)))
+
+    elif(object=='shop'):
+        result = list(set(Shop.objects.values_list('result', flat=True)))
+
+    search_dist = [(x, levenshtein_func(x.lower(), search.lower())) for x in result if levenshtein_func(x.lower(), search.lower()) <= edit_distance]
+    search_dist += [(x, len(x)-len(search)) for x in result if search.lower() in x.lower()]
+    search_dist.sort(key=lambda x: x[1])
+    if len(search_dist) == 0:
+        return []
+
+    result, _ = zip(*search_dist)
+    return list(set(result))
+
+
+def search(request):
+    if request.method['GET']:
+        return JsonResponse({
+            "result_code": 200,
+            "results": searching(request.GET['object'], request.GET['search'], 10)
+        })

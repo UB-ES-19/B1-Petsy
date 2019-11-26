@@ -18,6 +18,7 @@ class SignUpForm(UserCreationForm):
                   'password',
                   'password2')
 
+
 class ProductForm(forms.ModelForm):
 
     class Meta:
