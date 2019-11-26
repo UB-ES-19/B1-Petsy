@@ -141,23 +141,33 @@ def products(request, username=None):
 
 """
 
-def profile(request, id_user=None):
 
+def profile(request, id_user=None):
     user = UserPetsy.objects.all().get(id_user=id_user)
     products = Product.objects.all()
     shops = Shop.objects.all().filter(user_owner=user)
     followers = user.follower.all().count()
     following = user.following.all().count()
-    yo = UserPetsy.objects.all().get(id=request.user.id)
-    context = {
-        "request_user": request.user,
-        "user": user,
-        "followers": followers,
-        "following": following,
-        "list_products": products,
-        "shop_list": shops,
-        "follow": yo.following.filter(following=user).count() == 1
-    }
+    if request.user.is_authenticated:
+        yo = UserPetsy.objects.all().get(id=request.user.id)
+        context = {
+            "request_user": request.user,
+            "user": user,
+            "followers": followers,
+            "following": following,
+            "list_products": products,
+            "shop_list": shops,
+            "follow": yo.following.filter(following=user).count() == 1
+        }
+    else:
+        context = {
+            "request_user": request.user,
+            "user": user,
+            "followers": followers,
+            "following": following,
+            "list_products": products,
+            "shop_list": shops
+        }
     return render(request, 'petsy/profile.html', context)
 
 
@@ -166,11 +176,21 @@ def shop(request, id_shop=None):
     _shop = Shop.objects.all().get(id_shop=id_shop)
     product_list = list(Product.objects.all().filter(shop=_shop))
     user = UserPetsy.objects.all().get(email=_shop.user_owner.email)
-    context = {
-        "shop": _shop,
-        "list_products": product_list,
-        "user": user
-    }
+
+    if request.user.is_authenticated:
+        yo = UserPetsy.objects.all().get(id=request.user.id)
+        context = {
+            "shop": _shop,
+            "list_products": product_list,
+            "user": user,
+            "favorited": yo.shop_faved.filter(shop_faved=_shop).count() == 1
+        }
+    else:
+        context = {
+            "shop": _shop,
+            "list_products": product_list,
+            "user": user
+        }
     return render(request, 'petsy/shop.html', context)
 
 
@@ -183,7 +203,7 @@ def get_product_by_id(request, id_product=None):
 
     if request.method == 'GET':
         product_id = id_product if id_product is not None else request.GET['product_id']
-        user = UserPetsy.objects.all().get(email=request.user.email)
+        #user = UserPetsy.objects.all().get(email=request.user.email)
 
         try:
             product = Product.objects.get(idProduct=product_id)
@@ -196,9 +216,7 @@ def get_product_by_id(request, id_product=None):
 
         return render(request, 'petsy/product.html', {
             "product": product,
-            "reviews": ast.literal_eval(product.reviews),
-            "user": user
-
+            "reviews": ast.literal_eval(product.reviews)
         })
 
 
@@ -255,6 +273,31 @@ def following_users(request):
         "response_code": 400
     })
 
+@login_required()
+def favorite_shop(request):
+    if request.method == 'POST':
+        #print(request.POST['shop_favorited'])
+        follower = get_object_or_404(UserPetsy, id=request.user.id)
+        shop_favorited = get_object_or_404(Shop, id_shop=request.POST['following'])
+
+        relation = follower.shop_faved.filter(shop_faved=shop_favorited)
+        if relation:
+            relation.delete()
+            return JsonResponse({
+                "response_msg": "Dejar de seguir tienda OK!",
+                "response_code": 200
+            })
+        else:
+            follower.shop_faved.add(ShopFavorited(shop_faved=shop_favorited), bulk=False)
+            return JsonResponse({
+                "response_msg": "Seguir tienda OK!",
+                "response_code": 201
+            })
+
+    return JsonResponse({
+        "response_msg": "Error: GET encontrado",
+        "response_code": 400
+    })
 
 
 def review_product_by_id(request):
@@ -301,46 +344,6 @@ def review_product_by_id(request):
     product = Product.objects.get(idProduct=id_product)
 
     return redirect(get_product_by_id, id_product=product.idProduct)
-
-
-def following_users(request):
-    """
-    That function expects a request with the following body:
-    {
-        "follower: username,
-        "followed: username
-    }
-    :param request:
-    :return:
-    """
-
-    follower = UserPetsy.objects.get(id_user=request.POST['follower'])
-    followed = UserPetsy.objects.get(id_user=request.POST['followed'])
-
-    following_string = follower.following_users_string
-    following_array = ast.literal_eval(following_string)
-
-    followed_string = followed.followed_users_string
-    followed_array = ast.literal_eval(followed_string)
-
-    followed_array.append(follower.username)
-    following_array.append(followed.username)
-
-    updated_followers = len(followed_array)
-
-    UserPetsy.objects. \
-        filter(username=followed.username). \
-        update(followed_users_string=str(followed_array), followed_users=updated_followers)
-
-    updated_following = len(following_array)
-
-    UserPetsy.objects. \
-        filter(username=follower.username). \
-        update(following_users_string=str(following_array), following_users=updated_following)
-
-    return JsonResponse({
-        "result_code": 200
-    })
 
 
 def get_followers(request):

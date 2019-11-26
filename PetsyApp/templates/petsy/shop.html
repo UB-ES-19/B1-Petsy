@@ -2,6 +2,10 @@
 {% load static %}
 
 {% block links %}
+        <link href="{% static 'css/fileinput.min.css' %}" rel="stylesheet">
+        <link href="{% static 'themes/explorer/theme.min.css' %}" rel="stylesheet">
+        <link href="{% static 'css/profile.css'%}" rel="stylesheet">
+        <script src="{% static 'js/follow.js' %}"></script>
 {%  endblock %}
 
 {% block content %}
@@ -22,7 +26,16 @@
                         <h4>{{ shop.shop_name }}</h4>
                         <p>Descripción futura</p>
                         <p>Rate</p>
-                        <button id="follow_shop" onclick="favorited()">Añadir a favoritos</button>
+                        {% if request.user.is_authenticated %}
+                            {% if request.user.id != shop.user_owner.id %}
+                                <br><br>
+                                {% if not favorited %}
+                                    <button type="button" class="btn btn-secondary" id="favorite_shop" onclick="favorited('{{ shop.id_shop }}','{{ csrf_token }}', this)">Añadir a favoritos</button>
+                                {% else %}
+                                    <button type="button" class="btn btn-secondary" id="favorite_shop" onclick="favorited('{{ shop.id_shop }}','{{ csrf_token }}', this)">Quitar de favoritos</button>
+                                {% endif %}
+                            {% endif %}
+                    {% endif %}
                     </div>
 
                     <div class="col-md-4">
@@ -97,27 +110,4 @@
             </div>
         </section>
     </main>
-
-    <script>
-    var csrf_token = "{% csrf_token %}";
-
-    function favorited(){
-        $.ajax({
-            url: '/favorited/',
-            data: {
-                "csrfmiddlewaretoken": csrf_token,
-                "follower": {{ request_user.id }},
-                "shop_id": {{ shop.id_shop }}
-            },
-            type:'POST',
-            dataType: 'json',
-            success: function (data) {
-                if (data.response_code == 200) {
-                    alert("Usuario seguido con exito!!");
-                    location.reload();
-                }
-            }
-        });
-    }
-    </script>
 {% endblock %}

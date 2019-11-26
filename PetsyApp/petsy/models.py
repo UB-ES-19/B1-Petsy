@@ -36,6 +36,14 @@ class Shop(models.Model):
                 "user_owner: "+str(self.user_owner.username)
 
 
+class ShopFavorited(models.Model):
+    follower = models.ForeignKey(UserPetsy, related_name='shop_faved', on_delete=models.CASCADE)
+    shop_faved = models.ForeignKey(Shop, related_name='follower', on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('follower', 'shop_faved')
+
+
 class Product(models.Model):
     CATEGORIES = (
         ("Joya", "Joyeria y complementos"),
@@ -81,6 +89,6 @@ class Review(models.Model):
                                              MaxValueValidator(5, "Value must be between 1 and 5")
                                              ]
                                  )
-    user_rev = models.ForeignKey(UserPetsy)
-    product = models.ForeignKey(Product)
+    user_rev = models.ForeignKey(UserPetsy, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
 

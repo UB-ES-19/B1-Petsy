@@ -25,12 +25,14 @@
                     <a class="text-dark" href="">Sigue a <span><b> {{following}}</b></span></a>&nbsp;
                     <a class="text-dark" href=""><b id="follower_id"> {{followers}}</b> seguidores</a>
 
-                    {% if request.user.id != user.id %}
-                        <br><br>
-                        {% if not follow %}
-                            <button type="button" class="btn btn-secondary" id="follow_user" onclick="follow('{{ user.id }}','{{ csrf_token }}', this, $('#follower_id')[0])">Seguir usuario</button>
-                        {% else %}
-                            <button type="button" class="btn btn-secondary" id="follow_user" onclick="follow('{{ user.id }}','{{ csrf_token }}', this, $('#follower_id')[0])">Dejar de seguir</button>
+                    {% if request.user.is_authenticated %}
+                        {% if request.user.id != user.id %}
+                            <br><br>
+                            {% if not follow %}
+                                <button type="button" class="btn btn-secondary" id="follow_user" onclick="follow('{{ user.id }}','{{ csrf_token }}', this, $('#follower_id')[0])">Seguir usuario</button>
+                            {% else %}
+                                <button type="button" class="btn btn-secondary" id="follow_user" onclick="follow('{{ user.id }}','{{ csrf_token }}', this, $('#follower_id')[0])">Dejar de seguir</button>
+                            {% endif %}
                         {% endif %}
                     {% endif %}
                 </div>
