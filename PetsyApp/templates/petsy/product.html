@@ -30,7 +30,7 @@
                                                 </figure>
                                             </div>
                                             <div class="col-md-10">
-                                                <p><a href="#"><strong>{{ review.user.username }}</strong></a> {{ review.date }}</p>
+                                                <p><a href="{% url 'profile' review.user.id %}"><strong>{{ review.user.username }}</strong></a> {{ review.date }}</p>
                                                 <p>
                                                     {{ review.message }}
                                                 </p>

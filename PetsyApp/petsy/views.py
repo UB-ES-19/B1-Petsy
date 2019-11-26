@@ -150,9 +150,12 @@ def profile(request, id=None):
     following = user.following.all().count()
     fav_shops = user.shop_faved.all()
 
+
+    """
     product_list = []
     for shop in shops:
         product_list.append(Product.objects.all().filter(shop=shop.id_shop))
+    """
 
     if request.user.is_authenticated:
         yo = UserPetsy.objects.all().get(id=request.user.id)
@@ -160,7 +163,7 @@ def profile(request, id=None):
             "user": user,
             "followers": followers,
             "following": following,
-            "list_products": product_list[0],
+            "list_shops": shops,
             "list_items": fav_shops,
             "follow": yo.following.filter(following=user).count() == 1
         }
@@ -169,7 +172,7 @@ def profile(request, id=None):
             "user": user,
             "followers": followers,
             "following": following,
-            "list_products": product_list[0],
+            "list_shops": shops,
             "list_items": fav_shops,
             "follow": False
         }
@@ -325,6 +328,7 @@ def review_product_by_id(request):
     new_review = request.POST['review']
     new_rate = request.POST['rate']
     user = request.user.username  # "joseluis"  # request.POST['username']
+    id = request.user.id
 
     actual_reviews = product_to_update.reviews
     review_array = ast.literal_eval(actual_reviews)
@@ -333,6 +337,7 @@ def review_product_by_id(request):
         "user": {
             "profile_pic": "default_user.png",
             "username": user,
+            "id": id
         },
         "date": time.strftime('%y/%m/%d %X'),
         "message": new_review
@@ -350,6 +355,24 @@ def review_product_by_id(request):
     product = Product.objects.get(idProduct=id_product)
 
     return redirect(get_product_by_id, id_product=product.idProduct)
+
+
+def show_profile_followers(request, id=None, type="follower"):
+    user = UserPetsy.objects.all().get(id=id)
+    if type == "following":
+        list_users = user.following.filter(follower=user)
+        aux = [user.following for user in list_users]
+
+    else:
+        list_users = user.follower.filter(following=user)
+        aux = [user.follower for user in list_users]
+
+    context = {
+        "type": "user",
+        "list_items": aux,
+    }
+    return render(request, 'petsy/show_products.html', context)
+
 
 
 

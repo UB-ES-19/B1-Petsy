@@ -24,8 +24,8 @@
                 </div>
                 <div class="col-3">
                     <h3><b>{{ user.username }}</b></h3>
-                    <a class="text-dark" href="">Sigue a <span><b> {{following}}</b></span></a>&nbsp;
-                    <a class="text-dark" href=""><b id="follower_id"> {{followers}}</b> seguidores</a>
+                    <a class="text-dark" href="{% url 'profile_followers' user.id "following" %}">Sigue a <span><b> {{following}}</b></span></a>&nbsp;
+                    <a class="text-dark" href="{% url 'profile_followers' user.id "follower" %}"><b id="follower_id"> {{followers}}</b> seguidores</a>
 
                     {% if request.user.is_authenticated %}
                         {% if request.user.id != user.id %}
@@ -47,7 +47,7 @@
                     </div>
                     <div class="position-relative">
                         <h5>Tus Tiendas:</h5>
-                        {% for shop in shop_list %}
+                        {% for shop in list_shops %}
                             <a href="{% url 'shop' shop.id_shop %}" style="margin-top: 5px">
                                 <img class="img-shop-icon mr-xs-2" src="{% static 'images/shop-icon.png' %}">
                                 <div class="d-inline position-absolute margin-url">
