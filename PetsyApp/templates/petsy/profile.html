@@ -7,6 +7,8 @@
         <link href="{% static 'themes/explorer/theme.min.css' %}" rel="stylesheet">
         <link href="{% static 'css/profile.css'%}" rel="stylesheet">
         <script src="{% static 'js/follow.js' %}"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.11/js/mdb.min.js"></script>
+
 
 
 {% endblock %}
@@ -59,6 +61,27 @@
             </div>
         </div>
 
+
+        <div class="container margin-div">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Tiendas favoritas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Seguidos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Seguidores</a>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">hola</div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">adios</div>
+                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">pene</div>
+            </div>
+
+        </div>
         <div class="container margin-div">
         <h3>Tiendas favoritas</h3>
             {% for fav in fav_shops %}
