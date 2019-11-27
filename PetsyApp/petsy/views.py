@@ -293,6 +293,7 @@ def get_user(request):
     })
 
 
+
 @login_required()
 def following_users(request):
     if request.method == 'POST':
