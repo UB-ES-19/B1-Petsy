@@ -211,7 +211,7 @@ def get_product_by_id(request, id_product=None):
 
     if request.method == 'GET':
         product_id = id_product if id_product is not None else request.GET['product_id']
-        #user = UserPetsy.objects.all().get(email=request.user.email)
+        user = UserPetsy.objects.all().get(email=request.user.email)
 
         try:
             product = Product.objects.get(idProduct=product_id)
