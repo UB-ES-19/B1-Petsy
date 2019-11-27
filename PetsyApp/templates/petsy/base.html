@@ -21,17 +21,17 @@
                         <img src="{% static "images/etsy.png" %}" alt="Logo" style="width: 40px;">
                     </a>
                 </ul>
-                <form method="GET">
+                <form method="GET" action="{% url 'search' %}">
 
                     <ul class="navbar-nav mx-auto" style="margin-left: 305px !important;">
                         <ul class="nav navbar-nav" style = "margin-right:200px">
                             <div class="input-group " style ="width: 400px">
-                                <select class="custom-select">
-                                    <option>Productos</option>
-                                    <option>Tiendas</option>
-                                    <option>Usuarios</option>
+                                <select class="custom-select" name="type">
+                                    <option value="product">Productos</option>
+                                    <option value="shop">Tiendas</option>
+                                    <option value="user">Usuarios</option>
                                 </select>
-                                <input type="text" placeholder="Buscar articulos y tiendas" aria-label="Search">
+                                <input type="text" placeholder="Buscar articulos y tiendas" aria-label="Search" name="q">
                                 <div class="input-group-append">
                                     <span class="input-group-text red lighten-3" id="basic-text1"><a href = "#"><i class="fa fa-search text-grey fa-1x" aria-hidden="false"></i></a></span>
                                 </div>

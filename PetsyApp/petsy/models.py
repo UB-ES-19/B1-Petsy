@@ -42,7 +42,6 @@ class ShopFavorited(models.Model):
 
     class Meta:
         unique_together = ('follower', 'shop_faved')
-        
 
 
 class Product(models.Model):

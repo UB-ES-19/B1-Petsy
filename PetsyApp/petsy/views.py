@@ -6,13 +6,48 @@ from petsy.models import *
 from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import ListView
 from itertools import chain
 import ast
 import time
 
-#Petsy
-def index(request):
 
+# Petsy
+
+class SearchProductView(ListView):
+    model = Product
+    template_name = 'petsy/show_products.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        list_items = Product.objects.filter(nameProduct__icontains=query)
+
+        return list_items
+
+
+class SearchShopView(ListView):
+    model = Shop
+    template_name = 'petsy/show_products.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        list_items = Shop.objects.filter(shop_name__icontains=query)
+
+        return list_items
+
+
+class SearchUserView(ListView):
+    model = User
+    template_name = 'petsy/show_products.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        list_items = User.objects.filter(username__icontains=query)
+
+        return list_items
+
+
+def index(request):
     if request.user.is_authenticated:
         user = UserPetsy.objects.all().get(email=request.user.email)
         context = {
@@ -63,6 +98,7 @@ def signup(request):
                     'response_code': 200  # That username already exists
                 })
 
+
 def login_user(request):
     """
     This method checks whether the combination user/password exists or not
@@ -100,6 +136,7 @@ def login_user(request):
                 'login_successful': False,
                 'response_code': 403  # Wrong password
             })
+
 
 def _check_user_connected(request):
     """
@@ -150,7 +187,6 @@ def profile(request, id=None):
     following = user.following.all().count()
     fav_shops = user.shop_faved.all()
 
-
     """
     product_list = []
     for shop in shops:
@@ -180,7 +216,6 @@ def profile(request, id=None):
 
 
 def shop(request, id_shop=None):
-
     _shop = Shop.objects.all().get(id_shop=id_shop)
     product_list = list(Product.objects.all().filter(shop=_shop))
     user = UserPetsy.objects.all().get(email=_shop.user_owner.email)
@@ -257,6 +292,7 @@ def get_user(request):
         "products_array": product_array
     })
 
+
 @login_required()
 def following_users(request):
     if request.method == 'POST':
@@ -282,10 +318,11 @@ def following_users(request):
         "response_code": 400
     })
 
+
 @login_required()
 def favorite_shop(request):
     if request.method == 'POST':
-        #print(request.POST['shop_favorited'])
+        # print(request.POST['shop_favorited'])
         follower = get_object_or_404(UserPetsy, id=request.user.id)
         shop_favorited = get_object_or_404(Shop, id_shop=request.POST['following'])
 
@@ -374,11 +411,6 @@ def show_profile_followers(request, id=None, type="follower"):
     return render(request, 'petsy/show_products.html', context)
 
 
-
-
-
-
-
 def remove_product(request, id_product=None):
     """
     :param request:
@@ -437,20 +469,20 @@ def create_product(request):
 
 
 def searching(object, search, edit_distance):
-
     from .levenshtein import levenshtein_func
 
-    if(object=='product'):
+    if (object == 'product'):
         result = list(set(Product.objects.values_list('result', flat=True)))
 
-    elif(object=='username'):
+    elif (object == 'username'):
         result = list(set(UserPetsy.objects.values_list('result', flat=True)))
 
-    elif(object=='shop'):
+    elif (object == 'shop'):
         result = list(set(Shop.objects.values_list('result', flat=True)))
 
-    search_dist = [(x, levenshtein_func(x.lower(), search.lower())) for x in result if levenshtein_func(x.lower(), search.lower()) <= edit_distance]
-    search_dist += [(x, len(x)-len(search)) for x in result if search.lower() in x.lower()]
+    search_dist = [(x, levenshtein_func(x.lower(), search.lower())) for x in result if
+                   levenshtein_func(x.lower(), search.lower()) <= edit_distance]
+    search_dist += [(x, len(x) - len(search)) for x in result if search.lower() in x.lower()]
     search_dist.sort(key=lambda x: x[1])
     if len(search_dist) == 0:
         return []
@@ -465,3 +497,23 @@ def search(request):
             "result_code": 200,
             "results": searching(request.GET['object'], request.GET['search'], 10)
         })
+
+
+def search2(request):
+    if request.method == 'GET':
+        type = request.GET.get('type')
+        query = request.GET.get('q')
+        if type == "product":
+           list_items = Product.objects.filter(nameProduct__icontains=query)
+        elif type == "shop":
+            list_items = Shop.objects.filter(shop_name__icontains=query)
+        else:
+            list_items = User.objects.filter(username__icontains=query)
+
+        context = {
+            "list_items": list_items,
+            "type": type
+        }
+
+        return render(request, 'petsy/show_products.html', context)
+
