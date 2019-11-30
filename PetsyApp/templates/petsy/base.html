@@ -15,7 +15,7 @@
     
     <body>
         <header>
-            <nav class="navbar navbar-expand-sm" >
+           <!-- <nav class="navbar navbar-expand-sm" >
                 <ul class="navbar-nav" >
                     <a class = "navbar-brand " href="{% url 'index' %}">
                         <img src="{% static "images/etsy.png" %}" alt="Logo" style="width: 40px;">
@@ -62,6 +62,90 @@
                     {% endif %}
                 </ul>
 
+
+            </nav>-->
+
+         <nav class="navbar navbar-light">
+              <a class="navbar-brand" href="/">
+                <img src="/static/images/Petsy.png" alt="Logo" style="width: 5em;">
+              </a>
+              <form class="form-inline" method="GET" action="{% url 'search' %}">
+                <div class="input-group buscador">
+                  <div class="input-group-prepend">
+                    <select class="custom-select select-search">
+                        <option>Productos</option>
+                        <option>Tiendas</option>
+                        <option>Usuarios</option>
+                    </select>
+                  </div>
+
+                  <input type="text" class="form-control input-search" placeholder="Buscar articulos y tiendas" aria-label="Search" name="q">
+                    <button  class="btn btn-outline-success my-2 my-sm-0" action="{% url 'search' %}" type="submit"><i class="fa fa-search"></i></button>
+                </div>
+              </form>
+                <div class="form-inline" id="ul_navbar">
+
+                    {% if not request.user.is_authenticated %}
+                        <div><a href="#" style="margin-right: 30px" data-toggle="modal" data-target="#register_modal"  class="btn btn-transparent-border"><i id="register_label"></i> Registrarse</a></div>
+                        <div><a href="#"  data-toggle="modal" data-target="#login_modal" class="btn btn-transparent"><i id="login_label"></i> Iniciar Sesión</a></div>
+                    {% else %}
+
+                        <div class="form-inline">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-1">
+                                        <div class="dropdown">
+                                          <a class="btn" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="far fa-user-circle"></i>
+                                          </a>
+                                            <div class="dropdown-menu">
+                                              <a class="dropdown-item" href ="{% url 'profile' request.user.id %}"> Perfil </a>
+                                              <div class="dropdown-divider"></div>
+                                                <form action="{% url 'logout' %}" method="POST">
+                                                    {%  csrf_token %}
+                                                    <button  class=" btn dropdown-item" type="submit" id="logout_button">Cerrar sessión</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-1">
+                                        <a>
+                                            <i class="fas fa-store"></i>
+                                        </a>
+                                    </div>
+                                    <div class="col-1">
+                                         <a>
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-1">
+                                            <span> {{ request.user.username }}</span>
+                                    </div>
+                                    <div class="col-1">
+                                        <a>
+                                            <span>Tienda</span>
+                                        </a>
+                                    </div>
+                                    <div class="col-1">
+                                         <a>
+                                            <span>Carrito</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
 
             </nav>
         </header>
