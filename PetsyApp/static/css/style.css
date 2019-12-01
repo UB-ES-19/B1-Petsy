@@ -19,7 +19,6 @@ h1 {
     font-weight: normal;
 }
 header{
-    margin-bottom: 10px;
     border-bottom: solid lightgray 0.5px;
 }
 nav span{
@@ -343,6 +342,42 @@ nav span{
 .dropdown-menu {
     font-size: 11px;
     width: 116px !important;
+}
+
+.col-md-6.px-0 {
+
+    background-color: rgba(250,235,215,.9);
+    border-radius: 24px;
+    text-align: center;
+    color: white;
+
+}
+.name-propietari {
+
+    display: block;
+    margin-top: 7px;
+    color:  black;
+    text-transform: uppercase;
+    font-size: small;
+
+}
+.container.articles p {
+
+    font-size: 36px;
+    font-weight: lighter;
+    text-decoration: underline;
+
+}
+.title-propietari {
+
+    color:   gray;
+    font-size: small;
+
+}
+.container.articles {
+
+    margin-top: 5em;
+
 }
 #add_product_form_button{
     margin-left: 22em;

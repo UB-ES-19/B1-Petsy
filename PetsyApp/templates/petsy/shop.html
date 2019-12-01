@@ -5,57 +5,50 @@
         <link href="{% static 'css/fileinput.min.css' %}" rel="stylesheet">
         <link href="{% static 'themes/explorer/theme.min.css' %}" rel="stylesheet">
         <link href="{% static 'css/profile.css'%}" rel="stylesheet">
-        <script src="{% static 'js/follow.js' %}"></script>
 {%  endblock %}
-
+{% block scripts %}
+   <script src="{% static 'js/follow.js' %}"></script>
+{%  endblock %}
 {% block content %}
 
-    <main style="background-color:white">
-        <section style="background-color:white">
-            <div>
-                <img class="branding-image-temporal" src="{% static 'images/juansora.jpg' %}">
+<main>
+    <section>
+        <div class="jumbotron" style="background-image: url('{% static 'images/sorajuan.jpeg' %}'); background-size: contain ">
+            <div class="col-md-6 px-0">
+              <h1 class="display-4 font-italic">{{ shop.shop_name }}</h1>
+              <p class="lead my-3">Descripcion</p>
             </div>
+        </div>
 
-            <div class="separator"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-4" style="text-align: center;">
+                    <p class="title-propietari">PROPIETARIO DE LA TIENDA</p>
+                    <i class="far fa-user-circle fa-3x"></i>
+                    <a class="name-propietari" href="{% url 'profile' shop.user_owner.id_user %}">{{ shop.user_owner.username }}</a>
+                </div>
 
-            <div class="container">
-                <div class="row">
-
-                    <div class="col-md-8">
-                        <img class="img-shop" src="{% static 'images/shop-icon.png' %}" alt="shop icon" align="left">
-                        <h4>{{ shop.shop_name }}</h4>
-                        <p>Descripción futura</p>
-                        <p>Rate</p>
-                        {% if request.user.is_authenticated %}
+                <div class="col-10" style="text-align: end;">
+                    {% if request.user.is_authenticated %}
                             {% if request.user.id != shop.user_owner.id %}
-                                <br><br>
                                 {% if not favorited %}
-                                    <button type="button" class="btn btn-secondary" id="favorite_shop" onclick="favorited('{{ shop.id_shop }}','{{ csrf_token }}', this)">Añadir a favoritos</button>
+                                    <button type="button" class="btn btn-background" id="favorite_shop" onclick="favorited('{{ shop.id_shop }}','{{ csrf_token }}', this)">Añadir a favoritos</button>
                                 {% else %}
-                                    <button type="button" class="btn btn-secondary" id="favorite_shop" onclick="favorited('{{ shop.id_shop }}','{{ csrf_token }}', this)">Quitar de favoritos</button>
+                                    <button type="button" class="btn btn-background" id="favorite_shop" onclick="favorited('{{ shop.id_shop }}','{{ csrf_token }}', this)">Quitar de favoritos</button>
                                 {% endif %}
                             {% endif %}
                     {% endif %}
-                    </div>
-
-                    <div class="col-md-4 text-center">
-                        <h4>Propietario de la tienda</h4>
-                        <figure>
-                            <a href="{% url 'profile' shop.user_owner.id_user %}"><img src="{% static 'images/defautlProfile.png'%}"  class="rounded-circle ml-4 my-2  img-profile"></a>&nbsp;
-                            <a class="margin-url" href="{% url 'profile' shop.user_owner.id %}">{{ shop.user_owner.username }}</a>
-                        </figure>
-
-                    </div>
-
                 </div>
             </div>
-
-            <div class="separator"></div>
-
-            <div class="container">
-                <h2>Artículos</h2>
-                <div class="row">
-                    <div class="col-md-2">
+        </div>
+        <div class="container articles">
+            <div class="row">
+                <div class="col-12">
+                    <p>ARTÍCULOS</p>
+                </div>
+            </div>
+            <div class="row">
+                <!--<div class="col-md-2">
                         <ul class="list-group">
                             {% for category in categories %}
                             <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -64,7 +57,7 @@
                             </li>
                             {% endfor %}
                         </ul>
-                    </div>
+                    </div>-->
                     <div class="col-md-10">
                         <div class="container margin-div">
                             {% for product in list_products %}
@@ -104,9 +97,10 @@
                                 {% endif %}
                             {% endfor %}
                         </div>
-                    </div>
-                </div>
+
             </div>
-        </section>
-    </main>
+        </div>
+
+    </section>
+</main>
 {% endblock %}
