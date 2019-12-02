@@ -1,23 +1,6 @@
-
-
-
-
-
 var error_msg = "";
 
-$("#login_form").submit(function (e) {
-    e.preventDefault();
-    if (validaLogin()) {
-        sendLogin();
-    }
-});
 
-$("#register_form").submit(function (e) {
-    e.preventDefault();
-    if(validaRegister()){
-        sendRegister();
-    }
-});
 
 function validaLogin() {
     if($("#email_login").val() == ""){
@@ -133,5 +116,32 @@ function checkPassword() {
         return false;
 }
 
+$(document).ready(function() {
+    $("#login_form").submit(function (e) {
+        e.preventDefault();
+        if (validaLogin()) {
+            sendLogin();
+        }
+    });
 
+    $("#register_form").submit(function (e) {
+        e.preventDefault();
+        if(validaRegister()){
+            sendRegister();
+        }
+    });
+    $(document).on("click", "#tfavs", function() {
+        $("#tfavs").addClass("in");
+        $("#pfavs").removeClass("in");
+        document.getElementById("container-tfav").style.display = "block";
+         document.getElementById("container-pfav").style.display = "none";
+
+    });
+    $(document).on("click", "#pfavs", function() {
+        $("#pfavs").addClass("in");
+        $("#tfavs").removeClass("in");
+        document.getElementById("container-tfav").style.display = "none";
+        document.getElementById("container-pfav").style.display = "block";
+    });
+});
 

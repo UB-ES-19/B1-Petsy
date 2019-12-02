@@ -186,6 +186,7 @@ def profile(request, id=None):
     followers = user.follower.all().count()
     following = user.following.all().count()
     fav_shops = user.shop_faved.all()
+    products = Product.objects.all()
 
     """
     product_list = []
@@ -201,7 +202,8 @@ def profile(request, id=None):
             "following": following,
             "list_shops": shops,
             "list_items": fav_shops,
-            "follow": yo.following.filter(following=user).count() == 1
+            "follow": yo.following.filter(following=user).count() == 1,
+            "list_products": products
         }
     else:
         context = {
@@ -210,7 +212,8 @@ def profile(request, id=None):
             "following": following,
             "list_shops": shops,
             "list_items": fav_shops,
-            "follow": False
+            "follow": False,
+            "list_products": products
         }
     return render(request, 'petsy/profile.html', context)
 

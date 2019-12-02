@@ -22,10 +22,10 @@
               <form class="form-inline" method="GET" action="{% url 'search' %}">
                 <div class="input-group buscador">
                   <div class="input-group-prepend">
-                    <select class="custom-select select-search">
-                        <option>Productos</option>
-                        <option>Tiendas</option>
-                        <option>Usuarios</option>
+                    <select class="custom-select select-search" name="type">
+                        <option value="product">Productos</option>
+                        <option value="shop">Tiendas</option>
+                        <option value="user">Usuarios</option>
                     </select>
                   </div>
                   <input type="text" class="form-control input-search" placeholder="Buscar articulos y tiendas" aria-label="Search" name="q">
@@ -66,7 +66,9 @@
                                                 <a href="{% url 'shop' shop.id_shop %}" class="dropdown-item">
                                                    {{ shop.shop_name }}
                                                 </a>
-                                        {% endfor %}
+                                            {% endfor %}
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item"><i class="fas fa-plus"></i> Añadir producto</a>
                                         </div>
                                     </div>
 

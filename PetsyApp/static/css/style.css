@@ -379,6 +379,52 @@ nav span{
     margin-top: 5em;
 
 }
+.profile {
+   width: 82px;
+    text-align: center;
+}
+.wrap-profile{
+    width: max-content;
+    border: solid  orange 11px;
+    border-radius: 31px;
+}
+.colum-imgProf {
+
+    justify-content: center;
+    display: flex;
+
+}
+.colum-user{
+    display: table-cell;
+    vertical-align: middle;
+}
+.table-user{
+    display: table;
+}
+.container-user{
+    margin-top: 3em;
+    margin-left: 9em;
+}
+.tiendas-fav{
+    font-size: 34px;
+    font-weight: lighter;
+    margin-top: 2.5em;
+    text-decoration: underline 1px;
+}
+.container.margin-div {
+    margin-bottom: 2em;
+    border-bottom: solid lightgray 1px;
+}
+.in {
+
+    border-bottom: solid  orange 6px;
+    border-radius: 0px;
+
+}
+.btn.focus, .btn:focus {
+    outline: 0;
+    box-shadow: none;
+}
 #add_product_form_button{
     margin-left: 22em;
     margin-top: 2em;
