@@ -14,7 +14,7 @@
                     <div class="col-md-6">
                         {#                        <img class="d-block w-100" src="photos/{{ img }}" alt="imagen produto">#}
                         <div>
-                            <img class="d-block w-100 img-product" src="../../../photos/fons.jpg" alt="imagen produto">
+                            <img class="d-block w-100 img-product" src="{{product.img.url}}" alt="imagen produto">
                         </div>
 
                         <div class="separator">
@@ -30,12 +30,12 @@
                                                 </figure>
                                             </div>
                                             <div class="col-md-10">
-                                                <p><a href="#"><strong>{{ review.user.username }}</strong></a> {{ review.date }}</p>
+                                                <p><a href="{% url 'profile' review.user.id %}"><strong>{{ review.user.username }}</strong></a> {{ review.date }}</p>
                                                 <p>
                                                     {{ review.message }}
                                                 </p>
                                                 <figure>
-                                                    <p><a href="#" class="review-link"><img src="../../../photos/{{ img }}"
+                                                    <p><a href="#" class="review-link"><img src="../../../photos/{{ product.img }}"
                                                                                             class="img img-responsive review-image"
                                                                                             alt="foto producto"> {{ titulo }}</a>
                                                     </p>
@@ -45,9 +45,11 @@
                                     </div>
                                 </div>
                             {% endfor %}
+                            {% if request.user.is_authenticated %}
+
                             <div class="form-group">
                                 <p class="titulo-m">Danos tu opinión...</p>
-                                <form method="POST" action="{% url 'review_product_by_id' %}">
+                                <form id="review_form" method="POST" action="{% url 'review_product_by_id' %}">
                                     {% csrf_token %}
                                     <label class="titulo-xs" for="rating">Puntuación</label>
                                     <select id="rating" name="rate">
@@ -59,20 +61,23 @@
                                     </select>
                                     <br>
                                     <textarea style="display: none;" name="product_id">
-                                        {{ id_product }}
+                                        {{ product.idProduct }}
                                     </textarea>
                                     <textarea placeholder="Escribe aquí tu reseña..." class="form-control" id="message" rows="3" name="review"></textarea>
                                     <button type="submit" class="btn btn-background" id="review_button">Enviar reseña</button>
 
                                 </form>
                             </div>
+                        {% endif %}
                         </div>
                     </div>
 
                     <div class="col-md-4">
-                        <h2 id="titulo-producto">{{ titulo }}</h2>
-                        <p class="subtitulo-s">{{ descripcion }}</p>
-                        <p><b>{{ precio }}€</b></p>
+                        <a href="{% url 'shop' product.shop.id_shop %}">{{ product.shop.shop_name }}</a>
+                        <h2 id="titulo-producto">{{ product.nameProduct }}</h2>
+                        <p class="subtitulo-s">{{ product.description }}</p>
+                        <p><b>{{ product.price }}€</b></p>
+                        {% if request.user.is_authenticated %}
                         <div class="display-grid">
                             <form method="post">
                             {% csrf_token %}
@@ -88,12 +93,13 @@
                                 <button type="submit" class="btn btn-transparent comprar"><p class="txt-center">Añadir a la cesta</p></button>
                             </form>
                         </div>
+                        {% endif %}
                         <div class="border-top caracteristicas">
                             <p class="titulo-s"><b>Información del producto</b></p>
                             <p class="titulo-xs"><b>Categoria</b></p>
-                            <p class="texto-s" style="font-size: 0.8em;font-weight: lighter;">{{ categoria }}</p>
+                            <p class="texto-s" style="font-size: 0.8em;font-weight: lighter;">{{ product.category }}</p>
                             <p class="titulo-xs"><b>Materiales</b></p>
-                            <p class="texto-s" >{{ materiales }}</p>
+                            <p class="texto-s" >{{ product.materials }}</p>
                         </div>
 
                     </div>
