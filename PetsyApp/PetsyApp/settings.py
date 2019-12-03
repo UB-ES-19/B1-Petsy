@@ -25,7 +25,7 @@ SECRET_KEY = 'khewbccmp1(#^d98h*%h@h#7)@oo23)h6f%9bpydv(-fc9#$=6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0']
 
 
 # Application definition
@@ -78,11 +78,13 @@ WSGI_APPLICATION = 'PetsyApp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'petsyapp',
+        'NAME': 'postgres',         #docker
+        #'NAME': 'petsyapp',        #local
         'USER': 'petsyappuser',
         'PASSWORD': 'ESB12019',
-        'HOST': 'localhost',
-        'PORT': '',
+        'HOST': 'db',               #docker
+        #'HOST': 'localhost',       #local
+        'PORT': '5432',
     }
 }
 
