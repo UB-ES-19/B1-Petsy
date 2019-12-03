@@ -45,12 +45,16 @@
                     {% endif %}
                 </div>
             <div class="col-6 text-align-right">
+            {% if request.user.is_authenticated %}
+                {% if request.user.id != user.id %}
                     <h5 style="font-weight: lighter;text-decoration: underline">Sus tiendas:</h5>
                         {% for shop in list_shops %}
                             <li>
                                 <a href="{% url 'shop' shop.id_shop %}" style="margin-top: 5px; color:black; margin-left: 1em;">{{ shop.shop_name }}</a>
                             </li>
                         {% endfor %}
+                {% endif %}
+            {% endif %}
                     </div>
                 </div>
             </div>
