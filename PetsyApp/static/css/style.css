@@ -425,6 +425,20 @@ nav span{
     outline: 0;
     box-shadow: none;
 }
+.tienda {
+
+    position: absolute;
+    top: 6em;
+    left: 66em;
+
+}
+.fav_product {
+
+    color: orange !important;
+    margin: 10px;
+
+}
+
 #add_product_form_button{
     margin-left: 22em;
     margin-top: 2em;

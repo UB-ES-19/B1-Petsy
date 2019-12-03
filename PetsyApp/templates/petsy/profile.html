@@ -25,7 +25,11 @@
                 </div>
                 <div class="col-4 colum-user">
                     <p style="font-size: 40px;font-weight: lighter;">{{ user.username }}
-                        <a href="" class="text-dark" style="font-size: 15px;font-weight: lighter;margin-left: 1em"><i class="far fa-edit"></i>Editar perfil</a>
+                        {% if request.user.is_authenticated %}
+                            {% if request.user.id == user.id %}
+                                <a href="" class="text-dark" style="font-size: 15px;font-weight: lighter;margin-left: 1em"><i class="far fa-edit"></i>Editar perfil</a>
+                            {% endif %}
+                        {% endif %}
                     </p>
                     <a class="text-dark" style="font-weight: lighter;" href="{% url 'profile_followers' user.id "following" %}">Sigue a <span><b> {{following}}</b></span></a>&nbsp;
                     <a class="text-dark" style="font-weight: lighter;" href="{% url 'profile_followers' user.id "follower" %}"><b id="follower_id"> {{followers}}</b> seguidores</a>

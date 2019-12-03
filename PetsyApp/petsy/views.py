@@ -514,6 +514,7 @@ def search(request):
 
 
 def search2(request):
+    shops = Shop.objects.all().filter(user_owner=request.user)
     if request.method == 'GET':
         type = request.GET.get('type')
         query = request.GET.get('q')
@@ -526,6 +527,7 @@ def search2(request):
 
         context = {
             "list_items": list_items,
+            "list_shops": shops,
             "type": type,
         }
 
