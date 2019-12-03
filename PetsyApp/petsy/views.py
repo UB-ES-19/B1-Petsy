@@ -50,13 +50,14 @@ class SearchUserView(ListView):
 def index(request):
     if request.user.is_authenticated:
         user = UserPetsy.objects.all().get(email=request.user.email)
+        shops = Shop.objects.all().filter(user_owner=user)
         context = {
-            "user": user
+            "user": user,
+            "list_shops": shops
         }
         return render(request, 'petsy/homepage.html', context)
 
     return render(request, 'petsy/homepage.html')
-
 
 def signup(request):
     """
