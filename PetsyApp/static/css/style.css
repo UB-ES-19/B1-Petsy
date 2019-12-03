@@ -11,6 +11,9 @@ img{
     height: 100%;
     object-fit: cover;
 }
+li{
+    list-style: none;
+}
 
 a:hover{
     color: orangered;
@@ -390,16 +393,23 @@ nav span{
 }
 .colum-imgProf {
 
-    justify-content: center;
-    display: flex;
+    display: table-cell;
 
 }
 .colum-user{
-    display: table-cell;
-    vertical-align: middle;
+   display: table-cell;
+    vertical-align: top;
 }
 .table-user{
     display: table;
+    width: 100%;
+}
+.col-6.text-align-right {
+
+    display: table-cell;
+    vertical-align: top;
+    padding-left: 13em;
+
 }
 .container-user{
     margin-top: 3em;
@@ -437,6 +447,9 @@ nav span{
     color: orange !important;
     margin: 10px;
 
+}
+.col-6.text-align-right a:hover{
+    color:orange !important;
 }
 
 #add_product_form_button{
