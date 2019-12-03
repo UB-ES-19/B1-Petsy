@@ -158,12 +158,14 @@ def logout_user(request):
 
 
 @login_required
-def create(request):
+def create(request, id_shop=None):
     user = UserPetsy.objects.all().get(email=request.user.email)
+    shops = Shop.objects.all().filter(user_owner=user)
     context = {
         'user': user,
         'dict_cat': Product._d_categories,
-        'product_form': ProductForm()
+        'product_form': ProductForm(),
+        'list_shops' : shops
     }
     return render(request, 'petsy/createProduct.html', context)
 
@@ -184,6 +186,7 @@ def products(request, username=None):
 def profile(request, id=None):
     user = UserPetsy.objects.all().get(id=id)
     shops = Shop.objects.all().filter(user_owner=user)
+    _shops = Shop.objects.all().filter(user_owner=request.user)
     followers = user.follower.all().count()
     following = user.following.all().count()
     fav_shops = user.shop_faved.all()
@@ -201,7 +204,8 @@ def profile(request, id=None):
             "user": user,
             "followers": followers,
             "following": following,
-            "list_shops": shops,
+            "shops": shops,
+            "list_shops": _shops,
             "list_items": fav_shops,
             "follow": yo.following.filter(following=user).count() == 1,
             "list_products": products
@@ -223,6 +227,7 @@ def shop(request, id_shop=None):
     _shop = Shop.objects.all().get(id_shop=id_shop)
     product_list = list(Product.objects.all().filter(shop=_shop))
     user = UserPetsy.objects.all().get(email=_shop.user_owner.email)
+    shops = Shop.objects.all().filter(user_owner=request.user)
 
     if request.user.is_authenticated:
         yo = UserPetsy.objects.all().get(id=request.user.id)
@@ -230,7 +235,8 @@ def shop(request, id_shop=None):
             "shop": _shop,
             "list_products": product_list,
             "user": user,
-            "favorited": yo.shop_faved.filter(shop_faved=_shop).count() == 1
+            "favorited": yo.shop_faved.filter(shop_faved=_shop).count() == 1,
+            "list_shops": shops
         }
     else:
         context = {
@@ -251,6 +257,7 @@ def get_product_by_id(request, id_product=None):
     if request.method == 'GET':
         product_id = id_product if id_product is not None else request.GET['product_id']
         user = UserPetsy.objects.all().get(email=request.user.email)
+        _shops = Shop.objects.all().filter(user_owner=request.user)
 
         try:
             product = Product.objects.get(idProduct=product_id)
@@ -263,7 +270,8 @@ def get_product_by_id(request, id_product=None):
 
         return render(request, 'petsy/product.html', {
             "product": product,
-            "reviews": ast.literal_eval(product.reviews)
+            "reviews": ast.literal_eval(product.reviews),
+            "list_shops": _shops
         })
 
 
@@ -452,6 +460,7 @@ def create_product(request):
         username = request.user
         user = UserPetsy.objects.get(username=username)
 
+
         try:
             shop = Shop.objects.get(user_owner=user).id_shop
             print("Shop already exists.")
@@ -517,7 +526,7 @@ def search2(request):
 
         context = {
             "list_items": list_items,
-            "type": type
+            "type": type,
         }
 
         return render(request, 'petsy/show_products.html', context)

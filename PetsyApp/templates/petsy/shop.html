@@ -36,6 +36,8 @@
                                 {% else %}
                                     <button type="button" class="btn btn-background" id="favorite_shop" onclick="favorited('{{ shop.id_shop }}','{{ csrf_token }}', this)">Quitar de favoritos</button>
                                 {% endif %}
+                            {% else %}
+                                <a class="btn btn-background" href="{% url 'create' shop.id_shop %}"><i class="fas fa-plus"></i> Añadir producto</a>
                             {% endif %}
                     {% endif %}
                 </div>
