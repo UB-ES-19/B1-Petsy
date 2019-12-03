@@ -7,7 +7,7 @@
 {% block content %}
 <main class ="background_product">
         <section class="boder-top">
-
+            <a href="{% url 'shop' product.shop.id_shop %}" class="btn btn-background tienda">Ir a {{ product.shop.shop_name }}</a>
             <div class="container">
                 <div class="row" style="justify-content: center;background-color:white">
 
@@ -73,7 +73,6 @@
                     </div>
 
                     <div class="col-md-4">
-                        <a href="{% url 'shop' product.shop.id_shop %}">{{ product.shop.shop_name }}</a>
                         <h2 id="titulo-producto">{{ product.nameProduct }}</h2>
                         <p class="subtitulo-s">{{ product.description }}</p>
                         <p><b>{{ product.price }}€</b></p>
@@ -91,6 +90,7 @@
                                     <option value="5">5</option>
                                 </select><br>
                                 <button type="submit" class="btn btn-transparent comprar"><p class="txt-center">Añadir a la cesta</p></button>
+                                <a href="#" id="btn-fav-product" class="fav_product"><i class="far fa-heart"></i></a>
                             </form>
                         </div>
                         {% endif %}
