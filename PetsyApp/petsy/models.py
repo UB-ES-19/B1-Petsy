@@ -29,6 +29,7 @@ class Shop(models.Model):
     id_shop = models.AutoField(primary_key=True)
     shop_name = models.TextField(default='Shop')
     user_owner = models.ForeignKey(UserPetsy, on_delete=models.CASCADE)
+    description = models.TextField(blank=True)
 
     def __str__(self):
         return "ID_shop: "+str(self.id_shop)+", " \
@@ -91,4 +92,3 @@ class Review(models.Model):
                                  )
     user_rev = models.ForeignKey(UserPetsy, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-
