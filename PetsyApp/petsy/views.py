@@ -165,11 +165,20 @@ def create(request, id_shop=None):
         'user': user,
         'dict_cat': Product._d_categories,
         'product_form': ProductForm(),
-        'list_shops' : shops
+        'list_shops': shops
     }
     return render(request, 'petsy/createProduct.html', context)
 
-
+@login_required
+def create_shop_view(request):
+    user = UserPetsy.objects.all().get(email=request.user.email)
+    shops = Shop.objects.all().filter(user_owner=user)
+    context = {
+        'user': user,
+        'shop_form': ShopForm(),
+        'list_shops': shops
+    }
+    return render(request, 'petsy/createShop.html', context)
 """
 # Vista de productos (testing)
 def products(request, username=None):
@@ -274,7 +283,31 @@ def get_product_by_id(request, id_product=None):
             "list_shops": _shops
         })
 
+def get_shop_by_id(request, id_shop=None):
+    """
+    :param request:
+    :param id_product:
+    :return:
+    """
 
+    if request.method == 'GET':
+        shop_id = id_shop if id_shop is not None else request.GET['shop_id']
+        user = UserPetsy.objects.all().get(email=request.user.email)
+        _shops = Shop.objects.all().filter(user_owner=request.user)
+
+        try:
+            shop = Shop.objects.get(id_shop=shop_id)
+
+        except:
+            return JsonResponse({
+                "response_msg": "Error: la tienda no existe",
+                "response_code": 404  # Product not found
+            })
+
+        return render(request, 'petsy/shop.html', {
+            "shop": shop,
+            "list_shops": _shops
+        })
 def get_user(request):
     """
 
@@ -481,7 +514,36 @@ def create_product(request):
             return redirect(get_product_by_id, id_product=p.idProduct)
     return HttpResponse('')
 
+def create_shop(request):
+    """
+    Register a new user into database
 
+    :param request: Request
+    :return: ????????
+    """
+    if request.method == 'POST':
+
+        username = request.user
+        user = UserPetsy.objects.get(username=username)
+
+
+        """try:
+            shop = Shop.objects.get(user_owner=user).id_shop
+            print("Shop already exists.")
+        except:
+            print("No shop yet, creating a new one.")
+            shop = Shop(
+                shop_name="Shop",
+                user_owner=user
+        )"""
+
+        shop = ShopForm(request.POST, request.FILES)
+        if shop.is_valid():
+            s = shop.save(commit=False)
+            s.user_owner = user
+            shop.save()
+            return redirect(get_product_by_id, id_shop=s.id_shop)
+    return HttpResponse('')
 def searching(object, search, edit_distance):
     from .levenshtein import levenshtein_func
 

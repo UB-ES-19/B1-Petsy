@@ -1,0 +1,46 @@
+{% extends 'petsy/base.html' %}
+{% load static %}
+
+{% block links %}
+
+        <link href="{% static 'css/fileinput.min.css' %}" rel="stylesheet">
+        <link href="{% static 'themes/explorer/theme.min.css' %}" rel="stylesheet">
+
+{% endblock %}
+
+{% block content %}
+<main >
+    <section class="background_crear" >
+        <div class="container" id="crear">
+
+            <div class = "container margin-form" style="background-color: antiquewhite">
+                <span class ="titol_crear"><h1>Nueva tienda</h1></span>
+                <form id="add_shop_form" class="my-form-add-shop"><!--method="POST" action="{% url 'create_product' %}" enctype="multipart/form-data"-->
+                {% csrf_token %}
+                <div>
+                    <p>Nombre de la tienda</p>
+                    {{shop_form.shop_name}}
+                </div>
+                <div>
+                     <p>Descripción</p>
+                    {{shop_form.description}}
+                </div>
+                <div>
+                    <p>Añade una imagen de portada</p>
+                    {{shop_form.img_shop}}
+                </div>
+
+                <button class="btn btn-transparent" type="submit" id="add_product_form_button">Crea la tienda</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/fileinput.min.js' %}"></script>
+    <script src="{% static 'themes/fa/theme.min.js' %}"></script>
+    <script src="{% static 'js/pages/createProduct.js' %}"></script>
+{% endblock %}
+

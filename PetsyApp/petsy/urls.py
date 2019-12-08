@@ -10,11 +10,13 @@ urlpatterns = [
     url(r'^login/$', views.login_user, name="login"),
     url(r'^logout/$', views.logout_user, name="logout"),
     url(r'^create/(?P<id_shop>.*)$', views.create, name="create"),
+    url(r'^create_shop/', views.create_shop_view, name="create_shop"),
     url(r'^profile/(?P<id>.*)/(?P<type>.*)/$', views.show_profile_followers, name="profile_followers"),
     url(r'^profile/(?P<id>.*)$', views.profile, name="profile"),
     url(r'^shop/(?P<id_shop>.*)$', views.shop, name="shop"),
 
     url(r'^product/(?P<id_product>.*)/$', views.get_product_by_id, name='product_by_id'),
+    url(r'^shop/(?P<id_shop>.*)/$', views.get_shop_by_id, name='shop_by_id'),
     url(r'^product/$', views.create_product, name='create_product'),
     url(r'^review_product_by_id/$', views.review_product_by_id, name='review_product_by_id'),
     url(r'^follow/$', views.following_users, name="follow_user"),
