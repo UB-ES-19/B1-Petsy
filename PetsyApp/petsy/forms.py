@@ -34,6 +34,17 @@ class ProductForm(forms.ModelForm):
         }
 
 
+class EditProfileForm(forms.ModelForm):
+
+    class Meta:
+        model = UserPetsy
+        fields = ['username', 'photo']
+        widgets = {
+            'username': forms.TextInput(attrs={'placeholder': 'Nuevo nombre', 'class':'formulari'}),
+            'photo': forms.FileInput(attrs={'id': 'input-fa', 'accept': 'image/*', 'class': 'file'})
+        }
+
+
 class ReviewForm(forms.ModelForm):
 
     class Meta:
