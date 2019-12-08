@@ -296,7 +296,7 @@ def get_shop_by_id(request, id_shop=None):
         _shops = Shop.objects.all().filter(user_owner=request.user)
 
         try:
-            shop = Shop.objects.get(id_shop=shop_id)
+            s = Shop.objects.get(id_shop=shop_id)
 
         except:
             return JsonResponse({
@@ -305,7 +305,7 @@ def get_shop_by_id(request, id_shop=None):
             })
 
         return render(request, 'petsy/shop.html', {
-            "shop": shop,
+            "shop": s,
             "list_shops": _shops
         })
 def get_user(request):
@@ -542,7 +542,7 @@ def create_shop(request):
             s = shop.save(commit=False)
             s.user_owner = user
             shop.save()
-            return redirect(get_product_by_id, id_shop=s.id_shop)
+            return redirect(get_shop_by_id, id_shop=s.id_shop)
     return HttpResponse('')
 def searching(object, search, edit_distance):
     from .levenshtein import levenshtein_func
