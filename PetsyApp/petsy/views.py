@@ -558,8 +558,24 @@ def create_shop(request):
             return redirect(get_shop_by_id, id_shop=s.id_shop)
     return HttpResponse('')
 
-def edit_shop(request):
-    return HttpResponse('')
+def edit_shop(request, id_shop=None):
+    if request.method == "POST":
+        shop = Shop.objects.get(id_shop=id_shop)
+
+        if request.POST["shop_name"] != "":
+            shop.shop_name = request.POST["shop_name"]
+
+        if len(request.FILES) != 0:
+            shop.img_shop = request.FILES["img_shop"]
+
+        if request.POST["description"] != "":
+            shop.description = request.POST["description"]
+
+
+
+        shop.save()
+
+        return redirect(get_shop_by_id, id_shop=shop.id_shop)
 
 def searching(object, search, edit_distance):
     from .levenshtein import levenshtein_func
