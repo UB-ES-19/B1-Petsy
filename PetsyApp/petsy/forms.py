@@ -42,7 +42,16 @@ class ShopForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'class': 'form-control','placeholder': 'Añade información relevante como estado, modelo, color...'}),
             'img_shop': forms.FileInput(attrs={'id': 'input-fa', 'accept': 'image/*', 'class': 'file'})
         }
+class EditForm(forms.ModelForm):
 
+    class Meta:
+        model = Shop
+        fields = ['shop_name', 'description',  'img_shop']
+        widgets = {
+            'shop_name': forms.TextInput(attrs={ 'class': 'formulari'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
+            'img_shop': forms.FileInput(attrs={'id': 'input-fa', 'accept': 'image/*', 'class': 'file'})
+        }
 class ReviewForm(forms.ModelForm):
 
     class Meta:

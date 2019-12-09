@@ -30,7 +30,7 @@ class Shop(models.Model):
     shop_name = models.TextField(default='Shop')
     user_owner = models.ForeignKey(UserPetsy, on_delete=models.CASCADE)
     description = models.CharField(max_length=1000, default='description')
-    img_shop = models.ImageField(upload_to=get_image_filename_post)
+    img_shop = models.ImageField(upload_to=get_image_filename_post, default='/default-shop-img.jpg')
 
     def __str__(self):
         return "ID_shop: "+str(self.id_shop)+", " \

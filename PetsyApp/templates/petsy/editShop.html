@@ -11,11 +11,11 @@
 {% block content %}
 <main >
     <section class="background_crear" >
-        <div class="container" id="crear">
+        <div class="container" >
 
             <div class = "container margin-form" style="background-color: antiquewhite">
-                <span class ="titol_crear" id="titol-crear-shop"><h1>Crear tienda</h1></span>
-                <form id="add_shop_form" class="my-form-add-shop" method='POST' action="{% url 'create_shop' %}" enctype="multipart/form-data">
+                <span class ="titol_crear" ><h1>Editar tienda</h1></span>
+                <form id="add_shop_form" class="my-form-add-shop" method="POST" action="{% url 'edit_shop' shop.id_shop %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div>
                     <p>Nombre de la tienda</p>
@@ -27,10 +27,12 @@
                 </div>
                 <div>
                     <p>Añade una imagen de portada</p>
+                    <img src={{ shop.img_shop.url }}>
                     {{shop_form.img_shop}}
+
                 </div>
 
-                <button class="btn btn-transparent" type="submit" id="add_shop_form_button">Crea la tienda</button>
+                <button class="btn btn-transparent" type="submit" id="add_shop_form_button">Edita</button>
                 </form>
             </div>
         </div>

@@ -29,7 +29,7 @@
                     <a class="name-propietari" href="{% url 'profile' shop.user_owner.id_user %}">{{ shop.user_owner.username }}</a>
                     {% if request.user.is_authenticated %}
                         {% if request.user.id == user.id %}
-                            <a href="" class="text-dark" style="font-size: 15px;font-weight: lighter;"><i class="far fa-edit"></i>Editar tienda</a>
+                            <a id="btn_editar_tienda" href="{% url 'edit_shop_view' shop.id_shop %}" class="text-dark" style="font-size: 15px;font-weight: lighter;"><i class="far fa-edit"></i>Editar tienda</a>
                         {% endif %}
                     {% endif %}
                 </div>

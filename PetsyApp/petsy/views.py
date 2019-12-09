@@ -165,7 +165,8 @@ def create(request, id_shop=None):
         'user': user,
         'dict_cat': Product._d_categories,
         'product_form': ProductForm(),
-        'list_shops': shops
+        'list_shops': shops,
+        'id_shop_actual': id_shop
     }
     return render(request, 'petsy/createProduct.html', context)
 
@@ -176,9 +177,21 @@ def create_shop_view(request):
     context = {
         'user': user,
         'shop_form': ShopForm(),
-        'list_shops': shops
+        'list_shops': shops,
     }
     return render(request, 'petsy/createShop.html', context)
+@login_required
+def edit_shop_view(request, id_shop=None):
+    user = UserPetsy.objects.all().get(email=request.user.email)
+    shops = Shop.objects.all().filter(user_owner=user)
+    _shop = Shop.objects.all().get(id_shop=id_shop)
+    context = {
+        'user': user,
+        'shop_form': EditForm(instance=_shop),
+        'list_shops': shops,
+        'shop': _shop
+    }
+    return render(request, 'petsy/editShop.html', context)
 """
 # Vista de productos (testing)
 def products(request, username=None):
@@ -481,7 +494,7 @@ def remove_product(request, id_product=None):
         })
 
 
-def create_product(request):
+def create_product(request,id_shop=None):
     """
     Register a new user into database
 
@@ -495,7 +508,7 @@ def create_product(request):
 
 
         try:
-            shop = Shop.objects.get(user_owner=user).id_shop
+            shop = Shop.objects.get(id_shop=id_shop)
             print("Shop already exists.")
         except:
             print("No shop yet, creating a new one.")
@@ -505,7 +518,7 @@ def create_product(request):
             )
             shop.save()
 
-        shop = Shop.objects.get(user_owner=user)
+
         product = ProductForm(request.POST, request.FILES)
         if product.is_valid():
             p = product.save(commit=False)
@@ -544,6 +557,10 @@ def create_shop(request):
             shop.save()
             return redirect(get_shop_by_id, id_shop=s.id_shop)
     return HttpResponse('')
+
+def edit_shop(request):
+    return HttpResponse('')
+
 def searching(object, search, edit_distance):
     from .levenshtein import levenshtein_func
 
