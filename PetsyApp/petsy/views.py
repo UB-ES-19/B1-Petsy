@@ -169,6 +169,18 @@ def create(request, id_shop=None):
     }
     return render(request, 'petsy/createProduct.html', context)
 
+@login_required()
+def edit_product(request, id=None):
+    if request.method == "GET":
+        user = UserPetsy.objects.all().get(email=request.user.email)
+        shops = Shop.objects.all().filter(user_owner=user)
+        context = {
+            'user': user,
+            'dict_cat': Product._d_categories,
+            'product_form': ProductForm(),
+            'list_shops': shops
+        }
+        return render(request, 'petsy/editProduct.html', context)
 
 @login_required
 def edit_profile(request):
@@ -302,6 +314,7 @@ def get_product_by_id(request, id_product=None):
         product_id = id_product if id_product is not None else request.GET['product_id']
         user = UserPetsy.objects.all().get(email=request.user.email)
         _shops = Shop.objects.all().filter(user_owner=request.user)
+        ownership = False
 
         try:
             product = Product.objects.get(idProduct=product_id)
@@ -312,11 +325,15 @@ def get_product_by_id(request, id_product=None):
                 "response_code": 404  # Product not found
             })
 
+        if request.user.is_authenticated and request.user.id == product.shop.user_owner.id:
+            ownership = True
+
         return render(request, 'petsy/product.html', {
             "product": product,
             "reviews": ast.literal_eval(product.reviews),
             "list_shops": _shops,
-            "favorited": user.prod_faved.filter(prod_faved=product).count() == 1
+            "favorited": user.prod_faved.filter(prod_faved=product).count() == 1,
+            "owner": ownership
         })
 
 
@@ -550,6 +567,24 @@ def create_product(request):
             p.save()
             return redirect(get_product_by_id, id_product=p.idProduct)
     return HttpResponse('')
+
+@login_required()
+def edit_product_data(request, id=None):
+    if request.method == "POST":
+        user = UserPetsy.objects.all.get(id=request.user.id)
+        product = Product.objects.all.get(idProduct=id)
+        edited = ProductForm(request.POST, request.FILES)
+
+        if edited.is_valid():
+            product.nameProduct = edited.nameProduct
+            product.description = edited.description
+            product.category = edited.category
+            product.price = edited.price
+            product.img = edited.img
+            product.materials = edited.materials
+            product.save()
+
+        return redirect(get_product_by_id, id_product=product.id)
 
 
 def searching(object, search, edit_distance):
