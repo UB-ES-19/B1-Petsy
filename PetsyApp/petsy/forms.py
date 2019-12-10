@@ -57,6 +57,10 @@ class EditForm(forms.ModelForm):
         super(EditForm, self).__init__(*args, **kargs)
         self.fields['img_shop'].required = False
 
+    def __init__(self, *args, **kwargs):
+        super(ProductForm, self).__init__(*args, **kwargs)
+        self.fields['img'].required = False
+
 
 class EditProfileForm(forms.ModelForm):
 

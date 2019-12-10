@@ -192,6 +192,23 @@ def edit_shop_view(request, id_shop=None):
         'shop': _shop
     }
     return render(request, 'petsy/editShop.html', context)
+@login_required
+def edit_product(request, id=None):
+    if request.method == "GET":
+        print(id)
+        user = UserPetsy.objects.all().get(email=request.user.email)
+        shops = Shop.objects.all().filter(user_owner=user)
+        product = Product.objects.all().get(idProduct=int(id))
+        form = ProductForm(instance=product)
+        #form.img = product.img.url
+        context = {
+            'product': product,
+            'user': user,
+            'dict_cat': Product._d_categories,
+            'product_form': form,
+            'list_shops': shops
+        }
+        return render(request, 'petsy/editProduct.html', context)
 
 @login_required
 def edit_profile(request):
@@ -325,6 +342,7 @@ def get_product_by_id(request, id_product=None):
         product_id = id_product if id_product is not None else request.GET['product_id']
         user = UserPetsy.objects.all().get(email=request.user.email)
         _shops = Shop.objects.all().filter(user_owner=request.user)
+        ownership = False
 
         try:
             product = Product.objects.get(idProduct=product_id)
@@ -335,11 +353,15 @@ def get_product_by_id(request, id_product=None):
                 "response_code": 404  # Product not found
             })
 
+        if request.user.is_authenticated and request.user.id == product.shop.user_owner.id:
+            ownership = True
+
         return render(request, 'petsy/product.html', {
             "product": product,
             "reviews": ast.literal_eval(product.reviews),
             "list_shops": _shops,
-            "favorited": user.prod_faved.filter(prod_faved=product).count() == 1
+            "favorited": user.prod_faved.filter(prod_faved=product).count() == 1,
+            "owner": ownership
         })
 
 def get_shop_by_id(request, id_shop=None):
@@ -647,6 +669,26 @@ def edit_shop(request, id_shop=None):
         shop.save()
 
         return redirect(get_shop_by_id, id_shop=shop.id_shop)
+@login_required()
+def edit_product_data(request, id=None):
+    if request.method == "POST":
+        user = UserPetsy.objects.all().get(id=request.user.id)
+        product = Product.objects.all().get(idProduct=id)
+        edited = ProductForm(request.POST, request.FILES)
+
+        if edited.is_valid():
+            edited = edited.save(commit=False)
+            product.nameProduct = edited.nameProduct
+            product.description = edited.description
+            product.category = edited.category
+            product.price = edited.price
+            if len(request.FILES) > 0:
+                product.img = edited.img
+            product.materials = edited.materials
+            product.save()
+
+        return redirect(get_product_by_id, id_product=product.idProduct)
+
 
 def searching(object, search, edit_distance):
     from .levenshtein import levenshtein_func

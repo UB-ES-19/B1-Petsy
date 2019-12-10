@@ -67,6 +67,10 @@
                                     <button type="submit" class="btn btn-background" id="review_button">Enviar reseña</button>
 
                                 </form>
+                                {% if owner %}
+                                    <a href="{% url 'edit_product' product.idProduct %}" class="btn btn-background tienda">Editar Producto</a>
+                                {% endif %}
+
                             </div>
                         {% endif %}
                         </div>
