@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^review_product_by_id/$', views.review_product_by_id, name='review_product_by_id'),
     url(r'^follow/$', views.following_users, name="follow_user"),
     url(r'^favorited/$', views.favorite_shop, name="follow_user"),
+    url(r'^favorited_product', views.favorite_product, name="follow_user"),
     url(r'^profile/(?P<id>.*)/(?P<type>.*)/$', views.show_profile_followers, name="profile_followers"),
     url(r'search/$', views.search2, name='search'),
     url(r'^edit_profile', views.edit_profile, name='edit_profile')

@@ -81,6 +81,14 @@ class Product(models.Model):
         return self._d_categories[self.category]
 
 
+class ProductFavorited(models.Model):
+    follower = models.ForeignKey(UserPetsy, related_name='prod_faved', on_delete=models.CASCADE)
+    prod_faved = models.ForeignKey(Product, related_name='follower', on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('follower', 'prod_faved')
+
+
 class Review(models.Model):
     # id_rev = models.AutoField(primary_key=True)
     # Relation between the User and the Review
