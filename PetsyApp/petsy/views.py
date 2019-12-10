@@ -238,7 +238,7 @@ def profile(request, id=None):
                 "list_items": fav_shops,
                 "follow": yo.following.filter(following=user).count() == 1,
                 "list_products": products,
-                "edit_form": EditProfileForm()
+                "edit_form": EditProfileForm(instance=user)
 
             }
         else:

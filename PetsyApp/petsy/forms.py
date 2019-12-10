@@ -44,6 +44,10 @@ class EditProfileForm(forms.ModelForm):
             'photo': forms.FileInput(attrs={'id': 'input-fa', 'accept': 'image/*', 'class': 'file'})
         }
 
+    def __init__(self, *args, **kargs):
+        super(EditProfileForm, self).__init__(*args, **kargs)
+        self.fields['photo'].required = False
+
 
 class ReviewForm(forms.ModelForm):
 
