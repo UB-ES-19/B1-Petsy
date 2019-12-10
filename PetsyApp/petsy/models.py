@@ -7,14 +7,17 @@ from datetime import datetime
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+
 def get_image_filename_post(instance, filename):
     return "%s" % (str(datetime.now()) + filename)
+
 
 class UserPetsy(User):
     id_user = models.AutoField(primary_key=True)
     photo = models.ImageField(max_length=500, blank=True, default="default_user.png")
     description = models.TextField(blank=True)
     init_date = models.DateField(null=True, blank=True)
+    currentBill = models.TextField(default="")
 
 
 class UserFollowing(models.Model):

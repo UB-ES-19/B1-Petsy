@@ -575,3 +575,44 @@ def edit_product(request):
     })
 
 
+def cesta_add_product_by_id(request):
+    """
+    That function expects a request with the following body:
+        {
+            "product_id": 4,
+            "review": "Very good quality, I really recommend it bc...",
+            "rate": 3,
+            "username": "joseluis"
+        }
+    And then, updates the field 'reviews' from the 'product_id' product.
+
+    :param request
+    :return: JsonResponse
+    """
+    id_product = request.POST['id_product']
+    amount = request.POST['amount']
+    usern = request.user.username  # "joseluis"  # request.POST['username']
+    id = request.user.id
+
+    user = UserPetsy.objects.get(username=usern)
+    current_bill = user.currentBill
+
+    current_bill += str(id_product)+"-"+str(amount)+","
+
+    user.currentBill = current_bill
+
+    return redirect(get_product_by_id, id_product=id_product)
+
+
+def render_bill(request):
+
+    current_bill = UserPetsy.objects.get(username=request.user.username).currentBill
+
+    for pair in current_bill.split(','):  # id-amount
+
+
+    return render(request, 'petsy/bill.html', {
+        "prod": {
+
+        }
+    })

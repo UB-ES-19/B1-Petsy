@@ -90,7 +90,7 @@
                                 </div>
                                 <div class="col-1">
                                      <a>
-                                        <span>Carrito</span>
+                                        <span onclick="carrito()"> Carrito</span>
                                     </a>
                                 </div>
                             </div>
@@ -198,7 +198,9 @@
     <script src="{% static "js/bootstrap.min.js" %}"></script>
     <script defer src="{% static "js/all.js" %}"></script>
     <script src="{% static "js/scripts.js" %}"></script>
-    <script></script>
+    <script>
+        function carrito(){ var baseUrl = window.location.href; window.location.href = baseUrl.split('/')[0]+"//"+baseUrl.split('/')[2]+"/bill";}
+    </script>
     {% block scripts %} {% endblock %}
 
 </html>
