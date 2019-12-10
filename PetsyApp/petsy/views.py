@@ -215,26 +215,17 @@ def edit_profile(request):
     if request.method == "POST":
         user = UserPetsy.objects.all().get(id=request.user.id)
 
-        patata = False
-        patata2 = False
+        #patata = False
+        #patata2 = False
         if request.POST["username"] != "":
             user.username = request.POST["username"]
-            patata = True
+            #patata = True
         if len(request.FILES) != 0:
             user.photo = request.FILES["photo"]
-            patata2 = True
-
-        if patata and patata2:
-            return JsonResponse({
-                "response_code": 204,
-                "response:msg": "Sin Contenido"
-            })
+            #patata2 = True
 
         user.save()
-        return JsonResponse({
-            "response_code": 200,
-            "response_msg": "Usuario actualizado correctamente"
-        })
+        return redirect(profile, user.id)
 
 
 """

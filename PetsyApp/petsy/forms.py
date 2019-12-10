@@ -74,8 +74,8 @@ class EditProfileForm(forms.ModelForm):
             'photo': forms.FileInput(attrs={'id': 'input-fa', 'accept': 'image/*', 'class': 'file'})
         }
 
-    def __init__(self, *args, **kargs):
-        super(EditProfileForm, self).__init__(*args, **kargs)
+    def __init__(self, *args, **kwargs):
+        super(EditProfileForm, self).__init__(*args, **kwargs)
         self.fields['photo'].required = False
 
 
