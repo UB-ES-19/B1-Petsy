@@ -217,7 +217,7 @@ def profile(request, id=None):
     followers = user.follower.all().count()
     following = user.following.all().count()
     fav_shops = user.shop_faved.all()
-    products = Product.objects.all()
+    products = user.prod_faved.all()
 
     """
     product_list = []
@@ -315,7 +315,8 @@ def get_product_by_id(request, id_product=None):
         return render(request, 'petsy/product.html', {
             "product": product,
             "reviews": ast.literal_eval(product.reviews),
-            "list_shops": _shops
+            "list_shops": _shops,
+            "favorited": user.prod_faved.filter(prod_faved=product).count() == 1
         })
 
 

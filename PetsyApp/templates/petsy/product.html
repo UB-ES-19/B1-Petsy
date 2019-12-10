@@ -90,7 +90,11 @@
                                     <option value="5">5</option>
                                 </select><br>
                                 <button type="submit" class="btn btn-transparent comprar"><p class="txt-center">Añadir a la cesta</p></button>
-                                <a href="#" id="btn-fav-product" class="fav_product"><i class="far fa-heart"></i></a>
+                                {% if favorited %}
+                                <button id="btn-fav-product" class="fav_product far fa-heart" onclick="favorited_product('{{ product.idProduct }}', '{{ csrf_token }}', this)"></button>
+                                {% else %}
+                                <button id="btn-fav-product" class="fav_product far fa-heart-broken" onclick="favorited_product('{{ product.idProduct }}', '{{ csrf_token }}', this)"></button>
+                                {% endif %}
                             </form>
                         </div>
                         {% endif %}
@@ -116,4 +120,5 @@
 {% endblock %}
 {% block scripts %}
     <script src="{% static 'js/pages/product.js' %}"></script>
+    <script src="{% static 'js/follow.js' %}"></script>
 {% endblock %}

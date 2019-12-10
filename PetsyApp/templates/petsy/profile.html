@@ -131,21 +131,21 @@
                                     <div class="row">
                                         <div class="card-deck">
                                             <div class="card">
-                                                <img class="card-img-top img-card" src="{{product.img.url}}" alt="Card image cap">
+                                                <img class="card-img-top img-card" src="{{product.prod_faved.img.url}}" alt="Card image cap">
                                                 <div class="card-body">
-                                                    <h5 class="card-title text-center">{{ product.nameProduct }}</h5>
-                                                    <p class="card-text">{{ product.description }}</p>
-                                                    <a href="{% url 'product_by_id' product.idProduct %}" class="card-text stretched-link"></a>
+                                                    <h5 class="card-title text-center">{{ product.prod_faved.nameProduct }}</h5>
+                                                    <p class="card-text">{{ product.prod_faved.description }}</p>
+                                                    <a href="{% url 'product_by_id' product.prod_faved.idProduct %}" class="card-text stretched-link"></a>
                                                 </div>
                                             </div>
 
                                 {% elif forloop.counter0|divisibleby:3 or forloop.last %}
                                             <div class="card">
-                                                <img class="card-img-top img-card" src="{{product.img.url}}" alt="Card image cap">
+                                                <img class="card-img-top img-card" src="{{product.prod_faved.img.url}}" alt="Card image cap">
                                                 <div class="card-body">
-                                                    <h5 class="card-title text-center">{{ product.nameProduct }}</h5>
-                                                    <p class="card-text">{{ product.description }}</p>
-                                                    <a href="{% url 'product_by_id' product.idProduct %}" class="card-text stretched-link"></a>
+                                                    <h5 class="card-title text-center">{{ product.prod_faved.nameProduct }}</h5>
+                                                    <p class="card-text">{{ product.prod_faved.description }}</p>
+                                                    <a href="{% url 'product_by_id' product.prod_faved.idProduct %}" class="card-text stretched-link"></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -153,11 +153,11 @@
 
                                 {% else %}
                                             <div class="card">
-                                                <img class="card-img-top img-card" src="{{product.img.url}}" alt="Card image cap">
+                                                <img class="card-img-top img-card" src="{{product.prod_faved.img.url}}" alt="Card image cap">
                                                 <div class="card-body">
-                                                    <h5 class="card-title text-center">{{ product.nameProduct }}</h5>
-                                                    <p class="card-text">{{ product.description }}</p>
-                                                    <a href="{% url 'product_by_id' product.idProduct %}" class="card-text stretched-link"></a>
+                                                    <h5 class="card-title text-center">{{ product.prod_faved.nameProduct }}</h5>
+                                                    <p class="card-text">{{ product.prod_faved.description }}</p>
+                                                    <a href="{% url 'product_by_id' product.prod_faved.idProduct %}" class="card-text stretched-link"></a>
                                                 </div>
                                             </div>
                                 {% endif %}
