@@ -18,13 +18,13 @@
     <section>
         <div class="container container-user" style="margin-top: 3em;">
             <div class="row table-user">
-                <div class="col-2 colum-imgProf">
+                <div class="colum-imgProf">
                     <div class="wrap-profile">
                         <img class="profile" src="{% static 'images/default.png' %}">
                     </div>
                 </div>
-                <div class="col-4 colum-user">
-                    <p style="font-size: 40px;font-weight: lighter;">{{ user.username }}
+                <div class="colum-user">
+                    <p style="font-size: 40px;font-weight: lighter;display: inline-flex;width: 38em;">{{ user.username }}
                         {% if request.user.is_authenticated %}
                             {% if request.user.id == user.id %}
                                 <a href="" class="text-dark" style="font-size: 15px;font-weight: lighter;margin-left: 1em"><i class="far fa-edit"></i>Editar perfil</a>
