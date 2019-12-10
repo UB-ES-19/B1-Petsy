@@ -32,6 +32,10 @@ class ProductForm(forms.ModelForm):
             'materials': forms.TextInput(attrs={'class': 'formulari', 'placeholder': 'Dinos de que está hecho tu producto...'}),
             'img': forms.FileInput(attrs={'id': 'input-fa', 'accept': 'image/*', 'class': 'file'})
         }
+
+    def __init__(self, *args, **kwargs):
+        super(ProductForm, self).__init__(*args, **kwargs)
+        self.fields['img'].required = False
 class ShopForm(forms.ModelForm):
 
     class Meta:
@@ -57,9 +61,7 @@ class EditForm(forms.ModelForm):
         super(EditForm, self).__init__(*args, **kargs)
         self.fields['img_shop'].required = False
 
-    def __init__(self, *args, **kwargs):
-        super(ProductForm, self).__init__(*args, **kwargs)
-        self.fields['img'].required = False
+
 
 
 class EditProfileForm(forms.ModelForm):

@@ -498,6 +498,13 @@ nav span{
     margin-top: 2em;
     margin-left: 23em;
 }
+#btn_editar_producto {
+
+    position: absolute;
+    right: 16em;
+    top: 7em;
+
+}
 .edit-shop-button {
     margin-left: 32em;
     margin-top: 3em;

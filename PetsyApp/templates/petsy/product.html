@@ -5,6 +5,9 @@
 {%  endblock %}
 
 {% block content %}
+ {% if owner %}
+     <a id="btn_editar_producto" href="{% url 'edit_product' product.idProduct %}" class="text-dark" style="font-size: 15px;font-weight: lighter;"><i class="far fa-edit"></i>Editar producto</a>
+{% endif %}
 <main class ="background_product">
         <section class="boder-top">
             <a href="{% url 'shop' product.shop.id_shop %}" class="btn btn-background tienda">Ir a {{ product.shop.shop_name }}</a>
@@ -67,9 +70,7 @@
                                     <button type="submit" class="btn btn-background" id="review_button">Enviar reseña</button>
 
                                 </form>
-                                {% if owner %}
-                                    <a href="{% url 'edit_product' product.idProduct %}" class="btn btn-background tienda">Editar Producto</a>
-                                {% endif %}
+
 
                             </div>
                         {% endif %}
