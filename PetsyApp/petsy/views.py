@@ -192,6 +192,34 @@ def edit_shop_view(request, id_shop=None):
         'shop': _shop
     }
     return render(request, 'petsy/editShop.html', context)
+
+@login_required
+def edit_profile(request):
+    if request.method == "POST":
+        user = UserPetsy.objects.all().get(id=request.user.id)
+
+        patata = False
+        patata2 = False
+        if request.POST["username"] != "":
+            user.username = request.POST["username"]
+            patata = True
+        if len(request.FILES) != 0:
+            user.photo = request.FILES["photo"]
+            patata2 = True
+
+        if patata and patata2:
+            return JsonResponse({
+                "response_code": 204,
+                "response:msg": "Sin Contenido"
+            })
+
+        user.save()
+        return JsonResponse({
+            "response_code": 200,
+            "response_msg": "Usuario actualizado correctamente"
+        })
+
+
 """
 # Vista de productos (testing)
 def products(request, username=None):
@@ -221,17 +249,34 @@ def profile(request, id=None):
     """
 
     if request.user.is_authenticated:
-        yo = UserPetsy.objects.all().get(id=request.user.id)
-        context = {
-            "user": user,
-            "followers": followers,
-            "following": following,
-            "shops": shops,
-            "list_shops": _shops,
-            "list_items": fav_shops,
-            "follow": yo.following.filter(following=user).count() == 1,
-            "list_products": products
-        }
+
+        if request.user.id == int(id):
+            yo = UserPetsy.objects.all().get(id=request.user.id)
+            context = {
+                "user": user,
+                "followers": followers,
+                "following": following,
+                "shops": shops,
+                "list_shops": _shops,
+                "list_items": fav_shops,
+                "follow": yo.following.filter(following=user).count() == 1,
+                "list_products": products,
+                "edit_form": EditProfileForm(instance=user)
+
+            }
+        else:
+
+            yo = UserPetsy.objects.all().get(id=request.user.id)
+            context = {
+                "user": user,
+                "followers": followers,
+                "following": following,
+                "shops": shops,
+                "list_shops": _shops,
+                "list_items": fav_shops,
+                "follow": yo.following.filter(following=user).count() == 1,
+                "list_products": products
+            }
     else:
         context = {
             "user": user,
@@ -333,7 +378,7 @@ def get_user(request):
     """
     shop = Shop.objects.get(user_owner=request.user)
     products = Product.objects.get(id_shop=shop.id_shop)
-    print(products)
+    #print(products)
     product_array = []
     for i in range(4):
         product_array.append(products[i])

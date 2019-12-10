@@ -58,6 +58,21 @@ class EditForm(forms.ModelForm):
         self.fields['img_shop'].required = False
 
 
+class EditProfileForm(forms.ModelForm):
+
+    class Meta:
+        model = UserPetsy
+        fields = ['username', 'photo']
+        widgets = {
+            'username': forms.TextInput(attrs={'placeholder': 'Nuevo nombre', 'class':'formulari'}),
+            'photo': forms.FileInput(attrs={'id': 'input-fa', 'accept': 'image/*', 'class': 'file'})
+        }
+
+    def __init__(self, *args, **kargs):
+        super(EditProfileForm, self).__init__(*args, **kargs)
+        self.fields['photo'].required = False
+
+
 class ReviewForm(forms.ModelForm):
 
     class Meta:

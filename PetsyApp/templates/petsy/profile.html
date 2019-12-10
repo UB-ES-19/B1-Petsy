@@ -20,14 +20,15 @@
             <div class="row table-user">
                 <div class="colum-imgProf">
                     <div class="wrap-profile">
-                        <img class="profile" src="{% static 'images/default.png' %}">
+                        <img class="profile" src="{{ user.photo.url }}">
                     </div>
                 </div>
                 <div class="colum-user">
                     <p style="font-size: 40px;font-weight: lighter;display: inline-flex;width: 38em;">{{ user.username }}
                         {% if request.user.is_authenticated %}
                             {% if request.user.id == user.id %}
-                                <a href="" class="text-dark" style="font-size: 15px;font-weight: lighter;margin-left: 1em"><i class="far fa-edit"></i>Editar perfil</a>
+                                <!-- <div><a href="#" style="margin-right: 30px" data-toggle="modal" data-target="#register_modal"  class="btn btn-transparent-border"><i id="register_label"></i> Registrarse</a></div> -->
+                                <div><a href="" class="text-dark" style="font-size: 15px;font-weight: lighter;margin-left: 1em" data-toggle="modal" data-target="#edit_profile_modal"><i class="far fa-edit"></i>Editar perfil</a></div>
                             {% endif %}
                         {% endif %}
                     </p>
@@ -164,7 +165,50 @@
                  </div>
              </div>
          </div>
+
+
+        <!-- Modal Editar Perfil -->
+        <div class="modal fade" id="edit_profile_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h3 class="modal-title" id="exampleModalLongTitle">Edita tu perfil</h3>
+
+              </div>
+              <form id="edit_profile_form" class="my-form-register" method="POST" action="{% url 'edit_profile' %}">
+              <div class="modal-body">
+                    {% csrf_token %}
+                    <p>Nombre *:</p>
+                    <br>
+                    {{ edit_form.username }}
+                    <br><br>
+                    <p>Foto de perfil</p>
+                    {{ edit_form.photo }}
+                    <input type="hidden" name="next" value="{{ next|escape }}" />
+                    <br>
+
+
+                </div>
+              <div class="modal-footer">
+                <p id="register_error_msg" class="error_message_footer"></p>
+                <button type="submit" class="btn btn-secondary" id="edit_button">Editar</button>
+              </div>
+            </form>
+            </div>
+          </div>
+        </div>
+
     </section>
 </main>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/fileinput.min.js' %}"></script>
+    <script src="{% static 'themes/fa/theme.min.js' %}"></script>
+    <script src="{% static 'js/pages/createProduct.js' %}"></script>
+    <script src="{% static 'js/edit.js' %}"></script>
 {% endblock %}
 
