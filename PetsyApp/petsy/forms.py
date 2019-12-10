@@ -50,8 +50,14 @@ class EditForm(forms.ModelForm):
         widgets = {
             'shop_name': forms.TextInput(attrs={ 'class': 'formulari'}),
             'description': forms.Textarea(attrs={'class': 'form-control'}),
-            'img_shop': forms.FileInput(attrs={'id': 'input-fa', 'accept': 'image/*', 'class': 'file'})
+            'img_shop': forms.FileInput(attrs={'id': 'input-fa', 'class': 'file'})
         }
+
+    def __init__(self, *args, **kargs):
+        super(EditForm, self).__init__(*args, **kargs)
+        self.fields['img_shop'].required = False
+
+
 class ReviewForm(forms.ModelForm):
 
     class Meta:
