@@ -1,3 +1,7 @@
+html, body{
+    overflow-x: hidden;
+}
+
 h3{
     font-weight: bold;
 }
@@ -7,12 +11,23 @@ img{
     height: 100%;
     object-fit: cover;
 }
+li{
+    list-style: none;
+}
 
 a:hover{
     color: orangered;
 }
 h1 {
     font-weight: normal;
+}
+header{
+    border-bottom: solid lightgray 0.5px;
+}
+nav span{
+    display: block;
+    font-size: 12px;
+    color: gray;
 }
  #crear .form-control{
     font-weight: lighter;
@@ -67,9 +82,7 @@ h1 {
     background-image: url("../../photos/fons.jpg");}
 
 .margin-1{
-    margin-top: 10px;
     margin-bottom: 22px;
-    border-top: solid gray 0.5px;
     padding-top: 12px;
 }
 
@@ -81,11 +94,12 @@ h1 {
 
 .navbar a{
     border-color: orange;
-    color: orange;
+    color: orange !important;
+    cursor: pointer;
 }
 .navbar a:hover{
-    border-color: #FDEBD2;
-    color: #FDEBD2;
+    border-color: antiquewhite !important;
+    color: antiquewhite !important;
 }
 
 .navbar .btn:focus{
@@ -269,6 +283,173 @@ h1 {
 .img-card{
     max-width: 250px;
     max-height: 250px;
+}
+.buscador {
+    border: none;
+    border-radius: 7px;
+    padding-left: 6px;
+    height: 33px;
+}
+.input-search {
+    width: 33em !important;
+    background-color:lightgray;
+}
+.form-control:focus {
+    border-color: lightgray;
+    outline: 0;
+    box-shadow: none;
+    border-left: none;
+    border-right: none;
+}
+.custom-select.select-search {
+    background-color: antiquewhite;
+    color:  orange;
+    border: none;
+    margin-right: -4px;
+    border-radius: 23px 0px 0px 22px;
+}
+.custom-select.select-search:hover {
+    background-color: orange;
+    color:  antiquewhite;
+}
+.custom-select.select-search option:hover {
+    background-color: orange;
+    color:  antiquewhite;
+}
+.btn.btn-outline-success.my-2.my-sm-0 {
+    background-color:  antiquewhite;
+    border: none;
+    margin-left: -3px;
+    border-radius: 0px 22px 22px 0px;
+}
+.btn.btn-outline-success.my-2.my-sm-0:hover {
+    background-color:  orange;
+    color:antiquewhite;
+}
+.custom-select:focus {
+    border-color: lightgray;
+    outline: 0;
+    box-shadow: none;
+}
+.dropdown .btn{
+    border: none;
+}
+.btn.dropdown-item{
+    font-size: 11px;
+}
+.col-1{
+    text-align: center;
+    margin: 0 -7px;
+    margin-bottom: -9px;
+}
+.dropdown-menu {
+    font-size: 11px;
+    width: 116px !important;
+}
+
+.col-md-6.px-0 {
+
+    background-color: rgba(250,235,215,.9);
+    border-radius: 24px;
+    text-align: center;
+    color: white;
+
+}
+.name-propietari {
+
+    display: block;
+    margin-top: 7px;
+    color:  black;
+    text-transform: uppercase;
+    font-size: small;
+
+}
+.container.articles p {
+
+    font-size: 36px;
+    font-weight: lighter;
+    text-decoration: underline;
+
+}
+.title-propietari {
+
+    color:   gray;
+    font-size: small;
+
+}
+.container.articles {
+
+    margin-top: 5em;
+
+}
+.profile {
+   width: 82px;
+    text-align: center;
+}
+.wrap-profile{
+    width: max-content;
+    border: solid  orange 11px;
+    border-radius: 31px;
+}
+.colum-imgProf {
+
+    display: table-cell;
+
+}
+.colum-user{
+   display: table-cell;
+    vertical-align: top;
+}
+.table-user{
+    display: table;
+    width: 100%;
+}
+.col-6.text-align-right {
+
+    display: table-cell;
+    vertical-align: top;
+    padding-left: 13em;
+
+}
+.container-user{
+    margin-top: 3em;
+    margin-left: 9em;
+}
+.tiendas-fav{
+    font-size: 34px;
+    font-weight: lighter;
+    margin-top: 2.5em;
+    text-decoration: underline 1px;
+}
+.container.margin-div {
+    margin-bottom: 2em;
+    border-bottom: solid lightgray 1px;
+}
+.in {
+
+    border-bottom: solid  orange 6px;
+    border-radius: 0px;
+
+}
+.btn.focus, .btn:focus {
+    outline: 0;
+    box-shadow: none;
+}
+.tienda {
+
+    position: absolute;
+    top: 6em;
+    left: 66em;
+
+}
+.fav_product {
+
+    color: orange !important;
+    margin: 10px;
+
+}
+.col-6.text-align-right a:hover{
+    color:orange !important;
 }
 
 #add_product_form_button{
