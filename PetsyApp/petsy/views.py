@@ -402,6 +402,31 @@ def favorite_shop(request):
         "response_code": 400
     })
 
+@login_required()
+def favorite_product(request):
+    if request.method == "POST":
+        follower = get_object_or_404(UserPetsy, id=request.user.id)
+        prod_favorited = get_object_or_404(Product, idProduct=request.POST['following'])
+
+        relation = follower.prod_faved.filter(prod_faved=prod_favorited)
+
+        if relation:
+            relation.delete()
+            return JsonResponse({
+                "response_msg": "Objeto quitado de favoritos",
+                "response_code": 200
+            })
+        else:
+            follower.prod_faved.add(ProductFavorited(prod_faved=prod_favorited), bulk=False)
+            return JsonResponse({
+                "response_msg": "Objeto añadido a favoritos",
+                "response_code": 201
+            })
+    return JsonResponse({
+        "response_msg": "GET encontrado",
+        "response_code": 400
+    })
+
 
 def review_product_by_id(request):
     """

@@ -1,5 +1,6 @@
 function sendRegister() {
     var form = $("#edit_profile_form");
+
     $.ajax({
         url: '/edit_profile/',
         data: form.serialize(),
