@@ -33,6 +33,10 @@ class ProductForm(forms.ModelForm):
             'img': forms.FileInput(attrs={'id': 'input-fa', 'accept': 'image/*', 'class': 'file'})
         }
 
+    def __init__(self, *args, **kwargs):
+        super(ProductForm, self).__init__(*args, **kwargs)
+        self.fields['img'].required = False
+
 
 class EditProfileForm(forms.ModelForm):
 

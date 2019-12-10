@@ -176,11 +176,13 @@ def edit_product(request, id=None):
         user = UserPetsy.objects.all().get(email=request.user.email)
         shops = Shop.objects.all().filter(user_owner=user)
         product = Product.objects.all().get(idProduct=int(id))
+        form = ProductForm(instance=product)
+        #form.img = product.img.url
         context = {
             'product': product,
             'user': user,
             'dict_cat': Product._d_categories,
-            'product_form': ProductForm(),
+            'product_form': form,
             'list_shops': shops
         }
         return render(request, 'petsy/editProduct.html', context)
@@ -584,10 +586,10 @@ def edit_product_data(request, id=None):
             product.description = edited.description
             product.category = edited.category
             product.price = edited.price
-            product.img = edited.img
+            if len(request.FILES) > 0:
+                product.img = edited.img
             product.materials = edited.materials
             product.save()
-
 
         return redirect(get_product_by_id, id_product=product.idProduct)
 
