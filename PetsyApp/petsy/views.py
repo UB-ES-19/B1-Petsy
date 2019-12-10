@@ -169,12 +169,15 @@ def create(request, id_shop=None):
     }
     return render(request, 'petsy/createProduct.html', context)
 
-@login_required()
+@login_required
 def edit_product(request, id=None):
     if request.method == "GET":
+        print(id)
         user = UserPetsy.objects.all().get(email=request.user.email)
         shops = Shop.objects.all().filter(user_owner=user)
+        product = Product.objects.all().get(idProduct=int(id))
         context = {
+            'product': product,
             'user': user,
             'dict_cat': Product._d_categories,
             'product_form': ProductForm(),
@@ -571,11 +574,12 @@ def create_product(request):
 @login_required()
 def edit_product_data(request, id=None):
     if request.method == "POST":
-        user = UserPetsy.objects.all.get(id=request.user.id)
-        product = Product.objects.all.get(idProduct=id)
+        user = UserPetsy.objects.all().get(id=request.user.id)
+        product = Product.objects.all().get(idProduct=id)
         edited = ProductForm(request.POST, request.FILES)
 
         if edited.is_valid():
+            edited = edited.save(commit=False)
             product.nameProduct = edited.nameProduct
             product.description = edited.description
             product.category = edited.category
@@ -584,7 +588,8 @@ def edit_product_data(request, id=None):
             product.materials = edited.materials
             product.save()
 
-        return redirect(get_product_by_id, id_product=product.id)
+
+        return redirect(get_product_by_id, id_product=product.idProduct)
 
 
 def searching(object, search, edit_distance):
