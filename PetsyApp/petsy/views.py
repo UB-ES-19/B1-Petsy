@@ -591,8 +591,7 @@ def cesta_add_product_by_id(request):
     """
     id_product = request.POST['id_product']
     amount = request.POST['amount']
-    usern = request.user.username  # "joseluis"  # request.POST['username']
-    id = request.user.id
+    usern = request.user  # "joseluis"  # request.POST['username']
 
     user = UserPetsy.objects.get(username=usern)
     current_bill = user.currentBill
@@ -600,19 +599,69 @@ def cesta_add_product_by_id(request):
     current_bill += str(id_product)+"-"+str(amount)+","
 
     user.currentBill = current_bill
-
+    user.save()
+    print(current_bill)
     return redirect(get_product_by_id, id_product=id_product)
 
 
 def render_bill(request):
+    print(request.user)
+    us = UserPetsy.objects.get(username=request.user)
+    current_bill = us.currentBill
+    obj_dict = {}
 
-    current_bill = UserPetsy.objects.get(username=request.user.username).currentBill
+    print("BBBBBBBBBBBBBBBBBBBBBBB")
+    print("BBBBBBBBBBBBBBBBBBBBBBB")
+    print("BBBBBBBBBBBBBBBBBBBBBBB")
+    print("BBBBBBBBBBBBBBBBBBBBBBB")
 
-    for pair in current_bill.split(','):  # id-amount
+    print(current_bill)
+    total = 0
+    for pair in current_bill.split(','):  # id-amount,id-amount
+
+        if pair != '':
+            print(pair)
+            id = pair.split('-')[0]
+            amount = pair.split('-')[1]
+            prod = Product.objects.get(idProduct=id)
+            obj_dict[id] = {
+                "id": id,
+                "name": prod.nameProduct,
+                "price": prod.price,
+                "amount": amount,
+                "totalPrice": int(amount)*prod.price
+            }
+            total += float(obj_dict[id]["totalPrice"])
+    obj_dict["fin"] = {
+        "name": "",
+        "price": "",
+        "amount": "",
+        "totalPrice": total
+    }
+    return render(request, 'petsy/bill.html', {"patata": list(obj_dict.values())})
+
+def bill_dict(request):
+    current_bill = UserPetsy.objects.get(username=request.user).currentBill
+    obj_dict = {}
+
+    print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+    print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+    print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+    print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+    print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 
 
-    return render(request, 'petsy/bill.html', {
-        "prod": {
+    for pair in current_bill.split(','):  # id-amount,id-amount
+        if pair != '':
+            id = pair.split('-')[0]
+            amount = pair.split('-')[1]
+            prod = Product.objects.get(idProduct=id)
+            obj_dict[id] = {
+                "id": id,
+                "name": prod.nameProduct,
+                "price": prod.price,
+                "amount": amount,
+                "totalPrice": int(amount) * prod.price
+            }
 
-        }
-    })
+    return obj_dict
