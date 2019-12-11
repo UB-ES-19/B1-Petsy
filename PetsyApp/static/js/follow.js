@@ -53,3 +53,31 @@ function favorited(id_shop, csrf_token, btn){
         }
     });
 }
+
+function favorited_product(id_product, csrf_token, btn){
+        $.ajax({
+        url: '/favorited_product/',
+        data: {
+            "csrfmiddlewaretoken": csrf_token,
+            "following": id_product
+        },
+        type:'POST',
+        dataType: 'json',
+        success: function (data) {
+            if (data.response_code == 200) {
+                //var num = Number(contador.innerText) - 1;
+                //contador.innerText = num + "";
+                btn.class = "fav_product far fa-heart";
+            }
+            else if (data.response_code == 201) {
+                //var num = Number(contador.innerText) + 1;
+                //contador.innerText = num + "";
+                btn.class = "fav_product far fa-heart-broken";
+            }
+            else if (data.response_code == 400) {
+                alert(data.response_msg);
+                location.reload();
+            }
+        }
+    });
+}
