@@ -5,6 +5,9 @@
 {%  endblock %}
 
 {% block content %}
+ {% if owner %}
+     <a id="btn_editar_producto" href="{% url 'edit_product' product.idProduct %}" class="text-dark" style="font-size: 15px;font-weight: lighter;"><i class="far fa-edit"></i>Editar producto</a>
+{% endif %}
 <main class ="background_product">
         <section class="boder-top">
             <a href="{% url 'shop' product.shop.id_shop %}" class="btn btn-background tienda">Ir a {{ product.shop.shop_name }}</a>
@@ -67,6 +70,8 @@
                                     <button type="submit" class="btn btn-background" id="review_button">Enviar reseña</button>
 
                                 </form>
+
+
                             </div>
                         {% endif %}
                         </div>
@@ -91,7 +96,11 @@
                                 </select><br>
                                 <textarea placeholder={{ product.idProduct }} name="id_product" hidden>{{ product.idProduct }}</textarea>
                                 <button type="submit" class="btn btn-transparent comprar"><p class="txt-center">Añadir a la cesta</p></button>
-                                <a href="#" id="btn-fav-product" class="fav_product"><i class="far fa-heart"></i></a>
+                                {% if favorited %}
+                                <button id="btn-fav-product" class="fav_product far fa-heart" onclick="favorited_product('{{ product.idProduct }}', '{{ csrf_token }}', this)"></button>
+                                {% else %}
+                                <button id="btn-fav-product" class="fav_product far fa-heart-broken" onclick="favorited_product('{{ product.idProduct }}', '{{ csrf_token }}', this)"></button>
+                                {% endif %}
                             </form>
                         </div>
                         {% endif %}
@@ -117,4 +126,5 @@
 {% endblock %}
 {% block scripts %}
     <script src="{% static 'js/pages/product.js' %}"></script>
+    <script src="{% static 'js/follow.js' %}"></script>
 {% endblock %}

@@ -399,6 +399,7 @@ nav span{
 .colum-user{
    display: table-cell;
     vertical-align: top;
+    padding-left: 2em;
 }
 .table-user{
     display: table;
@@ -492,4 +493,19 @@ nav span{
 }
 #logout i:hover{
     color: orange;
+}
+#add_shop_form_button {
+    margin-top: 2em;
+    margin-left: 23em;
+}
+#btn_editar_producto {
+
+    position: absolute;
+    right: 16em;
+    top: 7em;
+
+}
+.edit-shop-button {
+    margin-left: 32em;
+    margin-top: 3em;
 }

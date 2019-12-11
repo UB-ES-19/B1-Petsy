@@ -14,7 +14,7 @@ def get_image_filename_post(instance, filename):
 
 class UserPetsy(User):
     id_user = models.AutoField(primary_key=True)
-    photo = models.ImageField(max_length=500, blank=True, default="default_user.png")
+    photo = models.ImageField(max_length=500, blank=True, default="default_user.png", upload_to=get_image_filename_post)
     description = models.TextField(blank=True)
     init_date = models.DateField(null=True, blank=True)
     currentBill = models.TextField(default="")
@@ -32,7 +32,8 @@ class Shop(models.Model):
     id_shop = models.AutoField(primary_key=True)
     shop_name = models.TextField(default='Shop')
     user_owner = models.ForeignKey(UserPetsy, on_delete=models.CASCADE)
-    description = models.TextField(blank=True)
+    description = models.CharField(max_length=1000, default='description')
+    img_shop = models.ImageField(upload_to=get_image_filename_post, default='/default-shop-img.jpg')
 
     def __str__(self):
         return "ID_shop: "+str(self.id_shop)+", " \
@@ -81,6 +82,14 @@ class Product(models.Model):
         return self._d_categories[self.category]
 
 
+class ProductFavorited(models.Model):
+    follower = models.ForeignKey(UserPetsy, related_name='prod_faved', on_delete=models.CASCADE)
+    prod_faved = models.ForeignKey(Product, related_name='follower', on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('follower', 'prod_faved')
+
+
 class Review(models.Model):
     # id_rev = models.AutoField(primary_key=True)
     # Relation between the User and the Review
@@ -95,3 +104,4 @@ class Review(models.Model):
                                  )
     user_rev = models.ForeignKey(UserPetsy, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+

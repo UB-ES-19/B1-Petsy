@@ -165,9 +165,67 @@ def create(request, id_shop=None):
         'user': user,
         'dict_cat': Product._d_categories,
         'product_form': ProductForm(),
-        'list_shops' : shops
+        'list_shops': shops,
+        'id_shop_actual': id_shop
     }
     return render(request, 'petsy/createProduct.html', context)
+
+@login_required
+def create_shop_view(request):
+    user = UserPetsy.objects.all().get(email=request.user.email)
+    shops = Shop.objects.all().filter(user_owner=user)
+    context = {
+        'user': user,
+        'shop_form': ShopForm(),
+        'list_shops': shops,
+    }
+    return render(request, 'petsy/createShop.html', context)
+@login_required
+def edit_shop_view(request, id_shop=None):
+    user = UserPetsy.objects.all().get(email=request.user.email)
+    shops = Shop.objects.all().filter(user_owner=user)
+    _shop = Shop.objects.all().get(id_shop=id_shop)
+    context = {
+        'user': user,
+        'shop_form': EditForm(instance=_shop),
+        'list_shops': shops,
+        'shop': _shop
+    }
+    return render(request, 'petsy/editShop.html', context)
+@login_required
+def edit_product(request, id=None):
+    if request.method == "GET":
+        print(id)
+        user = UserPetsy.objects.all().get(email=request.user.email)
+        shops = Shop.objects.all().filter(user_owner=user)
+        product = Product.objects.all().get(idProduct=int(id))
+        form = ProductForm(instance=product)
+        #form.img = product.img.url
+        context = {
+            'product': product,
+            'user': user,
+            'dict_cat': Product._d_categories,
+            'product_form': form,
+            'list_shops': shops
+        }
+        return render(request, 'petsy/editProduct.html', context)
+
+@login_required
+def edit_profile(request):
+    if request.method == "POST":
+        user = UserPetsy.objects.all().get(id=request.user.id)
+
+        #patata = False
+        #patata2 = False
+        if request.POST["username"] != "":
+            user.username = request.POST["username"]
+            #patata = True
+        if len(request.FILES) != 0:
+            user.photo = request.FILES["photo"]
+            #patata2 = True
+
+        user.save()
+        return redirect(profile, user.id)
 
 
 """
@@ -190,7 +248,7 @@ def profile(request, id=None):
     followers = user.follower.all().count()
     following = user.following.all().count()
     fav_shops = user.shop_faved.all()
-    products = Product.objects.all()
+    products = user.prod_faved.all()
 
     """
     product_list = []
@@ -199,17 +257,34 @@ def profile(request, id=None):
     """
 
     if request.user.is_authenticated:
-        yo = UserPetsy.objects.all().get(id=request.user.id)
-        context = {
-            "user": user,
-            "followers": followers,
-            "following": following,
-            "shops": shops,
-            "list_shops": _shops,
-            "list_items": fav_shops,
-            "follow": yo.following.filter(following=user).count() == 1,
-            "list_products": products
-        }
+
+        if request.user.id == int(id):
+            yo = UserPetsy.objects.all().get(id=request.user.id)
+            context = {
+                "user": user,
+                "followers": followers,
+                "following": following,
+                "shops": shops,
+                "list_shops": _shops,
+                "list_items": fav_shops,
+                "follow": yo.following.filter(following=user).count() == 1,
+                "list_products": products,
+                "edit_form": EditProfileForm(instance=user)
+
+            }
+        else:
+
+            yo = UserPetsy.objects.all().get(id=request.user.id)
+            context = {
+                "user": user,
+                "followers": followers,
+                "following": following,
+                "shops": shops,
+                "list_shops": _shops,
+                "list_items": fav_shops,
+                "follow": yo.following.filter(following=user).count() == 1,
+                "list_products": products
+            }
     else:
         context = {
             "user": user,
@@ -258,6 +333,7 @@ def get_product_by_id(request, id_product=None):
         product_id = id_product if id_product is not None else request.GET['product_id']
         user = UserPetsy.objects.all().get(email=request.user.email)
         _shops = Shop.objects.all().filter(user_owner=request.user)
+        ownership = False
 
         try:
             product = Product.objects.get(idProduct=product_id)
@@ -268,13 +344,42 @@ def get_product_by_id(request, id_product=None):
                 "response_code": 404  # Product not found
             })
 
+        if request.user.is_authenticated and request.user.id == product.shop.user_owner.id:
+            ownership = True
+
         return render(request, 'petsy/product.html', {
             "product": product,
             "reviews": ast.literal_eval(product.reviews),
-            "list_shops": _shops
+            "list_shops": _shops,
+            "favorited": user.prod_faved.filter(prod_faved=product).count() == 1,
+            "owner": ownership
         })
 
+def get_shop_by_id(request, id_shop=None):
+    """
+    :param request:
+    :param id_product:
+    :return:
+    """
 
+    if request.method == 'GET':
+        shop_id = id_shop if id_shop is not None else request.GET['shop_id']
+        user = UserPetsy.objects.all().get(email=request.user.email)
+        _shops = Shop.objects.all().filter(user_owner=request.user)
+
+        try:
+            s = Shop.objects.get(id_shop=shop_id)
+
+        except:
+            return JsonResponse({
+                "response_msg": "Error: la tienda no existe",
+                "response_code": 404  # Product not found
+            })
+
+        return render(request, 'petsy/shop.html', {
+            "shop": s,
+            "list_shops": _shops
+        })
 def get_user(request):
     """
 
@@ -287,7 +392,7 @@ def get_user(request):
     """
     shop = Shop.objects.get(user_owner=request.user)
     products = Product.objects.get(id_shop=shop.id_shop)
-    print(products)
+    #print(products)
     product_array = []
     for i in range(4):
         product_array.append(products[i])
@@ -355,6 +460,31 @@ def favorite_shop(request):
 
     return JsonResponse({
         "response_msg": "Error: GET encontrado",
+        "response_code": 400
+    })
+
+@login_required()
+def favorite_product(request):
+    if request.method == "POST":
+        follower = get_object_or_404(UserPetsy, id=request.user.id)
+        prod_favorited = get_object_or_404(Product, idProduct=request.POST['following'])
+
+        relation = follower.prod_faved.filter(prod_faved=prod_favorited)
+
+        if relation:
+            relation.delete()
+            return JsonResponse({
+                "response_msg": "Objeto quitado de favoritos",
+                "response_code": 200
+            })
+        else:
+            follower.prod_faved.add(ProductFavorited(prod_faved=prod_favorited), bulk=False)
+            return JsonResponse({
+                "response_msg": "Objeto añadido a favoritos",
+                "response_code": 201
+            })
+    return JsonResponse({
+        "response_msg": "GET encontrado",
         "response_code": 400
     })
 
@@ -448,7 +578,7 @@ def remove_product(request, id_product=None):
         })
 
 
-def create_product(request):
+def create_product(request,id_shop=None):
     """
     Register a new user into database
 
@@ -462,7 +592,7 @@ def create_product(request):
 
 
         try:
-            shop = Shop.objects.get(user_owner=user).id_shop
+            shop = Shop.objects.get(id_shop=id_shop)
             print("Shop already exists.")
         except:
             print("No shop yet, creating a new one.")
@@ -472,7 +602,7 @@ def create_product(request):
             )
             shop.save()
 
-        shop = Shop.objects.get(user_owner=user)
+
         product = ProductForm(request.POST, request.FILES)
         if product.is_valid():
             p = product.save(commit=False)
@@ -480,6 +610,75 @@ def create_product(request):
             p.save()
             return redirect(get_product_by_id, id_product=p.idProduct)
     return HttpResponse('')
+
+def create_shop(request):
+    """
+    Register a new user into database
+
+    :param request: Request
+    :return: ????????
+    """
+    if request.method == 'POST':
+
+        username = request.user
+        user = UserPetsy.objects.get(username=username)
+
+
+        """try:
+            shop = Shop.objects.get(user_owner=user).id_shop
+            print("Shop already exists.")
+        except:
+            print("No shop yet, creating a new one.")
+            shop = Shop(
+                shop_name="Shop",
+                user_owner=user
+        )"""
+
+        shop = ShopForm(request.POST, request.FILES)
+        if shop.is_valid():
+            s = shop.save(commit=False)
+            s.user_owner = user
+            shop.save()
+            return redirect(get_shop_by_id, id_shop=s.id_shop)
+    return HttpResponse('')
+
+def edit_shop(request, id_shop=None):
+    if request.method == "POST":
+        shop = Shop.objects.get(id_shop=id_shop)
+
+        if request.POST["shop_name"] != "":
+            shop.shop_name = request.POST["shop_name"]
+
+        if len(request.FILES) != 0:
+            shop.img_shop = request.FILES["img_shop"]
+
+        if request.POST["description"] != "":
+            shop.description = request.POST["description"]
+
+
+
+        shop.save()
+
+        return redirect(get_shop_by_id, id_shop=shop.id_shop)
+@login_required()
+def edit_product_data(request, id=None):
+    if request.method == "POST":
+        user = UserPetsy.objects.all().get(id=request.user.id)
+        product = Product.objects.all().get(idProduct=id)
+        edited = ProductForm(request.POST, request.FILES)
+
+        if edited.is_valid():
+            edited = edited.save(commit=False)
+            product.nameProduct = edited.nameProduct
+            product.description = edited.description
+            product.category = edited.category
+            product.price = edited.price
+            if len(request.FILES) > 0:
+                product.img = edited.img
+            product.materials = edited.materials
+            product.save()
+
+        return redirect(get_product_by_id, id_product=product.idProduct)
 
 
 def searching(object, search, edit_distance):
