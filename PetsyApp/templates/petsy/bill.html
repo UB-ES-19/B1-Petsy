@@ -1,0 +1,32 @@
+{% extends 'petsy/base.html' %}
+{% load static %}
+
+{% block links %}
+{%  endblock %}
+
+{% block content %}
+<main class ="background_product">
+    <table>
+        <tr>
+                <th><pre>Nom </pre></th>
+                <th><pre>Quantitat </pre></th>
+                <th><pre>Preu per objecte </pre></th>
+                <th><pre>Preu total</pre> </th>
+            </tr>
+        {% for prod_obj in patata %}
+            <tr>
+                <th>{{ prod_obj.name }}</th>
+                <th>{{ prod_obj.amount }}</th>
+                <th>{{ prod_obj.price }}</th>
+                <th>{{ prod_obj.totalPrice }} €</th>
+            </tr>
+
+        {% endfor %}
+    </table>
+
+</main>
+
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'js/pages/product.js' %}"></script>
+{% endblock %}

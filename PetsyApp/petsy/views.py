@@ -713,7 +713,9 @@ def search(request):
 
 
 def search2(request):
-    shops = Shop.objects.all().filter(user_owner=request.user)
+    shops = None
+    if request.user.is_authenticated:
+        shops = Shop.objects.all().filter(user_owner=request.user)
     if request.method == 'GET':
         type = request.GET.get('type')
         query = request.GET.get('q')
@@ -732,3 +734,113 @@ def search2(request):
 
         return render(request, 'petsy/show_products.html', context)
 
+
+@login_required()
+def edit_user(request):
+    user = UserPetsy.objects.get(id_user=request.POST['username'])
+    if request.POST['modify'] == 'description':
+        user.description = request.POST['description']
+        return JsonResponse({
+            "result_code": 200
+        })
+
+
+# def edit_shop(request):
+#     shop = Shop.objects.get(id_shop=request.POST['id_shop'])
+#     if request.POST['modify'] == 'shop_name':
+#         shop.shop_name = request.POST['shop_name']
+#
+#     elif request.POST['modify'] == 'description':
+#         shop.description = request.POST['description']
+#
+#     return JsonResponse({
+#         "result_code": 200
+#     })
+
+
+def cesta_add_product_by_id(request):
+    """
+    That function expects a request with the following body:
+        {
+            "product_id": 4,
+            "review": "Very good quality, I really recommend it bc...",
+            "rate": 3,
+            "username": "joseluis"
+        }
+    And then, updates the field 'reviews' from the 'product_id' product.
+
+    :param request
+    :return: JsonResponse
+    """
+    id_product = request.POST['id_product']
+    amount = request.POST['amount']
+    usern = request.user  # "joseluis"  # request.POST['username']
+
+    user = UserPetsy.objects.get(username=usern)
+    current_bill = user.currentBill
+
+    current_bill += str(id_product)+"-"+str(amount)+","
+
+    user.currentBill = current_bill
+    user.save()
+    print(current_bill)
+    return redirect(get_product_by_id, id_product=id_product)
+
+
+def render_bill(request):
+    print(request.user)
+    us = UserPetsy.objects.get(username=request.user)
+    current_bill = us.currentBill
+    obj_dict = {}
+    shops = Shop.objects.all().filter(user_owner=request.user)
+    print(current_bill)
+    total = 0
+    for pair in current_bill.split(','):  # id-amount,id-amount
+
+        if pair != '':
+            print(pair)
+            id = pair.split('-')[0]
+            amount = pair.split('-')[1]
+            prod = Product.objects.get(idProduct=id)
+            obj_dict[id] = {
+                "id": id,
+                "name": prod.nameProduct,
+                "price": prod.price,
+                "amount": amount,
+                "totalPrice": int(amount)*prod.price
+            }
+            total += float(obj_dict[id]["totalPrice"])
+    obj_dict["fin"] = {
+        "name": "",
+        "price": "",
+        "amount": "",
+        "totalPrice": total
+    }
+    return render(request, 'petsy/bill.html', {"patata": list(obj_dict.values()),
+                                               "list_shops": shops})
+
+def bill_dict(request):
+    current_bill = UserPetsy.objects.get(username=request.user).currentBill
+    obj_dict = {}
+
+    print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+    print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+    print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+    print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+    print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+
+
+    for pair in current_bill.split(','):  # id-amount,id-amount
+        if pair != '':
+            id = pair.split('-')[0]
+            amount = pair.split('-')[1]
+            prod = Product.objects.get(idProduct=id)
+            obj_dict[id] = {
+                "id": id,
+                "name": prod.nameProduct,
+                "price": prod.price,
+                "amount": amount,
+                "totalPrice": int(amount) * prod.price
+            }
+
+    return obj_dict

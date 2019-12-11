@@ -17,6 +17,7 @@ class UserPetsy(User):
     photo = models.ImageField(max_length=500, blank=True, default="default_user.png", upload_to=get_image_filename_post)
     description = models.TextField(blank=True)
     init_date = models.DateField(null=True, blank=True)
+    currentBill = models.TextField(default="")
 
 
 class UserFollowing(models.Model):

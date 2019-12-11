@@ -16,7 +16,7 @@ urlpatterns = [
     url(r'^profile/(?P<id>.*)/(?P<type>.*)/$', views.show_profile_followers, name="profile_followers"),
     url(r'^profile/(?P<id>.*)$', views.profile, name="profile"),
     url(r'^shop/(?P<id_shop>.*)$', views.shop, name="shop"),
-
+    url(r'^bill/$', views.render_bill, name="bill"),
     url(r'^product/(?P<id_product>.*)/$', views.get_product_by_id, name='product_by_id'),
     url(r'^shop/(?P<id_shop>.*)$', views.get_shop_by_id, name='shop_by_id'),
     url(r'^product/(?P<id_shop>.*)$', views.create_product, name='create_product'),
@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^favorited_product', views.favorite_product, name="follow_user"),
     url(r'^profile/(?P<id>.*)/(?P<type>.*)/$', views.show_profile_followers, name="profile_followers"),
     url(r'search/$', views.search2, name='search'),
+    url(r'^cesta_add_product_by_id/$', views.cesta_add_product_by_id, name='cesta_add_product_by_id'),
     url(r'^edit_profile', views.edit_profile, name='edit_profile'),
     url(r'^edit_product/(?P<id>.*)/$', views.edit_product, name="edit_product"),
     url(r'^edit_product_data/(?P<id>.*)/$', views.edit_product_data, name="edit_product_data")
