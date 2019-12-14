@@ -26,7 +26,7 @@
                 <div class="col-4" style="text-align: center;">
                     <p class="title-propietari">PROPIETARIO DE LA TIENDA</p>
                     <i class="far fa-user-circle fa-3x"></i>
-                    <a class="name-propietari" href="{% url 'profile' shop.user_owner.id_user %}">{{ shop.user_owner.username }}</a>
+                    <a class="name-propietari" href="{% url 'profile' shop.user_owner.id %}">{{ shop.user_owner.username }}</a>
                     {% if request.user.is_authenticated %}
                         {% if request.user.id == user.id %}
                             <a id="btn_editar_tienda" href="{% url 'edit_shop_view' shop.id_shop %}" class="text-dark" style="font-size: 15px;font-weight: lighter;"><i class="far fa-edit"></i>Editar tienda</a>
