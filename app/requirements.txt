@@ -14,3 +14,6 @@ sqlparse==0.3.0
 urllib3==1.25.7
 virtualenv==16.7.4
 yarg==0.1.9
+gunicorn==19.7
+whitenoise==3.3.1
+dj_database_url
