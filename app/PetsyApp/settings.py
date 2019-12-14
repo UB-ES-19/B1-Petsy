@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import django_heroku
 import dj_database_url
 
 """
@@ -88,11 +89,12 @@ DATABASES = {
         #'NAME': 'petsyapp',        #local
         'USER': 'petsyappuser',
         'PASSWORD': 'ESB12019',
-        'HOST': 'db',               #docker
-        #'HOST': 'localhost',       #local
+        #'HOST': 'db',               #docker
+        'HOST': 'localhost',       #local
         'PORT': '5432',
     }
 }
+
 DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
 
@@ -135,6 +137,8 @@ USE_TZ = True
 
 LOGIN_REDIRECT_URL = '/'
 
+STATIC_URL = os.path.join(BASE_DIR, "/static/")
+
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
@@ -144,3 +148,5 @@ MEDIA_URL = '/photos/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'photos')
 
 LOGIN_URL = "index"
+
+django_heroku.settings(locals())

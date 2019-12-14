@@ -16,7 +16,7 @@ services:
       - petsy
     restart: unless-stopped
   web:
-    build: .
+    build: ""
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app/petsyApp
