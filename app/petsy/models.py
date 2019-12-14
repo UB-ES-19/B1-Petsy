@@ -7,14 +7,17 @@ from datetime import datetime
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+
 def get_image_filename_post(instance, filename):
     return "%s" % (str(datetime.now()) + filename)
 
+
 class UserPetsy(User):
     id_user = models.AutoField(primary_key=True)
-    photo = models.ImageField(max_length=500, blank=True, default="default_user.png")
+    photo = models.ImageField(max_length=500, blank=True, default="default_user.png", upload_to=get_image_filename_post)
     description = models.TextField(blank=True)
     init_date = models.DateField(null=True, blank=True)
+    currentBill = models.TextField(default="")
 
 
 class UserFollowing(models.Model):
@@ -29,6 +32,8 @@ class Shop(models.Model):
     id_shop = models.AutoField(primary_key=True)
     shop_name = models.TextField(default='Shop')
     user_owner = models.ForeignKey(UserPetsy, on_delete=models.CASCADE)
+    description = models.CharField(max_length=1000, default='description')
+    img_shop = models.ImageField(upload_to=get_image_filename_post, default='/default-shop-img.jpg')
 
     def __str__(self):
         return "ID_shop: "+str(self.id_shop)+", " \
@@ -75,6 +80,14 @@ class Product(models.Model):
 
     def get_human_category(self):
         return self._d_categories[self.category]
+
+
+class ProductFavorited(models.Model):
+    follower = models.ForeignKey(UserPetsy, related_name='prod_faved', on_delete=models.CASCADE)
+    prod_faved = models.ForeignKey(Product, related_name='follower', on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('follower', 'prod_faved')
 
 
 class Review(models.Model):

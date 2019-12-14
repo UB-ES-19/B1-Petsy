@@ -14,8 +14,8 @@
         <div class="container" id="crear">
 
             <div class = "container margin-form" style="background-color: antiquewhite">
-                <span class ="titol_crear"><h1>Información del producto</h1></span>
-                <form id="add_product_form" class="my-form-add-product" method="POST" action="{% url 'create_product' id_shop_actual %}" enctype="multipart/form-data">
+                <span class ="titol_crear"><h1>Editar producto</h1></span>
+                <form id="add_product_form" class="my-form-add-product" method="POST" action="{% url 'edit_product_data' product.idProduct %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div>
                     <p>Título del producto</p>
@@ -42,7 +42,7 @@
                     {{product_form.img}}
                 </div>
 
-                <button class="btn btn-transparent" type="submit" id="add_product_form_button">Añade el producto</button>
+                <button class="btn btn-transparent" type="submit" id="add_product_form_button">Editar</button>
                 </form>
             </div>
         </div>
@@ -55,4 +55,3 @@
     <script src="{% static 'themes/fa/theme.min.js' %}"></script>
     <script src="{% static 'js/pages/createProduct.js' %}"></script>
 {% endblock %}
-

@@ -117,6 +117,7 @@ function checkPassword() {
 }
 
 $(document).ready(function() {
+    var bool = false;
     $("#login_form").submit(function (e) {
         e.preventDefault();
         if (validaLogin()) {
@@ -143,5 +144,17 @@ $(document).ready(function() {
         document.getElementById("container-tfav").style.display = "none";
         document.getElementById("container-pfav").style.display = "block";
     });
+    $(document).on("click", "#btn-fav-product", function() {
+
+       if(bool){
+           this.innerHTML = "<i class='far fa-heart'></i>";
+           bool = false;
+       }else{
+           this.innerHTML = "<i class='fas fa-heart'></i>";
+           bool = true;
+       }
+
+    });
+
 });
 

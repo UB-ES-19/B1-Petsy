@@ -68,8 +68,9 @@
                                                 </a>
                                             {% endfor %}
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item"><i class="fas fa-plus"></i> Añadir producto</a>
+                                            <a class="dropdown-item" href="{% url 'create_shop_view' %}">Crear tienda</a>
                                         </div>
+
                                     </div>
 
                                 </div>
@@ -92,14 +93,11 @@
                                 </div>
                                 <div class="col-1">
                                      <a>
-                                        <span>Carrito</span>
+                                        <span onclick="carrito()"> Carrito</span>
                                     </a>
                                 </div>
                             </div>
                         </div>
-
-
-
 
                     </div>
 
@@ -195,12 +193,14 @@
 
     </body>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="{% static "js/bootstrap.min.js" %}"></script>
     <script defer src="{% static "js/all.js" %}"></script>
     <script src="{% static "js/scripts.js" %}"></script>
-    <script></script>
+    <script>
+        function carrito(){ var baseUrl = window.location.href; window.location.href = baseUrl.split('/')[0]+"//"+baseUrl.split('/')[2]+"/bill";}
+    </script>
     {% block scripts %} {% endblock %}
 
 </html>

@@ -33,6 +33,51 @@ class ProductForm(forms.ModelForm):
             'img': forms.FileInput(attrs={'id': 'input-fa', 'accept': 'image/*', 'class': 'file'})
         }
 
+    def __init__(self, *args, **kwargs):
+        super(ProductForm, self).__init__(*args, **kwargs)
+        self.fields['img'].required = False
+class ShopForm(forms.ModelForm):
+
+    class Meta:
+        model = Shop
+        fields = ['shop_name', 'description',  'img_shop']
+        widgets = {
+            'shop_name': forms.TextInput(attrs={'placeholder': 'En pocas palabras...',  'class': 'formulari'}),
+            'description': forms.Textarea(attrs={'class': 'form-control','placeholder': 'Añade información relevante como estado, modelo, color...'}),
+            'img_shop': forms.FileInput(attrs={'id': 'input-fa', 'accept': 'image/*', 'class': 'file'})
+        }
+class EditForm(forms.ModelForm):
+
+    class Meta:
+        model = Shop
+        fields = ['shop_name', 'description',  'img_shop']
+        widgets = {
+            'shop_name': forms.TextInput(attrs={ 'class': 'formulari'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
+            'img_shop': forms.FileInput(attrs={'id': 'input-fa', 'class': 'file'})
+        }
+
+    def __init__(self, *args, **kargs):
+        super(EditForm, self).__init__(*args, **kargs)
+        self.fields['img_shop'].required = False
+
+
+
+
+class EditProfileForm(forms.ModelForm):
+
+    class Meta:
+        model = UserPetsy
+        fields = ['username', 'photo']
+        widgets = {
+            'username': forms.TextInput(attrs={'placeholder': 'Nuevo nombre', 'class':'formulari'}),
+            'photo': forms.FileInput(attrs={'id': 'input-fa', 'accept': 'image/*', 'class': 'file'})
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(EditProfileForm, self).__init__(*args, **kwargs)
+        self.fields['photo'].required = False
+
 
 class ReviewForm(forms.ModelForm):
 

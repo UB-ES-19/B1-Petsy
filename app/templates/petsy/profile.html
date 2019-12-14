@@ -1,3 +1,4 @@
+
 {% extends 'petsy/base.html' %}
 {% load static %}
 
@@ -18,14 +19,19 @@
     <section>
         <div class="container container-user" style="margin-top: 3em;">
             <div class="row table-user">
-                <div class="col-2 colum-imgProf">
+                <div class="colum-imgProf">
                     <div class="wrap-profile">
-                        <img class="profile" src="{% static 'images/default.png' %}">
+                        <img class="profile" src="{{ user.photo.url }}">
                     </div>
                 </div>
-                <div class="col-4 colum-user">
-                    <p style="font-size: 40px;font-weight: lighter;">{{ user.username }}
-                        <a href="" class="text-dark" style="font-size: 15px;font-weight: lighter;margin-left: 1em"><i class="far fa-edit"></i>Editar perfil</a>
+                <div class="colum-user">
+                    <p style="font-size: 40px;font-weight: lighter;display: inline-flex;width: 38em;">{{ user.username }}
+                        {% if request.user.is_authenticated %}
+                            {% if request.user.id == user.id %}
+                                <!-- <div><a href="#" style="margin-right: 30px" data-toggle="modal" data-target="#register_modal"  class="btn btn-transparent-border"><i id="register_label"></i> Registrarse</a></div> -->
+                                <div><a href="" class="text-dark" style="font-size: 15px;font-weight: lighter;margin-left: 1em" data-toggle="modal" data-target="#edit_profile_modal"><i class="far fa-edit"></i>Editar perfil</a></div>
+                            {% endif %}
+                        {% endif %}
                     </p>
                     <a class="text-dark" style="font-weight: lighter;" href="{% url 'profile_followers' user.id "following" %}">Sigue a <span><b> {{following}}</b></span></a>&nbsp;
                     <a class="text-dark" style="font-weight: lighter;" href="{% url 'profile_followers' user.id "follower" %}"><b id="follower_id"> {{followers}}</b> seguidores</a>
@@ -39,6 +45,19 @@
                             {% endif %}
                         {% endif %}
                     {% endif %}
+                </div>
+            <div class="col-6 text-align-right">
+            {% if request.user.is_authenticated %}
+                {% if request.user.id != user.id %}
+                    <h5 style="font-weight: lighter;text-decoration: underline">Sus tiendas:</h5>
+                        {% for shop in list_shops %}
+                            <li>
+                                <a href="{% url 'shop' shop.id_shop %}" style="margin-top: 5px; color:black; margin-left: 1em;">{{ shop.shop_name }}</a>
+                            </li>
+                        {% endfor %}
+                {% endif %}
+            {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
@@ -113,21 +132,21 @@
                                     <div class="row">
                                         <div class="card-deck">
                                             <div class="card">
-                                                <img class="card-img-top img-card" src="{{product.img.url}}" alt="Card image cap">
+                                                <img class="card-img-top img-card" src="{{product.prod_faved.img.url}}" alt="Card image cap">
                                                 <div class="card-body">
-                                                    <h5 class="card-title text-center">{{ product.nameProduct }}</h5>
-                                                    <p class="card-text">{{ product.description }}</p>
-                                                    <a href="{% url 'product_by_id' product.idProduct %}" class="card-text stretched-link"></a>
+                                                    <h5 class="card-title text-center">{{ product.prod_faved.nameProduct }}</h5>
+                                                    <p class="card-text">{{ product.prod_faved.description }}</p>
+                                                    <a href="{% url 'product_by_id' product.prod_faved.idProduct %}" class="card-text stretched-link"></a>
                                                 </div>
                                             </div>
 
                                 {% elif forloop.counter0|divisibleby:3 or forloop.last %}
                                             <div class="card">
-                                                <img class="card-img-top img-card" src="{{product.img.url}}" alt="Card image cap">
+                                                <img class="card-img-top img-card" src="{{product.prod_faved.img.url}}" alt="Card image cap">
                                                 <div class="card-body">
-                                                    <h5 class="card-title text-center">{{ product.nameProduct }}</h5>
-                                                    <p class="card-text">{{ product.description }}</p>
-                                                    <a href="{% url 'product_by_id' product.idProduct %}" class="card-text stretched-link"></a>
+                                                    <h5 class="card-title text-center">{{ product.prod_faved.nameProduct }}</h5>
+                                                    <p class="card-text">{{ product.prod_faved.description }}</p>
+                                                    <a href="{% url 'product_by_id' product.prod_faved.idProduct %}" class="card-text stretched-link"></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -135,11 +154,11 @@
 
                                 {% else %}
                                             <div class="card">
-                                                <img class="card-img-top img-card" src="{{product.img.url}}" alt="Card image cap">
+                                                <img class="card-img-top img-card" src="{{product.prod_faved.img.url}}" alt="Card image cap">
                                                 <div class="card-body">
-                                                    <h5 class="card-title text-center">{{ product.nameProduct }}</h5>
-                                                    <p class="card-text">{{ product.description }}</p>
-                                                    <a href="{% url 'product_by_id' product.idProduct %}" class="card-text stretched-link"></a>
+                                                    <h5 class="card-title text-center">{{ product.prod_faved.nameProduct }}</h5>
+                                                    <p class="card-text">{{ product.prod_faved.description }}</p>
+                                                    <a href="{% url 'product_by_id' product.prod_faved.idProduct %}" class="card-text stretched-link"></a>
                                                 </div>
                                             </div>
                                 {% endif %}
@@ -147,7 +166,50 @@
                  </div>
              </div>
          </div>
+
+
+        <!-- Modal Editar Perfil -->
+        <div class="modal fade" id="edit_profile_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h3 class="modal-title" id="exampleModalLongTitle">Edita tu perfil</h3>
+
+              </div>
+              <form id="edit_profile_form" class="my-form-register" method="POST" action="{% url 'edit_profile' %}">
+              <div class="modal-body">
+                    {% csrf_token %}
+                    <p>Nombre *:</p>
+                    <br>
+                    {{ edit_form.username }}
+                    <br><br>
+                    <p>Foto de perfil</p>
+                    {{ edit_form.photo }}
+                    <input type="hidden" name="next" value="{{ next|escape }}" />
+                    <br>
+
+
+                </div>
+              <div class="modal-footer">
+                <p id="register_error_msg" class="error_message_footer"></p>
+                <button type="submit" class="btn btn-secondary" id="edit_button">Editar</button>
+              </div>
+            </form>
+            </div>
+          </div>
+        </div>
+
     </section>
 </main>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'js/fileinput.min.js' %}"></script>
+    <script src="{% static 'themes/fa/theme.min.js' %}"></script>
+    <script src="{% static 'js/pages/createProduct.js' %}"></script>
+    <script src="{% static 'js/edit.js' %}"></script>
 {% endblock %}
 

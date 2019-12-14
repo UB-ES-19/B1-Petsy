@@ -5,9 +5,12 @@
 {%  endblock %}
 
 {% block content %}
+ {% if owner %}
+     <a id="btn_editar_producto" href="{% url 'edit_product' product.idProduct %}" class="text-dark" style="font-size: 15px;font-weight: lighter;"><i class="far fa-edit"></i>Editar producto</a>
+{% endif %}
 <main class ="background_product">
         <section class="boder-top">
-
+            <a href="{% url 'shop' product.shop.id_shop %}" class="btn btn-background tienda">Ir a {{ product.shop.shop_name }}</a>
             <div class="container">
                 <div class="row" style="justify-content: center;background-color:white">
 
@@ -67,22 +70,23 @@
                                     <button type="submit" class="btn btn-background" id="review_button">Enviar reseña</button>
 
                                 </form>
+
+
                             </div>
                         {% endif %}
                         </div>
                     </div>
 
                     <div class="col-md-4">
-                        <a href="{% url 'shop' product.shop.id_shop %}">{{ product.shop.shop_name }}</a>
                         <h2 id="titulo-producto">{{ product.nameProduct }}</h2>
                         <p class="subtitulo-s">{{ product.description }}</p>
                         <p><b>{{ product.price }}€</b></p>
                         {% if request.user.is_authenticated %}
                         <div class="display-grid">
-                            <form method="post">
+                            <form id="cest_form" method="POST" action="{% url 'cesta_add_product_by_id'%}" >
                             {% csrf_token %}
                                 <p class="titulo-xs">Cantidad</p>
-                                <select name="quantity"  class="mdb-select md-form" style="width: 43%;margin-bottom: 1em;">
+                                <select name="amount"  class="mdb-select md-form" style="width: 43%;margin-bottom: 1em;">
                                     <option value="0">0</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -90,7 +94,13 @@
                                     <option value="4">4</option>
                                     <option value="5">5</option>
                                 </select><br>
+                                <textarea placeholder={{ product.idProduct }} name="id_product" hidden>{{ product.idProduct }}</textarea>
                                 <button type="submit" class="btn btn-transparent comprar"><p class="txt-center">Añadir a la cesta</p></button>
+                                {% if favorited %}
+                                <button id="btn-fav-product" class="fav_product far fa-heart" onclick="favorited_product('{{ product.idProduct }}', '{{ csrf_token }}', this)"></button>
+                                {% else %}
+                                <button id="btn-fav-product" class="fav_product far fa-heart-broken" onclick="favorited_product('{{ product.idProduct }}', '{{ csrf_token }}', this)"></button>
+                                {% endif %}
                             </form>
                         </div>
                         {% endif %}
@@ -116,4 +126,5 @@
 {% endblock %}
 {% block scripts %}
     <script src="{% static 'js/pages/product.js' %}"></script>
+    <script src="{% static 'js/follow.js' %}"></script>
 {% endblock %}
