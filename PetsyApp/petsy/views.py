@@ -244,7 +244,6 @@ def products(request, username=None):
 def profile(request, id=None):
     user = UserPetsy.objects.all().get(id=id)
     shops = Shop.objects.all().filter(user_owner=user)
-    _shops = Shop.objects.all().filter(user_owner=request.user)
     followers = user.follower.all().count()
     following = user.following.all().count()
     fav_shops = user.shop_faved.all()
@@ -257,6 +256,7 @@ def profile(request, id=None):
     """
 
     if request.user.is_authenticated:
+        _shops = Shop.objects.all().filter(user_owner=request.user)
 
         if request.user.id == int(id):
             yo = UserPetsy.objects.all().get(id=request.user.id)
@@ -302,10 +302,11 @@ def shop(request, id_shop=None):
     _shop = Shop.objects.all().get(id_shop=id_shop)
     product_list = list(Product.objects.all().filter(shop=_shop))
     user = UserPetsy.objects.all().get(email=_shop.user_owner.email)
-    shops = Shop.objects.all().filter(user_owner=request.user)
+
 
     if request.user.is_authenticated:
         yo = UserPetsy.objects.all().get(id=request.user.id)
+        shops = Shop.objects.all().filter(user_owner=request.user)
         context = {
             "shop": _shop,
             "list_products": product_list,
@@ -330,30 +331,39 @@ def get_product_by_id(request, id_product=None):
     """
 
     if request.method == 'GET':
-        product_id = id_product if id_product is not None else request.GET['product_id']
-        user = UserPetsy.objects.all().get(email=request.user.email)
-        _shops = Shop.objects.all().filter(user_owner=request.user)
-        ownership = False
-
         try:
+            product_id = id_product if id_product is not None else request.GET['product_id']
             product = Product.objects.get(idProduct=product_id)
+            user = UserPetsy.objects.all().get(id=product.shop.user_owner.id)
+            ownership = False
+
+            if request.user.is_authenticated:
+                _shops = Shop.objects.all().filter(user_owner=request.user)
+
+                if request.user.id == product.shop.user_owner.id:
+                    ownership = True
+
+
+                return render(request, 'petsy/product.html', {
+                    "product": product,
+                    "reviews": ast.literal_eval(product.reviews),
+                    "list_shops": _shops,
+                    "favorited": user.prod_faved.filter(prod_faved=product).count() == 1,
+                    "owner": ownership
+                })
+
+            return render(request, 'petsy/product.html', {
+                "product": product,
+                "reviews": ast.literal_eval(product.reviews),
+                "favorited": user.prod_faved.filter(prod_faved=product).count() == 1,
+                "owner": ownership
+            })
 
         except:
             return JsonResponse({
                 "response_msg": "Error: El producto no existe",
                 "response_code": 404  # Product not found
             })
-
-        if request.user.is_authenticated and request.user.id == product.shop.user_owner.id:
-            ownership = True
-
-        return render(request, 'petsy/product.html', {
-            "product": product,
-            "reviews": ast.literal_eval(product.reviews),
-            "list_shops": _shops,
-            "favorited": user.prod_faved.filter(prod_faved=product).count() == 1,
-            "owner": ownership
-        })
 
 def get_shop_by_id(request, id_shop=None):
     """
@@ -363,23 +373,29 @@ def get_shop_by_id(request, id_shop=None):
     """
 
     if request.method == 'GET':
-        shop_id = id_shop if id_shop is not None else request.GET['shop_id']
-        user = UserPetsy.objects.all().get(email=request.user.email)
-        _shops = Shop.objects.all().filter(user_owner=request.user)
-
         try:
+            shop_id = id_shop if id_shop is not None else request.GET['shop_id']
             s = Shop.objects.get(id_shop=shop_id)
+
+            if request.user.is_authenticated:
+                _shops = Shop.objects.all().filter(user_owner=request.user)
+
+                return render(request, 'petsy/shop.html', {
+                    "shop": s,
+                    "list_shops": _shops
+                })
+
+            else:
+                return render(request, 'petsy/shop.html', {
+                    "shop": s
+                })
+
 
         except:
             return JsonResponse({
                 "response_msg": "Error: la tienda no existe",
                 "response_code": 404  # Product not found
             })
-
-        return render(request, 'petsy/shop.html', {
-            "shop": s,
-            "list_shops": _shops
-        })
 def get_user(request):
     """
 
