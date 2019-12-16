@@ -7,7 +7,6 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView
-from itertools import chain
 import ast
 import time
 

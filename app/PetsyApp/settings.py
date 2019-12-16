@@ -137,12 +137,20 @@ USE_TZ = True
 
 LOGIN_REDIRECT_URL = '/'
 
-STATIC_URL = os.path.join(BASE_DIR, "/static/")
+STATIC_URL = os.path.join(BASE_DIR, "static")
 
-STATIC_URL = '/static/'
+STATIC_ROOT = 'static'
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
+    "static"
 ]
+
+#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = (
+    os.path.join(BASE_DIR, "static"),
+)
+
 
 MEDIA_URL = '/photos/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'photos')
